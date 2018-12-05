@@ -5,7 +5,7 @@ export class AppSettings {
     public static API_ENDPOINT = "http://localhost:8072/";
     public static BUZON_URL = "buzones/";
     public static EMPLEADO_URL = "empleados/";
-    public static PLAZO_DISTRIBUCION_URL = "plazosdistribucion/";
+    public static PLAZO_URL = "plazos/";
     public static TIPO_SERVICIO_URL = "tiposservicio/";
     public static TIPO_SEGURIDAD_URL = "tiposseguridad/";
     public static TIPO_DOCUMENTO_URL = "tiposdocumento/";
@@ -23,6 +23,7 @@ export class AppSettings {
     public static ESTADO_DOCUMENTO_URL = "estadosdocumento/";
     public static TIPO_ESTADO_DOCUMENTO_URL = "tiposestadodocumento/";
     public static MENU_URL = "menus/";
+
 
     /** IMAGENES */
 

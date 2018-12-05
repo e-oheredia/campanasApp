@@ -9,6 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { TreeViewComponent } from './header/tree-view/tree-view.component';
 import { LocalStorageModule } from '../../../node_modules/angular-2-local-storage';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '../../../node_modules/@angular/common/http';
+import { PlazoService } from '../services/plazo.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '../../../node_modules/@angu
     BrowserStorageService,
     MenuService,
     RequesterService,
+    PlazoService,
     {provide: HTTP_INTERCEPTORS, 
       useClass: AuthInterceptor, 
       multi: true}, 

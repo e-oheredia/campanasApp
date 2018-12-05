@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { GenerarCampanaModule } from './generar-campana/generar-campana.module';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -12,7 +14,9 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule, 
-    LayoutModule
+    LayoutModule,
+    GenerarCampanaModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
