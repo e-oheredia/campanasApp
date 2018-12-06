@@ -25,6 +25,8 @@ export class AppSettings {
     public static MENU_URL = "menus/";
     public static CAMPANA_URL = "campanas/";
     public static TIPO_CAMPANA_URL = "tiposcampana/";
+    public static PAQUETE_HABILITADO_URL = "paquetes/";
+    public static ACCION_RESTOS_PROVEEDOR_URL = "accionesrestosproveedor/";
 
     /** IMAGENES */
 

@@ -8,52 +8,105 @@
   <div class="row">
     <div class="col-12">
       <div class="pb-2 mt-4 mb-2">
+        <div class="card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Campaña
+                </div>
+                <div class="col-7">
+                  {{campana.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Solicitante
+                </div>
+                <div class="col-7">
+                  {{campana.buzon.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Area Solicitante
+                </div>
+                <div class="col-7">
+                  {{campana.buzon.area.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Tipo de Documento
+                </div>
+                <div class="col-7">
+                  {{campana.tipoDocumento.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Plazo
+                </div>
+                <div class="col-7">
+                  {{campana.plazo.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Cantidad Lima
+                </div>
+                <div class="col-7">
+                  {{campana.cantidadLima}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Cantidad Provincia
+                </div>
+                <div class="col-7">
+                  {{campana.cantidadProvincia}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Paquete Habilitado
+                </div>
+                <div class="col-7" *ngIf="campana.paqueteHabilitado; else sinPaquete">
+                  {{campana.paqueteHabilitado.nombre}} <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.nombre}}</span>
+                </div>
+                <ng-template #sinPaquete>
+                    <div class="col-7">
+                        No necesita habilitado
+                      </div>
+                </ng-template>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="pb-2 mt-4 mb-2">
         <form [formGroup]="proveedorCampanaForm" (ngSubmit)="onSubmit(proveedorCampanaForm.value)">
           <div class="form-group">
-            <label for="nombreCampana">Campaña</label>
-            <input class="form-control" type="text" id="nombreCampana" [value]="campana.nombre">
-          </div>
-          <div class="form-group">
-            <label for="nombreBuzon">Solicitante</label>
-            <input class="form-control" type="text" id="nombreBuzon" [value]="campana.buzon.nombre">
-          </div>
-          <div class="form-group">
-            <label for="areaSolicitante">Area Solicitante</label>
-            <input class="form-control" type="text" id="areaSolicitante" [value]="campana.buzon.area.nombre">
-          </div>
-          <div class="form-group">
-            <label for="tipoDocumento">Tipo de Documento</label>
-            <input class="form-control" type="text" id="tipoDocumento" [value]="campana.tipoDocumento.nombre">
-          </div>
-          <div class="form-group">
-            <label for="plazo">Plazo</label>
-            <input class="form-control" type="text" id="plazo" [value]="campana.plazo.nombre">
-          </div>
-          <div class="form-group">
-            <label for="cantidadLima">Cantidad Lima</label>
-            <input class="form-control" type="text" id="cantidadLima" [value]="campana.cantidadLima">
-          </div>
-          <div class="form-group">
-            <label for="cantidadProvincia">Cantidad Provincia</label>
-            <input class="form-control" type="text" id="cantidadProvincia" [value]="campana.cantidadLima">
-          </div>
-          <div class="form-group" *ngIf="campana.paqueteHabilitado; else sinPaquete">
-            <label for="numeroGuia">Paquete Habilitado</label>
-            <h6>{{campana.paqueteHabilitado.nombre}}</h6>
-            <ul>
-              <li *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">
-                {{tipoHabilitado.nombre}}
-              </li>
-            </ul>
-          </div>
-          <ng-template #sinPaquete>
-            <div class="form-group">
-              <label>No necesita habilitados</label>
-            </div>
-          </ng-template>
-          <div class="form-group">
             <label for="tipoCampana">Tipo de Campaña</label>
-            <select class="form-control" id="tipoCampana" formControlName="tipoCampana" >
+            <select class="form-control" id="tipoCampana" formControlName="tipoCampana">
               <option *ngFor="let tipoCampana of tiposCampana" [ngValue]="tipoCampana">{{tipoCampana.nombre}}</option>
             </select>
             <span *ngIf="!proveedorCampanaForm.get('tipoCampana').valid && proveedorCampanaForm.get('tipoCampana').touched" class="text-danger small">
@@ -62,7 +115,7 @@
           </div>
           <div class="form-group">
             <label for="proveedor">Proveedor</label>
-            <select class="form-control" id="proveedor" formControlName="proveedor" >
+            <select class="form-control" id="proveedor" formControlName="proveedor">
               <option *ngFor="let proveedor of proveedores" [ngValue]="proveedor">{{proveedor.nombre}}</option>
             </select>
             <span *ngIf="!proveedorCampanaForm.get('proveedor').valid && proveedorCampanaForm.get('proveedor').touched" class="text-danger small">
@@ -72,9 +125,9 @@
           <div class="form-group">
             <label for="costoCampana">Costo de la Campaña</label>
             <input class="form-control" type="number" id="costoCampana" formControlName="costoCampana">
-              <span *ngIf="!proveedorCampanaForm.get('costoCampana').valid && proveedorCampanaForm.get('costoCampana').touched" class="text-danger small">
-                Es necesario ingresar el costo de la campaña
-              </span>
+            <span *ngIf="!proveedorCampanaForm.get('costoCampana').valid && proveedorCampanaForm.get('costoCampana').touched" class="text-danger small">
+              Es necesario ingresar el costo de la campaña
+            </span>
           </div>
           <div class="row">
             <div class="col text-right">

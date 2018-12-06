@@ -1,6 +1,9 @@
-import { ProveedorService } from './../services/proveedor.service';
-import { TipoCampanaService } from './../services/tipocampana.service';
-import { CampanaService } from './../services/campana.service';
+import { BuzonService } from './../services/buzon.service';
+import { EmpleadoService } from './../services/empleado.service';
+import { PaqueteHabilitadoService } from './../services/paquetehabilitado.service';
+import { ProveedorService } from '../services/proveedor.service';
+import { TipoCampanaService } from '../services/tipocampana.service';
+import { CampanaService } from '../services/campana.service';
 import { RequesterService } from '../services/requester.service';
 import { MenuService } from '../services/menu.service';
 import { BrowserStorageService } from '../services/browserstorage.service';
@@ -50,7 +53,10 @@ import { NotifierModule } from 'angular-notifier';
     TituloService, 
     CampanaService,
     TipoCampanaService,
-    ProveedorService
+    ProveedorService,
+    PaqueteHabilitadoService, 
+    EmpleadoService, 
+    BuzonService
   ]
 })
 export class LayoutModule { }
