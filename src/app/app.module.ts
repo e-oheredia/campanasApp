@@ -1,3 +1,4 @@
+import { NotifierModule } from 'angular-notifier';
 import { LayoutModule } from './layout/layout.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -14,7 +15,8 @@ import { SeleccionProveedorModule } from './seleccion-proveedor/seleccion-provee
     BrowserModule,
     AppRoutingModule, 
     LayoutModule, 
-    SeleccionProveedorModule
+    SeleccionProveedorModule, 
+    NotifierModule
   ],
   providers: [],
   bootstrap: [AppComponent]
