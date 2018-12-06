@@ -44,7 +44,12 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   ngOnInit() {
     this.cargarVista();
     this.campanaForm = new FormGroup({
-      'nombreCampana' : new FormControl("", Validators.required)
+      'nombreCampana' : new FormControl("", Validators.required),
+      'cliLima' : new FormControl("", Validators.required),
+      'cliProvincia' : new FormControl("", Validators.required),
+      'colLima' : new FormControl("", Validators.required),
+      'colProvincia' : new FormControl("", Validators.required),
+      'imprenta' : new FormControl("", Validators.required)
     })
   }
 
