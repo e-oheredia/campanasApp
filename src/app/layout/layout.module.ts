@@ -1,6 +1,9 @@
-import { ProveedorService } from './../services/proveedor.service';
-import { TipoCampanaService } from './../services/tipocampana.service';
-import { CampanaService } from './../services/campana.service';
+import { BuzonService } from './../services/buzon.service';
+import { EmpleadoService } from './../services/empleado.service';
+import { PaqueteHabilitadoService } from './../services/paquetehabilitado.service';
+import { ProveedorService } from '../services/proveedor.service';
+import { TipoCampanaService } from '../services/tipocampana.service';
+import { CampanaService } from '../services/campana.service';
 import { RequesterService } from '../services/requester.service';
 import { MenuService } from '../services/menu.service';
 import { BrowserStorageService } from '../services/browserstorage.service';
@@ -17,6 +20,10 @@ import { TituloComponent } from './titulo/titulo.component';
 import { TituloService } from '../services/titulo.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NotifierModule } from 'angular-notifier';
+import { TipoDocumentoService } from '../services/tipodocumento.service';
+import { TipoDestinoService } from '../services/tipodestino.service';
+import { TipoAgrupadoService } from '../services/tipoagrupado.service';
+import { AccionRestosProveedorService } from '../services/accionrestosproveedor.service';
 
 @NgModule({
   declarations: [
@@ -46,13 +53,21 @@ import { NotifierModule } from 'angular-notifier';
     MenuService,
     RequesterService,
     PlazoService,
+    TipoDocumentoService,
+    TipoDestinoService,
+    PaqueteHabilitadoService,
+    TipoAgrupadoService,
+    AccionRestosProveedorService,
     {provide: HTTP_INTERCEPTORS, 
       useClass: AuthInterceptor, 
       multi: true}, 
     TituloService, 
     CampanaService,
     TipoCampanaService,
-    ProveedorService
+    ProveedorService,
+    PaqueteHabilitadoService, 
+    EmpleadoService, 
+    BuzonService
   ]
 })
 export class LayoutModule { }

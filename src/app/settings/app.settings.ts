@@ -9,6 +9,8 @@ export class AppSettings {
     public static TIPO_SERVICIO_URL = "tiposservicio/";
     public static TIPO_SEGURIDAD_URL = "tiposseguridad/";
     public static TIPO_DOCUMENTO_URL = "tiposdocumento/";
+    public static TIPO_DESTINO_URL = "tiposdestino/";
+    public static TIPO_AGRUPADO_URL = "tiposagrupado/";
     public static PAIS_URL = "paises/";
     public static DEPARTAMENTO_URL = "departamentos/";
     public static PROVINCIA_URL = "provincias/";
@@ -25,6 +27,8 @@ export class AppSettings {
     public static MENU_URL = "menus/";
     public static CAMPANA_URL = "campanas/";
     public static TIPO_CAMPANA_URL = "tiposcampana/";
+    public static PAQUETE_HABILITADO_URL = "paquetes/";
+    public static ACCION_RESTOS_PROVEEDOR_URL = "accionesrestosproveedor/";
 
 
     /** IMAGENES */

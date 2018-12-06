@@ -13,7 +13,7 @@
   </div>
 </div>
 
-<!-- <app-datos-buzon></app-datos-buzon> -->
+<app-datos-buzon></app-datos-buzon>
 
 <div class="row justify-content-center">
   <div class="col-11">
@@ -29,10 +29,24 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="nomCampana">Nombre de la Campaña *</label>
-                <input class="form-control" type="text" name="nomCampana" id="">
+                <label for="nombreCampana">Nombre de la Campaña *</label>
+                <input class="form-control" type="text" name="nombreCampana" id="nombreCampana" formControlName="nombreCampana">
+                <span *ngIf="!campanaForm.get('nombreCampana').valid && campanaForm.get('nombreCampana').touched" class="text-danger small">
+                  Es necesario ingresar el nombre de la campaña
+                </span>
               </div>
             </div>
+
+            <div class="col">
+              <div class="form-group">
+                <label for="direccion">Dirección *</label>
+                <input class="form-control" type="text" name="direccion" id="direccion" formControlName="direccion">
+                <span *ngIf="!documentoForm.get('direccion').valid && documentoForm.get('direccion').touched" class="text-danger small">
+                  Es necesario ingresar la dirección
+                </span>
+              </div>
+            </div>
+
           </div>
 
           <div class="form-row">
@@ -40,7 +54,7 @@
               <div class="form-group">
                 <label for="tipoDocumento">Tipo de Documento</label>
                 <select class="form-control" id="tipoDocumento">
-                  <!-- <option *ngFor="let tipoDocumento of tipoDocumentos" [ngValue]="tipoDocumento">{{tipoDocumento.nombre}}</option> -->
+                  <option *ngFor="let tipoDocumento of tiposDocumento" [ngValue]="tipoDocumento">{{tipoDocumento.nombre}}</option>
                 </select>
                 <!-- <span *ngIf="!documentoForm.get('tipoDocumento').valid && documentoForm.get('tipoDocumento').touched" class="text-danger small">
                     Es necesario ingresar el tipo de documento
@@ -93,8 +107,7 @@
               <div class="form-group">
                 <label for="tipoDestino">Tipo de Destino</label>
                 <select class="form-control" id="tipoDestino">
-                  <option>EXTERNA</option>
-                  <option>INTERNA</option>
+                  <option *ngFor="let tipoDestino of tiposDestino" [ngValue]="tipoDestino">{{tipoDestino.nombre}}</option>
                 </select>
               </div>
             </div>
@@ -214,7 +227,7 @@
           <br>
 
           <div class="form-row">
-            <div class="col-10">
+            <div class="col-4">
               <div class="form-group">
                 <label for="monitoreo">Requiere Habilitado *</label><br>
                 <label><input type="radio" name="gender" value="male"> SI</label><br>
@@ -226,12 +239,18 @@
                   marcar el tipo de habilitación requerida
                 </h6>
                 <br>
+                <label for="paqueteHabilitado">Elige tu opción de Habilitado</label><br>
+                <select class="form-control" id="paqueteHabilitado">
+                  <option *ngFor="let paqueteHabilitado of paqueteHabilitados" [ngValue]="paqueteHabilitado">{{paqueteHabilitado.descripcion}}</option>
+                </select>
+                <br>
+                <br>
               </div>
             </div>
           </div>
 
           <div class="form-row">
-            <div class="col-10">
+            <div class="col-4">
               <div class="form-group">
                 <label for="agrupado">Requiere Agrupado *</label><br>
                 <label><input type="radio" name="gender" value="male"> SI</label><br>
@@ -241,10 +260,9 @@
                   usuario lo requiere. Tener en cuenta
                   que esta tarea aplica solo para campañas dirigidas a colaboradores del banco.
                 </h6>
-                <label for="tipoAgrupado">Requiere Agrupado *</label><br>
-                <label><input type="checkbox" id="cbox1" value="first_checkbox"> Agrupado por agencia</label><br>
-                <label><input type="checkbox" id="cbox1" value="first_checkbox"> Agrupado por unidad organizativa</label><br>
-                <label><input type="checkbox" id="cbox1" value="first_checkbox"> Agrupado por sucursales/sede</label><br>
+                <select class="form-control" id="tipoAgrupado">
+                  <option *ngFor="let tipoAgrupado of tiposAgrupado" [ngValue]="tipoAgrupado">{{tipoAgrupado.nombre}}</option>
+                </select>
               </div>
             </div>
           </div>
@@ -285,14 +303,17 @@
 
                 <br>
 
-                <label for="rezagosFisicos">¿Qué desea que se haga con los rezagos físicos?</label>
-                <select class="form-control" id="rezFisicos">
-                  <option>Devolver a almacén central</option>
-                  <option>Que el proveedor los destruya</option>
+                <label for="accionporrezagos">¿Qué desea que se haga con los rezagos físicos?</label>
+                <select class="form-control" id="accionporrezagos">
+                  <option *ngFor="let accionporrezagos of accionesRestosProveedor" [ngValue]="accionporrezagos">{{accionporrezagos.nombre}}</option>
                 </select>
+
               </div>
             </div>
           </div>
+
+
+
           <br>
           <hr>
 
@@ -312,11 +333,10 @@
 
                 <br>
 
-                <label for="cargosFisicos">¿Qué desea que se haga con los rezagos físicos?</label>
+                <label for="accionporcargos">¿Qué desea que se haga con los cargos físicos?</label>
                 <h6>Al finalizar la distribución, los cargos digitales serán almacenados en un CD</h6>
-                <select class="form-control" id="rezFisicos">
-                  <option>Devolver a almacén central</option>
-                  <option>Que el proveedor los destruya</option>
+                <select class="form-control" id="accionporcargos">
+                  <option *ngFor="let accionporcargos of accionesRestosProveedor" [ngValue]="accionporcargos">{{accionporcargos.nombre}}</option>
                 </select>
               </div>
             </div>

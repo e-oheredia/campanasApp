@@ -1,13 +1,13 @@
-import { Campana } from './../model/campana.model';
+import { Campana } from '../model/campana.model';
 import { SeleccionarProveedorComponent } from './seleccionar-proveedor/seleccionar-proveedor.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { CampanaService } from './../services/campana.service';
-import { AppSettings } from './../settings/app.settings';
-import { ButtonViewComponent } from './../table-management/button-view/button-view.component';
-import { TituloService } from './../services/titulo.service';
+import { CampanaService } from '../services/campana.service';
+import { AppSettings } from '../settings/app.settings';
+import { ButtonViewComponent } from '../table-management/button-view/button-view.component';
+import { TituloService } from '../services/titulo.service';
 import { Component, OnInit } from '@angular/core';
 import { EstadoCampanaEnum } from '../enum/estadocampana.enum';
-import { LocalDataSource } from '../../../node_modules/ng2-smart-table';
+import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   selector: 'app-seleccion-proveedor',
@@ -36,15 +36,15 @@ export class SeleccionProveedorComponent implements OnInit {
       nombre: {
         title: 'Nombre'
       },
-      // solicitante: {
-      //   title: 'Solicitante'
-      // },
+      solicitante: {
+        title: 'Solicitante'
+      },
       regulatorio: {
         title: 'Regulatorio'
       },
-      // tipoDocumento: {
-      //   title: 'Tipo de Documento'
-      // },
+      tipoDocumento: {
+        title: 'Tipo de Documento'
+      },
       tipoDestino: {
         title: 'Tipo de Destino'
       },
@@ -73,7 +73,8 @@ export class SeleccionProveedorComponent implements OnInit {
     let bsModalRef: BsModalRef = this.modalService.show(SeleccionarProveedorComponent, {
       initialState: {
         campana: this.campanas.find(campana => campana.id == row.id)
-      }
+      },
+      class: 'modal-lg'
     });
     
     this.modalService.onHide.subscribe(
@@ -92,9 +93,9 @@ export class SeleccionProveedorComponent implements OnInit {
           dataCampanasCreadas.push({
             id: campana.id,
             nombre: campana.nombre,
-            //solicitante: campana.buzon.nombre,
+            solicitante: campana.buzon.nombre,
             regulatorio: campana.regulatorio ? 'Sí':'No',
-            //tipoDocumento: campana.tipoDocumento.nombre,
+            tipoDocumento: campana.tipoDocumento.nombre,
             tipoDestino: campana.tipoDestino.nombre,
             cantidadLima: campana.cantidadLima,
             cantidadProvincia: campana.cantidadProvincia
