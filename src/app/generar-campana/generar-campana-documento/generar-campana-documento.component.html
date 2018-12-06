@@ -24,7 +24,7 @@
       </div>
 
       <div class="card-body">
-        <form >
+        <form>
 
           <div class="form-row">
             <div class="col-4">
@@ -40,10 +40,11 @@
               <div class="form-group">
                 <label for="tipoDocumento">Tipo de Documento</label>
                 <select class="form-control" id="tipoDocumento">
-                  <option>CARTAS</option>
-                  <option>INVITACIONES</option>
-                  <option>INFORMES</option>
+                  <!-- <option *ngFor="let tipoDocumento of tipoDocumentos" [ngValue]="tipoDocumento">{{tipoDocumento.nombre}}</option> -->
                 </select>
+                <!-- <span *ngIf="!documentoForm.get('tipoDocumento').valid && documentoForm.get('tipoDocumento').touched" class="text-danger small">
+                    Es necesario ingresar el tipo de documento
+                  </span> -->
               </div>
             </div>
           </div>
@@ -103,25 +104,25 @@
             <div class="col-2">
               <div class="form-group">
                 <label for="cliLima">Clientes en Lima *</label>
-                <input class="form-control col-5" type="text" name="cliLima"  id="">
+                <input class="form-control col-5" type="text" name="cliLima" id="">
               </div>
             </div>
             <div class="col-2">
               <div class="form-group">
                 <label for="cliProvincia">Clientes en Provincia *</label>
-                <input class="form-control col-5" type="text" name="cliProvincia"  id="">
+                <input class="form-control col-5" type="text" name="cliProvincia" id="">
               </div>
             </div>
             <div class="col-2">
               <div class="form-group">
                 <label for="colLima">Colaboradores en Lima *</label>
-                <input class="form-control col-5" type="text" name="colLima"  id="">
+                <input class="form-control col-5" type="text" name="colLima" id="">
               </div>
             </div>
             <div class="col-2">
               <div class="form-group">
                 <label for="colProvincia">Colaboradores en Provincia *</label>
-                <input class="form-control col-5" type="text" name="colProvincia"  id="">
+                <input class="form-control col-5" type="text" name="colProvincia" id="">
               </div>
             </div>
           </div>
@@ -202,9 +203,9 @@
                 <label for="imprenta">Imprenta/Sede *</label>
                 <input class="form-control" type="text" name="imprenta" id="">
                 <label for="direccion">Dirección *</label>
-                <input class="form-control" type="text" name="direccion"  id="">
+                <input class="form-control" type="text" name="direccion" id="">
                 <label for="contacto">Contacto *</label>
-                <input class="form-control" type="text" name="contacto"  id="">
+                <input class="form-control" type="text" name="contacto" id="">
                 <label for="horarioRecojo">Fecha y Hora de Recojo *</label>
                 <input class="form-control" type="text" name="horarioRecojo" id="">
               </div>
@@ -266,7 +267,7 @@
       </div>
 
       <div class="card-body">
-        <form >
+        <form>
 
           <div class="form-row">
             <div class="col-4">
@@ -276,9 +277,9 @@
                 <label><input type="radio" name="gender" value="female"> NO</label><br>
 
                 <label for="contacto">Contacto *</label>
-                <input class="form-control" type="text" name="contacto"  id="">
+                <input class="form-control" type="text" name="contacto" id="">
                 <label for="contacto">Dirección *</label>
-                <input class="form-control" type="text" name="direccion"  id="">
+                <input class="form-control" type="text" name="direccion" id="">
                 <label for="observacion">Observación *</label>
                 <input class="form-control" type="text" name="observacion" f id="">
 
@@ -340,7 +341,7 @@
 
       <div class="card-body">
         <h6>Estos datos te los puede brindar tu área de contabilidad</h6>
-        <form >
+        <form>
 
           <div class="form-row">
             <div class="col-4">
@@ -350,9 +351,9 @@
                 <label><input type="radio" name="gender" value="female"> OTROS</label><br>
 
                 <label for="contacto">Cuenta Contable *</label>
-                <input class="form-control" type="text" name="contacto"  id="">
+                <input class="form-control" type="text" name="contacto" id="">
                 <label for="contacto">Centro de Costos *</label>
-                <input class="form-control" type="text" name="direccion"  id="">
+                <input class="form-control" type="text" name="direccion" id="">
                 <label for="observacion">Orden Estadística *</label>
                 <input class="form-control" type="text" name="observacion" id="">
                 <label for="observacion">Grupo de artículo *</label>
@@ -387,7 +388,7 @@
                 <label for="razonSocial">Razón Social *</label>
                 <input class="form-control" type="text" name="razonSocial" id="">
                 <label for="ruc">RUC *</label>
-                <input class="form-control" type="text" name="ruc"  id="">
+                <input class="form-control" type="text" name="ruc" id="">
                 <label for="direccion">Dirección *</label>
                 <input class="form-control" type="text" name="direccion" id="">
                 <label for="contacto">Contacto *</label>

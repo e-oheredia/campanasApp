@@ -1,8 +1,11 @@
-import { RequesterService } from './../services/requester.service';
-import { MenuService } from './../services/menu.service';
-import { BrowserStorageService } from './../services/browserstorage.service';
-import { AuthInterceptor } from './../services/interceptors/auth-interceptor';
-import { AppRoutingModule } from './../app-routing.module';
+import { ProveedorService } from './../services/proveedor.service';
+import { TipoCampanaService } from './../services/tipocampana.service';
+import { CampanaService } from './../services/campana.service';
+import { RequesterService } from '../services/requester.service';
+import { MenuService } from '../services/menu.service';
+import { BrowserStorageService } from '../services/browserstorage.service';
+import { AuthInterceptor } from '../services/interceptors/auth-interceptor';
+import { AppRoutingModule } from '../app-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
@@ -10,11 +13,16 @@ import { TreeViewComponent } from './header/tree-view/tree-view.component';
 import { LocalStorageModule } from '../../../node_modules/angular-2-local-storage';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '../../../node_modules/@angular/common/http';
 import { PlazoService } from '../services/plazo.service';
+import { TituloComponent } from './titulo/titulo.component';
+import { TituloService } from '../services/titulo.service';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { NotifierModule } from 'angular-notifier';
 
 @NgModule({
   declarations: [
+    TituloComponent,
     HeaderComponent,
-    TreeViewComponent
+    TreeViewComponent    
   ],
   imports: [
     CommonModule,
@@ -23,11 +31,14 @@ import { PlazoService } from '../services/plazo.service';
       prefix: '',
       storageType: 'localStorage'
     }),
-    HttpClientModule
+    HttpClientModule,
+    ModalModule.forRoot(),
+    NotifierModule
   ],
   exports: [
     HeaderComponent,
-    AppRoutingModule
+    AppRoutingModule, 
+    TituloComponent
   ],
   providers: [
     AuthInterceptor,
@@ -38,6 +49,10 @@ import { PlazoService } from '../services/plazo.service';
     {provide: HTTP_INTERCEPTORS, 
       useClass: AuthInterceptor, 
       multi: true}, 
+    TituloService, 
+    CampanaService,
+    TipoCampanaService,
+    ProveedorService
   ]
 })
 export class LayoutModule { }

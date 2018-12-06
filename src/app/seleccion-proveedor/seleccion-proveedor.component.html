@@ -1,0 +1,12 @@
+<ng-container *ngIf="campanas.length !== 0; else mensaje">
+    <ng2-smart-table [settings]="settings" [source]="dataCampanasCreadas"></ng2-smart-table>
+</ng-container>
+<ng-template #mensaje>
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-info" role="alert">
+                No tienes guías creadas
+            </div>
+        </div>
+    </div>
+</ng-template>

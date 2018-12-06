@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Plazo } from 'src/app/model/plazo.model';
 import { PlazoService } from 'src/app/services/plazo.service';
+import { TipoDocumento } from 'src/app/model/tipodocumento.model';
+import { TipoDocumentoService} from 'src/app/services/tipodocumento.service';
 
 @Component({
   selector: 'app-generar-campana-documento',
@@ -9,9 +11,12 @@ import { PlazoService } from 'src/app/services/plazo.service';
 })
 export class GenerarCampanaDocumentoComponent implements OnInit {
 
-  constructor(private plazoService:PlazoService) { }
+  constructor(private plazoService:PlazoService,
+              private tipoDocumentoService:TipoDocumentoService) { }
 
   plazos:Plazo[]=[];
+  tipoDocumentos:TipoDocumento[]=[];
+
 
   ngOnInit() {
     this.cargarDatosVista();
@@ -19,6 +24,12 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
 
   cargarDatosVista(){
     this.listarPlazos();
+  }
+
+  listarTipoDocumentos(){
+    this.tipoDocumentoService.listarAll().subscribe(
+      tipoDocumentos => {this.tipoDocumentos = tipoDocumentos}
+    )
   }
 
   listarPlazos(){
