@@ -12,6 +12,7 @@ import { Plazo } from './plazo.model';
 import { TipoDocumento } from './tipodocumento.model';
 import { ItemCampana } from './itemcampana.model';
 import { TipoAgrupado } from './tipoagrupado.model';
+
 export class Campana {
     constructor(
         public id: number, 

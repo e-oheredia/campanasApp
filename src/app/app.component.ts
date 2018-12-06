@@ -1,3 +1,4 @@
+import { EmpleadoService } from './services/empleado.service';
 import { MenuService } from './services/menu.service';
 import { BrowserStorageService } from './services/browserstorage.service';
 
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private menuService: MenuService,
+    private empleadoService: EmpleadoService
   ) { }
 
   ngOnInit() {
@@ -38,6 +40,7 @@ export class AppComponent implements OnInit {
               }
             );
           } else {
+            this.empleadoService.listarEmpleadoAutenticado();
             this.menuService.llenarMenuAutenticado();
           }
         }

@@ -1,4 +1,4 @@
-import { Proveedor } from './../model/proveedor.model';
+import { Proveedor } from '../model/proveedor.model';
 
 import { AppSettings } from '../settings/app.settings';
 import { Observable } from 'rxjs';
