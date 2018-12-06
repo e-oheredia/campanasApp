@@ -1,30 +1,37 @@
 <div class="row">
-  <div class="col-10">
-    <div class="pb-2 mt-4 mb-2">
+  <div class="col-12 text-center">
+    <div class="pb-4 mt-2 mb-4">
       <h1>SOLICITUD DE CAMPAÑAS - DOCUMENTOS</h1>
     </div>
   </div>
-  <div class="col-2 text-right">
+  <!-- <div class="col-2 text-right">
     <div class="pb-2 mt-4 mb-2">
       <a class="btn btn-primary" [href]="rutaManual" target="_blank">
         Manual de Registro
       </a>
     </div>
-  </div>
+  </div> -->
 </div>
 
 <app-datos-buzon></app-datos-buzon>
 
-<div class="row justify-content-center">
-  <div class="col-11">
-    <div class="card mb-2">
+<form [formGroup]="campanaForm">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <div class="card mb-2">
 
-      <div class="card-header">
-        <h5>DATOS GENERALES DE LA CAMPAÑA</h5>
-      </div>
+        <div class="card-header">
+          <h5>DATOS GENERALES DE LA CAMPAÑA</h5>
+        </div>
 
+        <div class="card-body">
+
+
+<<<<<<< HEAD
       <div class="card-body">
         <form [formGroup]="campanaForm">
+=======
+>>>>>>> 7457ae43174b1b4b600c6a46a87c15e7d3f1e67b
 
           <div class="form-row">
             <div class="col-4">
@@ -32,17 +39,7 @@
                 <label for="nombreCampana">Nombre de la Campaña *</label>
                 <input class="form-control" type="text" name="nombreCampana" id="nombreCampana" formControlName="nombreCampana">
                 <span *ngIf="!campanaForm.get('nombreCampana').valid && campanaForm.get('nombreCampana').touched" class="text-danger small">
-                  Es necesario ingresar el nombre de la campaña
-                </span>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="form-group">
-                <label for="direccion">Dirección *</label>
-                <input class="form-control" type="text" name="direccion" id="direccion" formControlName="direccion">
-                <span *ngIf="!documentoForm.get('direccion').valid && documentoForm.get('direccion').touched" class="text-danger small">
-                  Es necesario ingresar la dirección
+                  Es necesario ingresar el nombre de la campaña.
                 </span>
               </div>
             </div>
@@ -56,9 +53,6 @@
                 <select class="form-control" id="tipoDocumento">
                   <option *ngFor="let tipoDocumento of tiposDocumento" [ngValue]="tipoDocumento">{{tipoDocumento.nombre}}</option>
                 </select>
-                <!-- <span *ngIf="!documentoForm.get('tipoDocumento').valid && documentoForm.get('tipoDocumento').touched" class="text-danger small">
-                    Es necesario ingresar el tipo de documento
-                  </span> -->
               </div>
             </div>
           </div>
@@ -75,22 +69,16 @@
             </div>
           </div>
 
-
+          <!-- POR DEFAULT DEBE ESTAR MARCADO SI -->
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="monitoreo">Requiere Monitoreo Satelital *</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="male"> SI</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="female"> NO</label>
-                <br>
+                <label for="monitoreo">Requiere Monitoreo Satelital *</label><br>
+                <label><input type="radio" name="gender"> SI</label><br>
+                <label><input type="radio" name="gender"> NO</label><br>
               </div>
             </div>
           </div>
-
 
           <div class="form-row">
             <div class="col-4">
@@ -99,13 +87,12 @@
                 <select class="form-control" id="plazo">
                   <option *ngFor="let plazo of plazos" [ngValue]="plazo">{{plazo.nombre}}</option>
                 </select>
-                <!-- <span *ngIf="!documentoForm.get('tipoDocumento').valid && documentoForm.get('tipoDocumento').touched" class="text-danger small">
-                    Es necesario ingresar el tipo de documento
-                  </span> -->
               </div>
             </div>
           </div>
 
+          <!-- DEFAULT EXTERNA: SOLO SE MUESTRA CLIENTES LIMA Y PROVINCIA
+                       INTERNA: SOLO SE MUESTRA COLABORADORES LIMA Y PROVINCIA -->
           <div class="form-row">
             <div class="col-4">
               <h5>Cantidad de clientes/colaboradores que contiene la campaña</h5>
@@ -118,29 +105,49 @@
             </div>
           </div>
 
+
+          <!-- <label for="nombreCampana">Nombre de la Campaña *</label>
+          <input class="form-control" type="text" name="nombreCampana" id="nombreCampana" formControlName="nombreCampana">
+          <span *ngIf="!campanaForm.get('nombreCampana').valid && campanaForm.get('nombreCampana').touched" class="text-danger small">
+            Es necesario ingresar el nombre de la campaña.
+          </span> -->
+
+
           <div class="form-row">
             <div class="col-2">
               <div class="form-group">
                 <label for="cliLima">Clientes en Lima *</label>
-                <input class="form-control col-5" type="text" name="cliLima" id="">
+                <input class="form-control col-5" type="text" name="cliLima" id="cliLima" formControlName="cliLima">
+                <span *ngIf="!campanaForm.get('cliLima').valid && campanaForm.get('cliLima').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de clientes en Lima.
+                </span>
               </div>
             </div>
             <div class="col-2">
               <div class="form-group">
                 <label for="cliProvincia">Clientes en Provincia *</label>
-                <input class="form-control col-5" type="text" name="cliProvincia" id="">
+                <input class="form-control col-5" type="text" name="cliProvincia" id="cliProvincia" formControlName="cliProvincia">
+                <span *ngIf="!campanaForm.get('cliProvincia').valid && campanaForm.get('cliProvincia').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de clientes en Provincia.
+                </span>
               </div>
             </div>
             <div class="col-2">
               <div class="form-group">
                 <label for="colLima">Colaboradores en Lima *</label>
-                <input class="form-control col-5" type="text" name="colLima" id="">
+                <input class="form-control col-5" type="text" name="colLima" id="colLima" formControlName="colLima">
+                <span *ngIf="!campanaForm.get('colLima').valid && campanaForm.get('colLima').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de colaboradores en Lima.
+                </span>
               </div>
             </div>
             <div class="col-2">
               <div class="form-group">
                 <label for="colProvincia">Colaboradores en Provincia *</label>
-                <input class="form-control col-5" type="text" name="colProvincia" id="">
+                <input class="form-control col-5" type="text" name="colProvincia" id="colProvincia" formControlName="colProvincia">
+                <span *ngIf="!campanaForm.get('colProvincia').valid && campanaForm.get('colProvincia').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de colaboradores en Provincia.
+                </span>
               </div>
             </div>
           </div>
@@ -162,49 +169,43 @@
             </div>
           </div>
 
-        </form>
-      </div>
 
+        </div>
+
+      </div>
     </div>
   </div>
-</div>
 
 
 
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <div class="card mb-2">
 
+        <div class="card-header">
+          <h5>REQUERIMIENTOS DE LA CAMPAÑA</h5>
+        </div>
 
-<div class="row justify-content-center">
-  <div class="col-11">
-    <div class="card mb-2">
+        <div class="card-body">
 
-      <div class="card-header">
-        <h5>REQUERIMIENTOS DE LA CAMPAÑA</h5>
-      </div>
-
-      <div class="card-body">
-        <form>
 
           <div class="form-row">
             <div class="col-10">
               <div class="form-group">
-                <label for="monitoreo">Requiere Georreferenciación *</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="male"> SI</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="female"> NO</label>
-                <br>
-                <h6>La Georreferenciación es la tarea que realiza el proveedor para ubicar las direcciones registradas en la
-                  base de la campaña. Luego de realizarse se puede detectar direcciones "Normalizadas" y "No Distribuibles".
-                  <br> NORMALIZADA: Son los registros cuyas direcciones son válidas y han sido ubicadas por el proveedor para
-                  su futura visita y posterior entrega de campaña.
-                  <br> NO DISTRIBUIBLE: Son los registros con direcciones inválidas puesto que están incompletas, no existen
-                  o el proveedor no ha podido ubicarlas.
-                  <br> Al saber que registros son "No Distribuibles", este proceso permite las siguientes ventajas:
-                  <br> *El usuario puede corregir las direcciones para que vuelvan a ser georreferenciadas.
-                  <br> *Disminuir el porcentaje de rezagos a la hora de la distribución.
-                  <br> *Ahorro en el costo de impresión en caso el usuario decida separar los registros inválidos.
+                <label for="geo">Requiere Georreferenciación *</label><br>
+                <label><input type="radio" name="geo"> SI</label><br>
+                <label><input type="radio" name="geo"> NO</label><br>
+                <h6>La Georreferenciación es la tarea que realiza el proveedor para ubicar las direcciones registradas
+                  en la base de la campaña. Luego de
+                  realizarse se puede detectar direcciones "Normalizadas" y "No Distribuibles".<br>
+                  NORMALIZADA: Son los registros cuyas direcciones son válidas y han sido ubicadas por el proveedor
+                  para su futura visita y posterior entrega de campaña.<br>
+                  NO DISTRIBUIBLE: Son los registros con direcciones inválidas puesto que están incompletas, no existen
+                  o el proveedor no ha podido ubicarlas.<br>
+                  Al saber que registros son "No Distribuibles", este proceso permite las siguientes ventajas:<br>
+                  *El usuario puede corregir las direcciones para que vuelvan a ser georreferenciadas.<br>
+                  *Disminuir el porcentaje de rezagos a la hora de la distribución.<br>
+                  *Ahorro en el costo de impresión en caso el usuario decida separar los registros inválidos.
                 </h6>
                 <br>
               </div>
@@ -214,21 +215,21 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="monitoreo">Requiere Impresión *</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="male"> SI</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="female"> NO</label>
-                <br>
+                <label for="impresion">Requiere Impresión *</label><br>
+                <label><input type="radio" name="impresion"> SI</label><br>
+                <label><input type="radio" name="impresion"> NO</label><br>
                 <h6>
                   Si: El usuario gestionará la impresión de su campaña.
                   <br> No: La campaña ya se encuentra impresa y lista para ser recogida por el proveedor. Favor llenar los siguientes
                   datos.
                 </h6>
                 <label for="imprenta">Imprenta/Sede *</label>
-                <input class="form-control" type="text" name="imprenta" id="">
+                <input class="form-control" type="text" name="imprenta" id="imprenta" formControlName="imprenta">
+                <span *ngIf="!campanaForm.get('imprenta').valid && campanaForm.get('imprenta').touched" class="text-danger small">
+                  Es necesario ingresar la imprenta/sede.
+                </span>
+                <br>
+                <!-- ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
                 <label for="direccion">Dirección *</label>
                 <input class="form-control" type="text" name="direccion" id="">
                 <label for="contacto">Contacto *</label>
@@ -238,19 +239,23 @@
               </div>
             </div>
           </div>
+
+
+
+          <!-- <label for="colProvincia">Colaboradores en Provincia *</label>
+              <input class="form-control col-5" type="text" name="colProvincia" id="colProvincia" formControlName="colProvincia">
+              <span *ngIf="!campanaForm.get('colProvincia').valid && campanaForm.get('colProvincia').touched" class="text-danger small">
+                Es necesario ingresar la cantidad de colaboradores en Provincia.
+              </span> -->
+
           <br>
 
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="monitoreo">Requiere Habilitado *</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="male"> SI</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="female"> NO</label>
-                <br>
+                <label for="habilitado">Requiere Habilitado *</label><br>
+                <label><input type="radio" name="habilitado"> SI</label><br>
+                <label><input type="radio" name="habilitado"> NO</label><br>
                 <h6>
                   No: El material de la campaña será distribuido en el mismo estado en el que estuvo cuando pasó a manos del proveedor.
                   <br> Si: El material de la campaña requiere un habilitado antes de que se iniciesu distribución. Favor marcar
@@ -271,14 +276,9 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="agrupado">Requiere Agrupado *</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="male"> SI</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="female"> NO</label>
-                <br>
+                <label for="agrupado">Requiere Agrupado *</label><br>
+                <label><input type="radio" name="agrupado"> SI</label><br>
+                <label><input type="radio" name="agrupado"> NO</label><br>
                 <h6>
                   Luego de ser habilitada, la campaña puede ser agrupada antes de iniciar con su distribución si el usuario lo requiere. Tener
                   en cuenta que esta tarea aplica solo para campañas dirigidas a colaboradores del banco.
@@ -290,37 +290,30 @@
             </div>
           </div>
 
-        </form>
-      </div>
+        </div>
 
+      </div>
     </div>
   </div>
-</div>
 
 
 
-<div class="row justify-content-center">
-  <div class="col-11">
-    <div class="card mb-2">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <div class="card mb-2">
 
-      <div class="card-header">
-        <h5>MATERIALES DE LA CAMPAÑA</h5>
-      </div>
+        <div class="card-header">
+          <h5>MATERIALES DE LA CAMPAÑA</h5>
+        </div>
 
-      <div class="card-body">
-        <form>
+        <div class="card-body">
 
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="devolverRezagos">¿Desea que devolvamos los rezagos físicos? *</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="male"> SI</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="female"> NO</label>
-                <br>
+                <label for="devolverRezagos">¿Desea que devolvamos los rezagos físicos? *</label><br>
+                <label><input type="radio" name="devolverRezagos"> SI</label><br>
+                <label><input type="radio" name="devolverRezagos"> NO</label><br>
 
                 <label for="contacto">Contacto *</label>
                 <input class="form-control" type="text" name="contacto" id="">
@@ -348,14 +341,9 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="devolverCargos">¿Desea que devolvamos los cargos físicos? *</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="male"> SI</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="female"> NO</label>
-                <br>
+                <label for="devolverCargos">¿Desea que devolvamos los cargos físicos? *</label><br>
+                <label><input type="radio" name="devolverCargos"> SI</label><br>
+                <label><input type="radio" name="devolverCargos"> NO</label><br>
 
                 <label for="contacto">Contacto *</label>
                 <input class="form-control" type="text" name="contacto" id="">
@@ -376,37 +364,30 @@
           </div>
           <br>
 
-        </form>
-      </div>
+        </div>
 
+      </div>
     </div>
   </div>
-</div>
 
 
-<div class="row justify-content-center">
-  <div class="col-11">
-    <div class="card mb-2">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <div class="card mb-2">
 
-      <div class="card-header">
-        <h5>DATOS DE COSTOS DE CAMPAÑA</h5>
-      </div>
+        <div class="card-header">
+          <h5>DATOS DE COSTOS DE CAMPAÑA</h5>
+        </div>
 
-      <div class="card-body">
-        <h6>Estos datos te los puede brindar tu área de contabilidad</h6>
-        <form>
+        <div class="card-body">
+          <h6>Estos datos te los puede brindar tu área de contabilidad</h6>
 
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="costoCampaña">Los costos de la campaña se cargarán en: *</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="male"> BCP</label>
-                <br>
-                <label>
-                  <input type="radio" name="gender" value="female"> OTROS</label>
-                <br>
+                <label for="costoCampaña">Los costos de la campaña se cargarán en: *</label><br>
+                <label><input type="radio" name="costoCampaña"> BCP</label><br>
+                <label><input type="radio" name="costoCampaña"> OTROS</label><br>
 
                 <label for="contacto">Cuenta Contable *</label>
                 <input class="form-control" type="text" name="contacto" id="">
@@ -439,8 +420,8 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label>Si el servicio no será pagado por BCP, indicar los siguientes datos para la generación de la factura: *</label>
-                <br>
+                <label>Si el servicio no será pagado por BCP, indicar los siguientes datos para la generación de la
+                  factura: </label><br>
                 <h6>Está prohibido realizar envíos de índole personal</h6>
 
                 <label for="razonSocial">Razón Social *</label>
@@ -458,19 +439,19 @@
 
           <textarea rows="10" cols="81"></textarea>
 
-        </form>
+        </div>
+
       </div>
-
     </div>
   </div>
-</div>
 
-<div class="row justify-content-center">
-  <div class="col-11 mt-4 mb-4">
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary form-control mt-2">
-        CREAR CAMPAÑA
-      </button>
+  <div class="row justify-content-center">
+    <div class="col-11 mt-4 mb-4">
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary form-control mt-2">
+          CREAR CAMPAÑA
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</form>
