@@ -1,3 +1,4 @@
+import { TipoCampana } from './tipocampana.model';
 import { PaqueteHabilitado } from './paquetehabilitado.model';
 import { ProveedorImpresion } from './proveedorimpresion.model';
 import { SeguimientoCampana } from './seguimientocampana.model';
@@ -35,9 +36,8 @@ export class Campana {
         public seguimientosCampana: SeguimientoCampana[],
         public tipoAgrupado: TipoAgrupado,
         public  proveedorImpresion: ProveedorImpresion,
-        public paqueteHabilitado: PaqueteHabilitado 
-
-
-
+        public paqueteHabilitado: PaqueteHabilitado, 
+        public tipoCampana: TipoCampana,
+        public costoCampana: number
     ){}    
 }

@@ -1,3 +1,6 @@
+import { ProveedorService } from './../services/proveedor.service';
+import { TipoCampanaService } from './../services/tipocampana.service';
+import { CampanaService } from './../services/campana.service';
 import { RequesterService } from '../services/requester.service';
 import { MenuService } from '../services/menu.service';
 import { BrowserStorageService } from '../services/browserstorage.service';
@@ -10,13 +13,15 @@ import { TreeViewComponent } from './header/tree-view/tree-view.component';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TituloComponent } from './titulo/titulo.component';
+import { TituloService } from '../services/titulo.service';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { NotifierModule } from 'angular-notifier';
 
 @NgModule({
   declarations: [
     TituloComponent,
     HeaderComponent,
-    TreeViewComponent
-    
+    TreeViewComponent    
   ],
   imports: [
     CommonModule,
@@ -25,11 +30,14 @@ import { TituloComponent } from './titulo/titulo.component';
       prefix: '',
       storageType: 'localStorage'
     }),
-    HttpClientModule
+    HttpClientModule,
+    ModalModule.forRoot(),
+    NotifierModule
   ],
   exports: [
     HeaderComponent,
-    AppRoutingModule
+    AppRoutingModule, 
+    TituloComponent
   ],
   providers: [
     AuthInterceptor,
@@ -39,6 +47,10 @@ import { TituloComponent } from './titulo/titulo.component';
     {provide: HTTP_INTERCEPTORS, 
       useClass: AuthInterceptor, 
       multi: true}, 
+    TituloService, 
+    CampanaService,
+    TipoCampanaService,
+    ProveedorService
   ]
 })
 export class LayoutModule { }

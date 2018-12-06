@@ -23,6 +23,8 @@ export class AppSettings {
     public static ESTADO_DOCUMENTO_URL = "estadosdocumento/";
     public static TIPO_ESTADO_DOCUMENTO_URL = "tiposestadodocumento/";
     public static MENU_URL = "menus/";
+    public static CAMPANA_URL = "campanas/";
+    public static TIPO_CAMPANA_URL = "tiposcampana/";
 
     /** IMAGENES */
 
