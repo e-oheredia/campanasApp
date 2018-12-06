@@ -1,5 +1,5 @@
-import { MenuService } from './../../services/menu.service';
-import { AppSettings } from './../../settings/app.settings';
+import { MenuService } from '../../services/menu.service';
+import { AppSettings } from '../../settings/app.settings';
 import { Component, OnInit } from '@angular/core';
 import { Menu } from '../../model/menu.model';
 
