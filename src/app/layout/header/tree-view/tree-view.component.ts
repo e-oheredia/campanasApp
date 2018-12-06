@@ -1,4 +1,4 @@
-import { Menu } from './../../../model/menu.model';
+import { Menu } from '../../../model/menu.model';
 import { Component, Input } from '@angular/core';
 
 @Component({

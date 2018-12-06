@@ -5,8 +5,8 @@ import {
 } from '@angular/common/http';
 import { Observable, Subscription } from "rxjs";
 import { Router } from '@angular/router';
-import { BrowserStorageService } from '.././browserstorage.service';
-import { RequesterService } from '.././requester.service';
+import { BrowserStorageService } from '../browserstorage.service';
+import { RequesterService } from '../requester.service';
 import { tap } from "rxjs/internal/operators";
 
 const TOKEN_HEADER_KEY = 'Authorization';
