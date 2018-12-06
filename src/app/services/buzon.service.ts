@@ -1,6 +1,6 @@
-import { Plazo } from './../model/plazo.model';
-import { Buzon } from './../model/buzon.model';
-import { AppSettings } from './../settings/app.settings';
+import { Plazo } from '../model/plazo.model';
+import { Buzon } from '../model/buzon.model';
+import { AppSettings } from '../settings/app.settings';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from "@angular/core";
 import { RequesterService } from "./requester.service";

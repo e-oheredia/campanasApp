@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
-import { Campana } from './../model/campana.model';
+import { Campana } from '../model/campana.model';
 import { AppSettings } from '../settings/app.settings';
 import { Injectable } from '@angular/core';
 import { RequesterService } from './requester.service';
-import { HttpParams } from '../../../node_modules/@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 
 
 @Injectable()

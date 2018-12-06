@@ -1,13 +1,13 @@
-import { Proveedor } from './../../model/proveedor.model';
-import { TipoCampana } from './../../model/tipocampana.model';
-import { ProveedorService } from './../../services/proveedor.service';
+import { Proveedor } from '../../model/proveedor.model';
+import { TipoCampana } from '../../model/tipocampana.model';
+import { ProveedorService } from '../../services/proveedor.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { Campana } from './../../model/campana.model';
-import { CampanaService } from './../../services/campana.service';
+import { Campana } from '../../model/campana.model';
+import { CampanaService } from '../../services/campana.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '../../../../node_modules/@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TipoCampanaService } from '../../services/tipocampana.service';
-import { NotifierService } from '../../../../node_modules/angular-notifier';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-seleccionar-proveedor',

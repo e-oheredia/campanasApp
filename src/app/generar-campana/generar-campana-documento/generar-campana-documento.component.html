@@ -24,7 +24,7 @@
       </div>
 
       <div class="card-body">
-        <form>
+        <form [formGroup]="campanaForm">
 
           <div class="form-row">
             <div class="col-4">
@@ -79,9 +79,14 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="monitoreo">Requiere Monitoreo Satelital *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
+                <label for="monitoreo">Requiere Monitoreo Satelital *</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="male"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="female"> NO</label>
+                <br>
               </div>
             </div>
           </div>
@@ -143,17 +148,17 @@
 
           <div class="row">
             <div class="col-4">
-              <form>
-                <div class="form-row align-items-center">
-                  <div class="col-sm-8">
-                    <input type="file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                      id="excel" (change)="onChangeExcelFile($event.srcElement.files[0])">
-                  </div>
-                  <div class="col btn-group">
-                    <button type="submit" class="btn btn-primary" [disabled]="!excelFile">Subir Base de Campaña</button>
-                  </div>
+              <div class="form-row align-items-center">
+                <div class="col-sm-8">
+                  <input type="file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="excel"
+                    (change)="onChangeExcelFile($event.srcElement.files[0])">
                 </div>
-              </form>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <ng2-smart-table [settings]="tableSettings" [source]="dataItemsCampanaCargados"></ng2-smart-table>
             </div>
           </div>
 
@@ -182,20 +187,24 @@
           <div class="form-row">
             <div class="col-10">
               <div class="form-group">
-                <label for="monitoreo">Requiere Georreferenciación *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
-                <h6>La Georreferenciación es la tarea que realiza el proveedor para ubicar las direcciones registradas
-                  en la base de la campaña. Luego de
-                  realizarse se puede detectar direcciones "Normalizadas" y "No Distribuibles".<br>
-                  NORMALIZADA: Son los registros cuyas direcciones son válidas y han sido ubicadas por el proveedor
-                  para su futura visita y posterior entrega de campaña.<br>
-                  NO DISTRIBUIBLE: Son los registros con direcciones inválidas puesto que están incompletas, no existen
-                  o el proveedor no ha podido ubicarlas.<br>
-                  Al saber que registros son "No Distribuibles", este proceso permite las siguientes ventajas:<br>
-                  *El usuario puede corregir las direcciones para que vuelvan a ser georreferenciadas.<br>
-                  *Disminuir el porcentaje de rezagos a la hora de la distribución.<br>
-                  *Ahorro en el costo de impresión en caso el usuario decida separar los registros inválidos.
+                <label for="monitoreo">Requiere Georreferenciación *</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="male"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="female"> NO</label>
+                <br>
+                <h6>La Georreferenciación es la tarea que realiza el proveedor para ubicar las direcciones registradas en la
+                  base de la campaña. Luego de realizarse se puede detectar direcciones "Normalizadas" y "No Distribuibles".
+                  <br> NORMALIZADA: Son los registros cuyas direcciones son válidas y han sido ubicadas por el proveedor para
+                  su futura visita y posterior entrega de campaña.
+                  <br> NO DISTRIBUIBLE: Son los registros con direcciones inválidas puesto que están incompletas, no existen
+                  o el proveedor no ha podido ubicarlas.
+                  <br> Al saber que registros son "No Distribuibles", este proceso permite las siguientes ventajas:
+                  <br> *El usuario puede corregir las direcciones para que vuelvan a ser georreferenciadas.
+                  <br> *Disminuir el porcentaje de rezagos a la hora de la distribución.
+                  <br> *Ahorro en el costo de impresión en caso el usuario decida separar los registros inválidos.
                 </h6>
                 <br>
               </div>
@@ -205,13 +214,18 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="monitoreo">Requiere Impresión *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
+                <label for="monitoreo">Requiere Impresión *</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="male"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="female"> NO</label>
+                <br>
                 <h6>
-                  Si: El usuario gestionará la impresión de su campaña.<br>
-                  No: La campaña ya se encuentra impresa y lista para ser recogida por el proveedor. Favor llenar los
-                  siguientes datos.
+                  Si: El usuario gestionará la impresión de su campaña.
+                  <br> No: La campaña ya se encuentra impresa y lista para ser recogida por el proveedor. Favor llenar los siguientes
+                  datos.
                 </h6>
                 <label for="imprenta">Imprenta/Sede *</label>
                 <input class="form-control" type="text" name="imprenta" id="">
@@ -229,17 +243,22 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="monitoreo">Requiere Habilitado *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
+                <label for="monitoreo">Requiere Habilitado *</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="male"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="female"> NO</label>
+                <br>
                 <h6>
-                  No: El material de la campaña será distribuido en el mismo estado en el que estuvo cuando pasó a
-                  manos del proveedor.<br>
-                  Si: El material de la campaña requiere un habilitado antes de que se iniciesu distribución. Favor
-                  marcar el tipo de habilitación requerida
+                  No: El material de la campaña será distribuido en el mismo estado en el que estuvo cuando pasó a manos del proveedor.
+                  <br> Si: El material de la campaña requiere un habilitado antes de que se iniciesu distribución. Favor marcar
+                  el tipo de habilitación requerida
                 </h6>
                 <br>
-                <label for="paqueteHabilitado">Elige tu opción de Habilitado</label><br>
+                <label for="paqueteHabilitado">Elige tu opción de Habilitado</label>
+                <br>
                 <select class="form-control" id="paqueteHabilitado">
                   <option *ngFor="let paqueteHabilitado of paqueteHabilitados" [ngValue]="paqueteHabilitado">{{paqueteHabilitado.descripcion}}</option>
                 </select>
@@ -252,13 +271,17 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="agrupado">Requiere Agrupado *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
+                <label for="agrupado">Requiere Agrupado *</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="male"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="female"> NO</label>
+                <br>
                 <h6>
-                  Luego de ser habilitada, la campaña puede ser agrupada antes de iniciar con su distribución si el
-                  usuario lo requiere. Tener en cuenta
-                  que esta tarea aplica solo para campañas dirigidas a colaboradores del banco.
+                  Luego de ser habilitada, la campaña puede ser agrupada antes de iniciar con su distribución si el usuario lo requiere. Tener
+                  en cuenta que esta tarea aplica solo para campañas dirigidas a colaboradores del banco.
                 </h6>
                 <select class="form-control" id="tipoAgrupado">
                   <option *ngFor="let tipoAgrupado of tiposAgrupado" [ngValue]="tipoAgrupado">{{tipoAgrupado.nombre}}</option>
@@ -290,9 +313,14 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="devolverRezagos">¿Desea que devolvamos los rezagos físicos? *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
+                <label for="devolverRezagos">¿Desea que devolvamos los rezagos físicos? *</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="male"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="female"> NO</label>
+                <br>
 
                 <label for="contacto">Contacto *</label>
                 <input class="form-control" type="text" name="contacto" id="">
@@ -320,9 +348,14 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="devolverCargos">¿Desea que devolvamos los cargos físicos? *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
+                <label for="devolverCargos">¿Desea que devolvamos los cargos físicos? *</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="male"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="female"> NO</label>
+                <br>
 
                 <label for="contacto">Contacto *</label>
                 <input class="form-control" type="text" name="contacto" id="">
@@ -366,9 +399,14 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="costoCampaña">Los costos de la campaña se cargarán en: *</label><br>
-                <label><input type="radio" name="gender" value="male"> BCP</label><br>
-                <label><input type="radio" name="gender" value="female"> OTROS</label><br>
+                <label for="costoCampaña">Los costos de la campaña se cargarán en: *</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="male"> BCP</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender" value="female"> OTROS</label>
+                <br>
 
                 <label for="contacto">Cuenta Contable *</label>
                 <input class="form-control" type="text" name="contacto" id="">
@@ -401,8 +439,8 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label>Si el servicio no será pagado por BCP, indicar los siguientes datos para la generación de la
-                  factura: *</label><br>
+                <label>Si el servicio no será pagado por BCP, indicar los siguientes datos para la generación de la factura: *</label>
+                <br>
                 <h6>Está prohibido realizar envíos de índole personal</h6>
 
                 <label for="razonSocial">Razón Social *</label>

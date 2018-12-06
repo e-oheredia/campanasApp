@@ -1,6 +1,6 @@
-<ng-container *ngIf="campanas.length !== 0; else mensaje">
+<div *ngIf="campanas.length !== 0; else mensaje">
     <ng2-smart-table [settings]="settings" [source]="dataCampanasCreadas"></ng2-smart-table>
-</ng-container>
+</div>
 <ng-template #mensaje>
     <div class="row">
         <div class="col">
