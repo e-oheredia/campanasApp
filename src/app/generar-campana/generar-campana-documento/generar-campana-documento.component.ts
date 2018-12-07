@@ -1,10 +1,9 @@
-import { GrupoCentroCostos } from './../../model/grupocentrocostos.model';
-import { CentroCostos } from './../../model/centrocostos.model';
 import { AppSettings } from './../../settings/app.settings';
 import { UtilsService } from './../../services/utils.service';
 import { ItemCampanaService } from './../../services/itemcampana.service';
 import { ItemCampana } from '../../model/itemcampana.model';
 import { Component, OnInit } from '@angular/core';
+
 import { Plazo } from '../../model/plazo.model';
 import { PlazoService } from '../../services/plazo.service';
 import { TipoDocumento } from '../../model/tipodocumento.model';
@@ -17,6 +16,9 @@ import { TipoAgrupado } from '../../model/tipoagrupado.model';
 import { TipoAgrupadoService } from '../../services/tipoagrupado.service';
 import { AccionRestosProveedor } from '../../model/accionrestosproveedor.model';
 import { AccionRestosProveedorService } from '../../services/accionrestosproveedor.service';
+import { CentroCostos } from 'src/app/model/centrocostos.model';
+import { GrupoCentroCostos } from 'src/app/model/grupocentrocostos.model';
+
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NotifierService } from '../../../../node_modules/angular-notifier';
@@ -84,6 +86,10 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   };
 
 
+  //: number = 1; //1 BCP - 2 OTROS
+
+  selectCCOO: boolean = true;
+
   ngOnInit() {
     this.tableSettings.columns = this.columnsItemsCampanaCargados;
     this.cargarVista();
@@ -104,8 +110,20 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       'direccionCargo': new FormControl("", Validators.required),
       'observacionCargo': new FormControl("", Validators.required),
       'accionporcargos': new FormControl("", Validators.required),
+      'costoCampana': new FormControl(),
+      'cuentaContable': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
+      'centroCostos': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
+      'ordenEstadistica': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
+      'grupoArticulo': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
+      'porcentajePago': new FormControl(1, [this.requiredIfCentroCostoBCP.bind(this)]),
+      'razonSocialEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
+      'rucEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
+      'direccionEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
+      'contactoEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
+
     }, this.noDocumentsLoaded.bind(this));
     this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
+
   }
 
   cargarVista() {
@@ -115,6 +133,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     this.listarHabilitados();
     this.listarTiposAgrupado();
     this.listarAccionRestosProveedor();
+    this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
   }
 
   listarTiposDocumento() {
@@ -152,6 +171,9 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       accionesrestoproveedor => { this.accionesRestosProveedor = accionesrestoproveedor }
     )
   }
+
+
+
 
   noDocumentsLoaded(form: FormGroup): { [key: string]: boolean } | null {
     if (this.itemsCampanaCargados.length == 0) {
@@ -206,29 +228,55 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     });
   }
 
-  agregarCentroCostoItem() {
-    let cc = new CentroCostos(null, this.campanaForm.get("cuentaContable").value, this.campanaForm.get("centroCostos").value, this.campanaForm.get("ordenEstadistica").value, this.campanaForm.get("grupoArticulo").value, this.campanaForm.get("porcentajePago").value);
-    this.grupoCentroCostos.centroscostos.push(cc);
-  }
-
   mostrar = true;
 
-  destinoOnChange(sel) {
-    if (sel.value == "EXTERNA") {
-      let divC = document.getElementById("nExterna");
-      divC.style.display = "";
-
-      let divT = document.getElementById("nInterna");
-      divT.style.display = "none";
-
-    } else {
-
-      let divC = document.getElementById("nExterna");
-      divC.style.display = "none";
-
-      let divT = document.getElementById("nInterna");
-      divT.style.display = "";
+  agregarCentroCostoItem() {
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) ||
+      this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('cuentaContable').value) ||
+      this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('centroCostos').value) ||
+      this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('ordenEstadistica').value) ||
+      this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('grupoArticulo').value) ||
+      this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('porcentajePago').value)
+    ) {
+      return;
     }
+
+    let cc = new CentroCostos(null, this.campanaForm.get("cuentaContable").value, this.campanaForm.get("centroCostos").value, this.campanaForm.get("ordenEstadistica").value, this.campanaForm.get("grupoArticulo").value, this.campanaForm.get("porcentajePago").value);
+
+    let p = 0;
+    this.grupoCentroCostos.centroscostos.forEach(element => {
+      p += element.porcentaje;
+    });
+
+    p += cc.porcentaje;
+
+    if (p > 100) {
+      return;
+    }
+
+    this.grupoCentroCostos.centroscostos.push(cc);
+
+  }
+
+
+  requiredIfEmpresaAuspiciadora(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || this.utilsService.isUndefinedOrNullOrEmpty(control.value)) {
+      return { 'requiredIfEmpresaAuspiciadora': true }
+    }
+
+    return null;
+
+  }
+
+  requiredIfCentroCostoBCP(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || this.utilsService.isUndefinedOrNullOrEmpty(control.value)) {
+      return { 'requiredIfCentroCostoBCP': true }
+    }
+
+    return null;
+
   }
 
 }
