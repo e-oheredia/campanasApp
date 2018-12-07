@@ -48,6 +48,8 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
 
   //: number = 1; //1 BCP - 2 OTROS
 
+  selectCCOO : boolean = true;
+
   ngOnInit() {
     this.cargarVista();
     this.campanaForm = new FormGroup({
@@ -111,6 +113,18 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   agregarCentroCostoItem() {
 
     let cc = new CentroCostos(null,this.campanaForm.get("cuentaContable").value,this.campanaForm.get("centroCostos").value,this.campanaForm.get("ordenEstadistica").value,this.campanaForm.get("grupoArticulo").value,this.campanaForm.get("porcentajePago").value);
+
+    let p = 0;
+    this.grupoCentroCostos.centroscostos.forEach(element => {
+      p += element.porcentaje;
+    });
+
+    p += cc.porcentaje;
+
+    if (p>100){
+      return;
+    }
+
     this.grupoCentroCostos.centroscostos.push(cc);
     
   }
