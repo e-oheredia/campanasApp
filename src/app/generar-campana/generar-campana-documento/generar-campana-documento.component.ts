@@ -260,7 +260,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     let cc = new CentroCostos(null, this.campanaForm.get("cuentaContable").value, this.campanaForm.get("centroCostos").value, this.campanaForm.get("ordenEstadistica").value, this.campanaForm.get("grupoArticulo").value, this.campanaForm.get("porcentajePago").value);
 
     let p = 0;
-    this.grupoCentroCostos.centroscostos.forEach(element => {
+    this.grupoCentroCostos.centrosCostos.forEach(element => {
       p += element.porcentaje;
     });
 
@@ -270,7 +270,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       return;
     }
 
-    this.grupoCentroCostos.centroscostos.push(cc);
+    this.grupoCentroCostos.centrosCostos.push(cc);
 
   }
 
@@ -421,7 +421,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       }
     }
 
-    if (this.grupoCentroCostos.centroscostos.length > 0) {
+    if (this.grupoCentroCostos.centrosCostos.length > 0) {
       campana.auspiciador = this.grupoCentroCostos;
     } else {
       campana.auspiciador = {
@@ -483,6 +483,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
 
   onChangeRequiereCentroCostoBCP(value) {
     if (!value) {
+      this.grupoCentroCostos.centrosCostos = [];
       this.centroCostosList = [];
       this.campanaForm.controls['cuentaContable'].setValue(null);
       this.campanaForm.controls['centroCostos'].setValue(null);
