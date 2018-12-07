@@ -1,22 +1,22 @@
 <div class="row">
-  <div class="col-10">
-    <div class="pb-2 mt-4 mb-2">
+  <div class="col-12 text-center">
+    <div class="pb-4 mt-2 mb-4">
       <h1>SOLICITUD DE CAMPAÑAS - DOCUMENTOS</h1>
     </div>
   </div>
-  <div class="col-2 text-right">
+  <!-- <div class="col-2 text-right">
     <div class="pb-2 mt-4 mb-2">
       <a class="btn btn-primary" [href]="rutaManual" target="_blank">
         Manual de Registro
       </a>
     </div>
-  </div>
+  </div> -->
 </div>
 
 <app-datos-buzon></app-datos-buzon>
 
-
 <form [formGroup]="campanaForm">
+
   <div class="row justify-content-center">
     <div class="col-11">
       <div class="card mb-2">
@@ -27,18 +27,16 @@
 
         <div class="card-body">
 
-
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
                 <label for="nombreCampana">Nombre de la Campaña *</label>
-                <input class="form-control" type="text" name="nombreCampana" id="nombreCampana">
-
+                <input class="form-control" type="text" name="nombreCampana" id="nombreCampana" formControlName="nombreCampana">
+                <span *ngIf="!campanaForm.get('nombreCampana').valid && campanaForm.get('nombreCampana').touched" class="text-danger small">
+                  Es necesario ingresar el nombre de la campaña.
+                </span>
               </div>
             </div>
-
-
-
           </div>
 
           <div class="form-row">
@@ -48,9 +46,6 @@
                 <select class="form-control" id="tipoDocumento">
                   <option *ngFor="let tipoDocumento of tiposDocumento" [ngValue]="tipoDocumento">{{tipoDocumento.nombre}}</option>
                 </select>
-                <!-- <span *ngIf="!documentoForm.get('tipoDocumento').valid && documentoForm.get('tipoDocumento').touched" class="text-danger small">
-                    Es necesario ingresar el tipo de documento
-                  </span> -->
               </div>
             </div>
           </div>
@@ -67,17 +62,20 @@
             </div>
           </div>
 
-
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="monitoreo">Requiere Monitoreo Satelital *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
+                <label for="monitoreo">Requiere Monitoreo Satelital *</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender"> NO</label>
+                <br>
               </div>
             </div>
           </div>
-
 
           <div class="form-row">
             <div class="col-4">
@@ -86,9 +84,6 @@
                 <select class="form-control" id="plazo">
                   <option *ngFor="let plazo of plazos" [ngValue]="plazo">{{plazo.nombre}}</option>
                 </select>
-                <!-- <span *ngIf="!documentoForm.get('tipoDocumento').valid && documentoForm.get('tipoDocumento').touched" class="text-danger small">
-                    Es necesario ingresar el tipo de documento
-                  </span> -->
               </div>
             </div>
           </div>
@@ -109,57 +104,66 @@
             <div class="col-2">
               <div class="form-group">
                 <label for="cliLima">Clientes en Lima *</label>
-                <input class="form-control col-5" type="text" name="cliLima" id="">
+                <input class="form-control col-5" type="text" name="cliLima" id="cliLima" formControlName="cliLima">
+                <span *ngIf="!campanaForm.get('cliLima').valid && campanaForm.get('cliLima').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de clientes en Lima.
+                </span>
               </div>
             </div>
             <div class="col-2">
               <div class="form-group">
                 <label for="cliProvincia">Clientes en Provincia *</label>
-                <input class="form-control col-5" type="text" name="cliProvincia" id="">
+                <input class="form-control col-5" type="text" name="cliProvincia" id="cliProvincia" formControlName="cliProvincia">
+                <span *ngIf="!campanaForm.get('cliProvincia').valid && campanaForm.get('cliProvincia').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de clientes en Provincia.
+                </span>
               </div>
             </div>
             <div class="col-2">
               <div class="form-group">
                 <label for="colLima">Colaboradores en Lima *</label>
-                <input class="form-control col-5" type="text" name="colLima" id="">
+                <input class="form-control col-5" type="text" name="colLima" id="colLima" formControlName="colLima">
+                <span *ngIf="!campanaForm.get('colLima').valid && campanaForm.get('colLima').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de colaboradores en Lima.
+                </span>
               </div>
             </div>
             <div class="col-2">
               <div class="form-group">
                 <label for="colProvincia">Colaboradores en Provincia *</label>
-                <input class="form-control col-5" type="text" name="colProvincia" id="">
+                <input class="form-control col-5" type="text" name="colProvincia" id="colProvincia" formControlName="colProvincia">
+                <span *ngIf="!campanaForm.get('colProvincia').valid && campanaForm.get('colProvincia').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de colaboradores en Provincia.
+                </span>
               </div>
             </div>
           </div>
+
           <br>
 
           <div class="row">
             <div class="col-4">
-              <form>
-                <div class="form-row align-items-center">
-                  <div class="col-sm-8">
-                    <input type="file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                      id="excel" (change)="onChangeExcelFile($event.srcElement.files[0])">
-                  </div>
-                  <div class="col btn-group">
-                    <button type="submit" class="btn btn-primary" [disabled]="!excelFile">Subir Base de Campaña</button>
-                  </div>
+              <div class="form-row align-items-center">
+                <div class="col-sm-8">
+                  <input type="file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    id="excel" (change)="onChangeExcelFile($event.srcElement.files[0])">
                 </div>
-              </form>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <ng2-smart-table [settings]="tableSettings" [source]="dataItemsCampanaCargados"></ng2-smart-table>
             </div>
           </div>
 
 
         </div>
-
       </div>
     </div>
   </div>
 
-
-
-
-
+  <!-- -------------------------------------------------------------------------------------------------------------------------------------------- -->
   <div class="row justify-content-center">
     <div class="col-11">
       <div class="card mb-2">
@@ -174,20 +178,28 @@
           <div class="form-row">
             <div class="col-10">
               <div class="form-group">
-                <label for="monitoreo">Requiere Georreferenciación *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
-                <h6>La Georreferenciación es la tarea que realiza el proveedor para ubicar las direcciones registradas
-                  en la base de la campaña. Luego de
-                  realizarse se puede detectar direcciones "Normalizadas" y "No Distribuibles".<br>
-                  NORMALIZADA: Son los registros cuyas direcciones son válidas y han sido ubicadas por el proveedor
-                  para su futura visita y posterior entrega de campaña.<br>
-                  NO DISTRIBUIBLE: Son los registros con direcciones inválidas puesto que están incompletas, no existen
-                  o el proveedor no ha podido ubicarlas.<br>
-                  Al saber que registros son "No Distribuibles", este proceso permite las siguientes ventajas:<br>
-                  *El usuario puede corregir las direcciones para que vuelvan a ser georreferenciadas.<br>
-                  *Disminuir el porcentaje de rezagos a la hora de la distribución.<br>
-                  *Ahorro en el costo de impresión en caso el usuario decida separar los registros inválidos.
+                <label for="geo">Requiere Georreferenciación *</label>
+                <br>
+                <label>
+                  <input type="radio" name="geo"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="geo"> NO</label>
+                <br>
+                <h6>La Georreferenciación es la tarea que realiza el proveedor para ubicar las direcciones
+                  registradas en la
+                  base de la campaña. Luego de realizarse se puede detectar direcciones "Normalizadas" y "No
+                  Distribuibles".
+                  <br> NORMALIZADA: Son los registros cuyas direcciones son válidas y han sido ubicadas por el
+                  proveedor para
+                  su futura visita y posterior entrega de campaña.
+                  <br> NO DISTRIBUIBLE: Son los registros con direcciones inválidas puesto que están incompletas, no
+                  existen
+                  o el proveedor no ha podido ubicarlas.
+                  <br> Al saber que registros son "No Distribuibles", este proceso permite las siguientes ventajas:
+                  <br> *El usuario puede corregir las direcciones para que vuelvan a ser georreferenciadas.
+                  <br> *Disminuir el porcentaje de rezagos a la hora de la distribución.
+                  <br> *Ahorro en el costo de impresión en caso el usuario decida separar los registros inválidos.
                 </h6>
                 <br>
               </div>
@@ -197,45 +209,83 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="monitoreo">Requiere Impresión *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
+                <label for="impresion">Requiere Impresión *</label>
+                <br>
+                <label>
+                  <input type="radio" name="impresion"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="impresion"> NO</label>
+                <br>
                 <h6>
-                  Si: El usuario gestionará la impresión de su campaña.<br>
-                  No: La campaña ya se encuentra impresa y lista para ser recogida por el proveedor. Favor llenar los
-                  siguientes datos.
+                  Si: El usuario gestionará la impresión de su campaña.
+                  <br> No: La campaña ya se encuentra impresa y lista para ser recogida por el proveedor. Favor
+                  llenar los siguientes
+                  datos.
                 </h6>
                 <label for="imprenta">Imprenta/Sede *</label>
-                <input class="form-control" type="text" name="imprenta" id="">
+                <input class="form-control" type="text" name="imprenta" id="imprenta" formControlName="imprenta">
+                <span *ngIf="!campanaForm.get('imprenta').valid && campanaForm.get('imprenta').touched" class="text-danger small">
+                  Es necesario ingresar la imprenta/sede.
+                </span>
+                <br>
                 <label for="direccion">Dirección *</label>
-                <input class="form-control" type="text" name="direccion" id="">
+                <input class="form-control" type="text" name="direccion" id="direccion" formControlName="direccion">
+                <span *ngIf="!campanaForm.get('direccion').valid && campanaForm.get('direccion').touched" class="text-danger small">
+                  Es necesario ingresar la dirección.
+                </span>
+                <br>
                 <label for="contacto">Contacto *</label>
-                <input class="form-control" type="text" name="contacto" id="">
-                <label for="horarioRecojo">Fecha y Hora de Recojo *</label>
-                <input class="form-control" type="text" name="horarioRecojo" id="">
+                <input class="form-control" type="text" name="contacto" id="contacto" formControlName="contacto">
+                <span *ngIf="!campanaForm.get('contacto').valid && campanaForm.get('contacto').touched" class="text-danger small">
+                  Es necesario ingresar el contacto.
+                </span>
+                <br>
+                <label for="fechaHoraRecojo">Fecha y Hora de Recojo *</label>
+                <input class="form-control" type="text" name="fechaHoraRecojo" id="fechaHoraRecojo" formControlName="fechaHoraRecojo">
+                <span *ngIf="!campanaForm.get('fechaHoraRecojo').valid && campanaForm.get('fechaHoraRecojo').touched"
+                  class="text-danger small">
+                  Es necesario ingresar la fecha y hora del recojo.
+                </span>
+                <br>
               </div>
             </div>
           </div>
+
           <br>
 
           <div class="form-row">
-            <div class="col-4">
+            <div class="col-5">
               <div class="form-group">
-                <label for="monitoreo">Requiere Habilitado *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
+                <label for="habilitado">Requiere Habilitado *</label>
+                <br>
+                <label>
+                  <input type="radio" name="habilitado"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="habilitado"> NO</label>
+                <br>
                 <h6>
                   No: El material de la campaña será distribuido en el mismo estado en el que estuvo cuando pasó a
-                  manos del proveedor.<br>
-                  Si: El material de la campaña requiere un habilitado antes de que se iniciesu distribución. Favor
-                  marcar el tipo de habilitación requerida
+                  manos del proveedor.
+                  <br> Si: El material de la campaña requiere un habilitado antes de que se iniciesu distribución.
+                  Favor marcar
+                  el tipo de habilitación requerida
                 </h6>
                 <br>
-                <label for="paqueteHabilitado">Elige tu opción de Habilitado</label><br>
+                <label for="paqueteHabilitado">Elige tu opción de Habilitado</label>
+                <br>
                 <select class="form-control" id="paqueteHabilitado">
                   <option *ngFor="let paqueteHabilitado of paqueteHabilitados" [ngValue]="paqueteHabilitado">{{paqueteHabilitado.descripcion}}</option>
                 </select>
                 <br>
+                <label>OPCION 1: Embolsado (1 micra) + Etiquetado</label><br>
+                <label>OPCION 2: Embolsado (1 micra) + Ensobrado + Etiquetado</label><br>
+                <label>OPCION 3: Embolsado (1 micra) + Ensobrado + Doblado + Etiquetado</label><br>
+                <label>OPCION 4: Embolsado (1 micra) + Inserto + Etiquetado</label><br>
+                <label>OPCION 5: Embolsado (2 micra) + Ensobrado + Etiquetado</label><br>
+                <label>OPCION 6: Embolsado (1 micra) + Etiquetado (3 Etiquetas)</label><br>
+                <label>OPCION 7: Embolsado (2 micra) + Ensobrado + Etiquetado + Inserto</label><br>
                 <br>
               </div>
             </div>
@@ -244,21 +294,26 @@
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="agrupado">Requiere Agrupado *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
+                <label for="agrupado">Requiere Agrupado *</label>
+                <br>
+                <label>
+                  <input type="radio" name="agrupado"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="agrupado"> NO</label>
+                <br>
                 <h6>
                   Luego de ser habilitada, la campaña puede ser agrupada antes de iniciar con su distribución si el
-                  usuario lo requiere. Tener en cuenta
-                  que esta tarea aplica solo para campañas dirigidas a colaboradores del banco.
+                  usuario lo requiere. Tener
+                  en cuenta que esta tarea aplica solo para campañas dirigidas a colaboradores del banco.
                 </h6>
+                <br>
                 <select class="form-control" id="tipoAgrupado">
                   <option *ngFor="let tipoAgrupado of tiposAgrupado" [ngValue]="tipoAgrupado">{{tipoAgrupado.nombre}}</option>
                 </select>
               </div>
             </div>
           </div>
-
 
         </div>
 
@@ -267,7 +322,7 @@
   </div>
 
 
-
+  <!-- -------------------------------------------------------------------------------------------------------------------------------------------- -->
   <div class="row justify-content-center">
     <div class="col-11">
       <div class="card mb-2">
@@ -278,20 +333,35 @@
 
         <div class="card-body">
 
-
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="devolverRezagos">¿Desea que devolvamos los rezagos físicos? *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
 
-                <label for="contacto">Contacto *</label>
-                <input class="form-control" type="text" name="contacto" id="">
-                <label for="contacto">Dirección *</label>
-                <input class="form-control" type="text" name="direccion" id="">
-                <label for="observacion">Observación *</label>
-                <input class="form-control" type="text" name="observacion" f id="">
+                <label for="devolverRezagos">¿Desea que devolvamos los rezagos físicos? *</label><br>
+                <label><input type="radio" name="devolverRezagos"> SI</label><br>
+                <label><input type="radio" name="devolverRezagos"> NO</label><br>
+                <br>
+                <label for="contactoRezago">Contacto *</label>
+                <input class="form-control" type="text" name="contactoRezago" id="contactoRezago" formControlName="contactoRezago">
+                <span *ngIf="!campanaForm.get('contactoRezago').valid && campanaForm.get('contactoRezago').touched"
+                  class="text-danger small">
+                  Es necesario ingresar el contacto.
+                </span>
+                <br>
+                <label for="direccionRezago">Dirección *</label>
+                <input class="form-control" type="text" name="direccionRezago" id="direccionRezago" formControlName="direccionRezago">
+                <span *ngIf="!campanaForm.get('direccionRezago').valid && campanaForm.get('direccionRezago').touched"
+                  class="text-danger small">
+                  Es necesario ingresar la dirección.
+                </span>
+                <br>
+                <label for="observacionRezago">Observación *</label>
+                <input class="form-control" type="text" name="observacionRezago" f id="observacionRezago"
+                  formControlName="observacionRezago">
+                <span *ngIf="!campanaForm.get('observacionRezago').valid && campanaForm.get('observacionRezago').touched"
+                  class="text-danger small">
+                  Es necesario ingresar la observación.
+                </span>
 
                 <br>
 
@@ -304,169 +374,235 @@
             </div>
           </div>
 
-
-
           <br>
+          <hr>
+          <hr>
           <hr>
 
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="devolverCargos">¿Desea que devolvamos los cargos físicos? *</label><br>
-                <label><input type="radio" name="gender" value="male"> SI</label><br>
-                <label><input type="radio" name="gender" value="female"> NO</label><br>
 
-                <label for="contacto">Contacto *</label>
-                <input class="form-control" type="text" name="contacto" id="">
-                <label for="contacto">Dirección *</label>
-                <input class="form-control" type="text" name="direccion" id="">
-                <label for="observacion">Observación *</label>
-                <input class="form-control" type="text" name="observacion" id="">
+                <label for="devolverCargos">¿Desea que devolvamos los cargos físicos? *</label><br>
+                <label><input type="radio" name="devolverCargos"> SI</label><br>
+                <label><input type="radio" name="devolverCargos"> NO</label><br>
+                <br>
+                <label for="contactoCargo">Contacto *</label>
+                <input class="form-control" type="text" name="contactoCargo" id="contactoCargo" formControlName="contactoCargo">
+                <span *ngIf="!campanaForm.get('contactoCargo').valid && campanaForm.get('contactoCargo').touched" class="text-danger small">
+                  Es necesario ingresar el contacto.
+                </span>
+                <br>
+                <label for="direccionCargo">Dirección *</label>
+                <input class="form-control" type="text" name="direccionCargo" id="direccionCargo" formControlName="direccionCargo">
+                <span *ngIf="!campanaForm.get('direccionCargo').valid && campanaForm.get('direccionCargo').touched"
+                  class="text-danger small">
+                  Es necesario ingresar la dirección.
+                </span>
+                <br>
+                <label for="observacionCargo">Observación *</label>
+                <input class="form-control" type="text" name="observacionCargo" id="observacionCargo" formControlName="observacionCargo">
+                <span *ngIf="!campanaForm.get('observacionCargo').valid && campanaForm.get('observacionCargo').touched"
+                  class="text-danger small">
+                  Es necesario ingresar la observación.
+                </span>
+                <br>
 
                 <br>
 
                 <label for="accionporcargos">¿Qué desea que se haga con los cargos físicos?</label>
                 <h6>Al finalizar la distribución, los cargos digitales serán almacenados en un CD</h6>
-                <select class="form-control" id="accionporcargos">
+                <select class="form-control" id="accionporcargos" formControlName="accionporcargos">
                   <option *ngFor="let accionporcargos of accionesRestosProveedor" [ngValue]="accionporcargos">{{accionporcargos.nombre}}</option>
                 </select>
+
               </div>
             </div>
           </div>
           <br>
 
-
         </div>
 
       </div>
     </div>
   </div>
 
-
+  <!-- -------------------------------------------------------------------------------------------------------------------------------------------- -->
   <div class="row justify-content-center">
     <div class="col-11">
       <div class="card mb-2">
 
-        <div class="card-header">
-          <h5>DATOS DE COSTOS DE CAMPAÑA</h5>
-        </div>
+        <div class="row justify-content-center">
+          <div class="col-11">
+            <div class="card mb-2">
 
-        <div class="card-body">
-          <h6>Estos datos te los puede brindar tu área de contabilidad</h6>
-
-
-
-          <div class="form-row">
-            <div class="col-4">
-              <div class="form-group">
-                <label for="costoCampana">Los costos de la campaña se cargarán en: *</label><br>
-                <label><input type="radio" name="costoCampana" formControlName="costoCampana" required value="1"
-                    checked> BCP</label><br>
-                <label><input type="radio" name="costoCampana" formControlName="costoCampana" required value="2"> OTROS</label>
+              <div class="card-header">
+                <h5>DATOS DE COSTOS DE CAMPAÑA</h5>
               </div>
-            </div>
-          </div>
-          <!-- Si selecciona BCP -->
-          <div *ngIf="campanaForm.get('costoCampana').value == 1">
-            <div class="form-row">
-              <div class="col-12">
-                <div class="form-group">
-                  
 
-                  <div class="col-4 mt-4">
-                    <label for="cuentaContable">Cuenta Contable *</label>
-                    <input class="form-control" type="text" name="cuentaContable" formControlName="cuentaContable" />
-                    <label for="centroCostos">Centro de Costos *</label>
-                    <input class="form-control" type="text" name="centroCostos" formControlName="centroCostos" />
-                    <label for="ordenEstadistica">Orden Estadística *</label>
-                    <input class="form-control" type="text" name="ordenEstadistica" formControlName="ordenEstadistica" />
-                    <label for="grupoArticulo">Grupo de artículo *</label>
-                    <input class="form-control" type="text" name="grupoArticulo" formControlName="grupoArticulo" />
-                    <label for="porcentajePago">Porcentaje de pago *</label>
-                    <input class="form-control" type="number" name="porcentajePago" formControlName="porcentajePago" min="1" max="100"/>
+              <div class="card-body">
+                <h6>Estos datos te los puede brindar tu área de contabilidad</h6>
 
-                  </div>
 
-                  <div class="col-12 mt-12">
+
+                <div class="form-row">
+                  <div class="col-4">
                     <div class="form-group">
-                      <div class="col-4 mt-4">
-                        <button type="submit" class="btn btn-primary form-control mt-2" (click)="agregarCentroCostoItem()">
-                          AGREGAR
-                        </button>
+                      <label for="costoCampana">Los costos de la campaña se cargarán en: *</label><br>
+                      <label><input type="radio" name="costoCampana" formControlName="costoCampana" required [checked]="true" [value]="1"> BCP</label><br>
+                      <label><input type="radio" name="costoCampana" formControlName="costoCampana" required  [value]="2">
+                        OTROS</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Si selecciona BCP -->
+                <div *ngIf="campanaForm.get('costoCampana').value == 1">
+                  <div class="form-row">
+                    <div class="col-12">
+                      <div class="form-group">
+
+
+                        <div class="col-4 mt-4">
+                          <label for="cuentaContable">Cuenta Contable *</label>
+                          <input class="form-control" type="text" name="cuentaContable" formControlName="cuentaContable" />
+                          <span *ngIf="!campanaForm.get('cuentaContable').valid && campanaForm.get('cuentaContable').touched" class="text-danger small">
+                            Es necesario ingresar la cuenta contable.
+                          </span>
+                          <br>
+                          <label for="centroCostos">Centro de Costos *</label>
+                          <input class="form-control" type="text" name="centroCostos" formControlName="centroCostos" />
+                          <span *ngIf="!campanaForm.get('centroCostos').valid && campanaForm.get('centroCostos').touched" class="text-danger small">
+                            Es necesario ingresar el centro de costos.
+                          </span>
+                          <br>
+                          <label for="ordenEstadistica">Orden Estadística *</label>
+                          <input class="form-control" type="text" name="ordenEstadistica" formControlName="ordenEstadistica" />
+                          <span *ngIf="!campanaForm.get('ordenEstadistica').valid && campanaForm.get('ordenEstadistica').touched" class="text-danger small">
+                            Es necesario ingresar la orden estadística.
+                          </span>
+                          <br>
+                          <label for="grupoArticulo">Grupo de artículo *</label>
+                          <input class="form-control" type="text" name="grupoArticulo" formControlName="grupoArticulo" />
+                          <span *ngIf="!campanaForm.get('grupoArticulo').valid && campanaForm.get('grupoArticulo').touched" class="text-danger small">
+                            Es necesario ingresar grupo de artículo.
+                          </span>
+                          <br>
+                          <label for="porcentajePago">Porcentaje de pago *</label>
+                          <input class="form-control" type="number" name="porcentajePago" formControlName="porcentajePago"
+                            min="1" max="100" />
+                            <span *ngIf="!campanaForm.get('porcentajePago').valid && campanaForm.get('porcentajePago').touched" class="text-danger small">
+                              Es necesario ingresar el porcentaje de pago.
+                            </span>
+                            <br>
+
+                        </div>
+
+                        <div class="col-12 mt-12">
+                          <div class="form-group">
+                            <div class="col-4 mt-4">
+                              <button type="submit" class="btn btn-primary form-control mt-2" (click)="agregarCentroCostoItem()">
+                                AGREGAR
+                              </button>
+                            </div>
+
+                          </div>
+                          <div class="form-group">
+
+
+                            <table class="table table-bordered">
+                              <thead>
+                                <tr>
+                                  <th>Cuenta contable</th>
+                                  <th>Centro de Costos</th>
+                                  <th>Orden Estadística</th>
+                                  <th>Grupo Artículo</th>
+                                  <th>Porcentaje Pago</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let ccoo of grupoCentroCostos.centroscostos">
+                                  <td scope="col">{{ ccoo.cuentaContableCodigo }}</td>
+                                  <td scope="col">{{ ccoo.centroCostosCodigo }}</td>
+                                  <td scope="col">{{ ccoo.ordenEstadistica }}</td>
+                                  <td scope="col">{{ ccoo.grupoArticulo }}</td>
+                                  <td scope="col">{{ ccoo.porcentaje }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
                       </div>
-
-                    </div>
-                    <div class="form-group">
-                      
-
-                      <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                                <th>Cuenta contable</th>
-                                <th>Centro de Costos</th>
-                                <th>Orden Estadística</th>
-                                <th>Grupo Artículo</th>
-                                <th>Porcentaje Pago</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let ccoo of grupoCentroCostos.centroscostos">
-                              <td scope="col">{{ ccoo.cuentaContableCodigo }}</td>
-                              <td scope="col">{{ ccoo.centroCostosCodigo }}</td>
-                              <td scope="col">{{ ccoo.ordenEstadistica }}</td>
-                              <td scope="col">{{ ccoo.grupoArticulo }}</td>
-                              <td scope="col">{{ ccoo.porcentaje }}</td>
-                            </tr>
-                          </tbody>
-                        </table>
                     </div>
                   </div>
-
                 </div>
+
+                <!-- Si selecciona OTROS -->
+                <div *ngIf="campanaForm.get('costoCampana') !== null && campanaForm.get('costoCampana').value==2">
+                  <div class="form-row">
+                    <div class="col-4">
+                      <div class="form-group">
+                        <label>Si el servicio no será pagado por BCP, indicar los siguientes datos para la generación
+                          de la
+                          factura: *</label>
+                        <br>
+                        <h6>Está prohibido realizar envíos de índole personal</h6>
+
+                        <label for="razonSocial">Razón Social *</label>
+                        <input class="form-control" type="text" formControlName="razonSocialEmpresaAuspiciadora" name="razonSocialEmpresaAuspiciadora" id="">
+                        <span *ngIf="!campanaForm.get('razonSocialEmpresaAuspiciadora').valid && campanaForm.get('razonSocialEmpresaAuspiciadora').touched" class="text-danger small">
+                          Es necesario ingresar la razon social de la empresa auspiciadora.
+                        </span>
+                        <br>
+                        <label for="ruc">RUC *</label>
+                        <input class="form-control" type="text" formControlName="rucEmpresaAuspiciadora" name="rucEmpresaAuspiciadora"
+                          id="">
+                          <span *ngIf="!campanaForm.get('rucEmpresaAuspiciadora').valid && campanaForm.get('rucEmpresaAuspiciadora').touched" class="text-danger small">
+                            Es necesario ingresar el RUC de la empresa auspiciadora.
+                          </span>
+                          <br>
+
+                        <label for="direccion">Dirección *</label>
+                        <input class="form-control" type="text" formControlName="direccionEmpresaAuspiciadora" name="direccionEmpresaAuspiciadora"
+                          id="">
+                          <span *ngIf="!campanaForm.get('direccionEmpresaAuspiciadora').valid && campanaForm.get('direccionEmpresaAuspiciadora').touched" class="text-danger small">
+                            Es necesario ingresar la dirección de la empresa auspiciadora.
+                          </span>
+                          <br>
+                        <label for="contacto">Contacto *</label>
+                        <input class="form-control" type="text" formControlName="contactoEmpresaAuspiciadora" name="contactoEmpresaAuspiciadora"
+                          id="">
+                          <span *ngIf="!campanaForm.get('contactoEmpresaAuspiciadora').valid && campanaForm.get('contactoEmpresaAuspiciadora').touched" class="text-danger small">
+                            Es necesario ingresar el contacto de la empresa auspiciadora.
+                          </span>
+                          <br>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <textarea rows="10" cols="81"></textarea>
+
+
               </div>
+
             </div>
           </div>
-          <!-- Si selecciona OTROS -->
-          <div *ngIf="campanaForm.get('costoCampana').value==2">
-            <div class="form-row">
-              <div class="col-4">
-                <div class="form-group">
-                  <label>Si el servicio no será pagado por BCP, indicar los siguientes datos para la generación de la
-                    factura: *</label><br>
-                  <h6>Está prohibido realizar envíos de índole personal</h6>
-
-                  <label for="razonSocial">Razón Social *</label>
-                  <input class="form-control" type="text" name="razonSocial" id="">
-                  <label for="ruc">RUC *</label>
-                  <input class="form-control" type="text" name="ruc" id="">
-                  <label for="direccion">Dirección *</label>
-                  <input class="form-control" type="text" name="direccion" id="">
-                  <label for="contacto">Contacto *</label>
-                  <input class="form-control" type="text" name="contacto" id="">
-
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <textarea rows="10" cols="81"></textarea>
-
-
         </div>
 
+        <div class="row justify-content-center">
+          <div class="col-11 mt-4 mb-4">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary form-control mt-2">
+                CREAR CAMPAÑA
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="row justify-content-center">
-    <div class="col-11 mt-4 mb-4">
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary form-control mt-2">
-          CREAR CAMPAÑA
-        </button>
-      </div>
-    </div>
-  </div>
-
 </form>

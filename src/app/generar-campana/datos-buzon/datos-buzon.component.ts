@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BuzonService } from 'src/app/services/buzon.service';
+import { BuzonService } from '../../services/buzon.service';
 import { Buzon } from '../../model/buzon.model';
 import { Area } from '../../model/area.model';
 import { Sede } from '../../model/sede.model';
