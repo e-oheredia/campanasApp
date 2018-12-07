@@ -1,3 +1,5 @@
+import { GrupoCentroCostos } from './../../model/grupocentrocostos.model';
+import { CentroCostos } from './../../model/centrocostos.model';
 import { AppSettings } from './../../settings/app.settings';
 import { UtilsService } from './../../services/utils.service';
 import { ItemCampanaService } from './../../services/itemcampana.service';
@@ -50,7 +52,9 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   itemsCampanaCargados: ItemCampana[] = [];
   dataItemsCampanaCargados: LocalDataSource = new LocalDataSource();
   excelFile: File;
-  tableSettings = AppSettings.tableSettings;
+  tableSettings = AppSettings.tableSettings;  
+  centroCostosList : CentroCostos[] = [];    
+  grupoCentroCostos : GrupoCentroCostos;
 
   columnsItemsCampanaCargados = {
     razonSocial: {
@@ -90,7 +94,8 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       'colLima' : new FormControl("", Validators.required),
       'colProvincia' : new FormControl("", Validators.required),
       'imprenta' : new FormControl("", Validators.required)
-    })
+    }, this.noDocumentsLoaded.bind(this));
+    this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
   }
 
   cargarVista(){
@@ -190,6 +195,11 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       }
       this.notifier.notify('error', data.mensaje);
     });
+  }
+
+  agregarCentroCostoItem() {
+    let cc = new CentroCostos(null,this.campanaForm.get("cuentaContable").value,this.campanaForm.get("centroCostos").value,this.campanaForm.get("ordenEstadistica").value,this.campanaForm.get("grupoArticulo").value,this.campanaForm.get("porcentajePago").value);
+    this.grupoCentroCostos.centroscostos.push(cc);    
   }
 
 
