@@ -27,136 +27,137 @@
 
         <div class="card-body">
 
-            <div class="form-row">
-              <div class="col-4">
-                <div class="form-group">
-                  <label for="nombreCampana">Nombre de la Campaña *</label>
-                  <input class="form-control" type="text" name="nombreCampana" id="nombreCampana" formControlName="nombreCampana">
-                  <span *ngIf="!campanaForm.get('nombreCampana').valid && campanaForm.get('nombreCampana').touched"
-                    class="text-danger small">
-                    Es necesario ingresar el nombre de la campaña.
-                  </span>
-                </div>
+          <div class="form-row">
+            <div class="col-4">
+              <div class="form-group">
+                <label for="nombreCampana">Nombre de la Campaña *</label>
+                <input class="form-control" type="text" name="nombreCampana" id="nombreCampana" formControlName="nombreCampana">
+                <span *ngIf="!campanaForm.get('nombreCampana').valid && campanaForm.get('nombreCampana').touched" class="text-danger small">
+                  Es necesario ingresar el nombre de la campaña.
+                </span>
               </div>
             </div>
+          </div>
 
-            <div class="form-row">
-              <div class="col-4">
-                <div class="form-group">
-                  <label for="tipoDocumento">Tipo de Documento</label>
-                  <select class="form-control" id="tipoDocumento">
-                    <option *ngFor="let tipoDocumento of tiposDocumento" [ngValue]="tipoDocumento">{{tipoDocumento.nombre}}</option>
-                  </select>
-                </div>
+          <div class="form-row">
+            <div class="col-4">
+              <div class="form-group">
+                <label for="tipoDocumento">Tipo de Documento</label>
+                <select class="form-control" id="tipoDocumento">
+                  <option *ngFor="let tipoDocumento of tiposDocumento" [ngValue]="tipoDocumento">{{tipoDocumento.nombre}}</option>
+                </select>
               </div>
             </div>
+          </div>
 
-            <div class="form-row">
-              <div class="col-4">
-                <div class="form-group">
-                  <label for="regulatorio">Es Regulatorio</label>
-                  <select class="form-control" id="regulatorio">
-                    <option>SI</option>
-                    <option>NO</option>
-                  </select>
-                </div>
+          <div class="form-row">
+            <div class="col-4">
+              <div class="form-group">
+                <label for="regulatorio">Es Regulatorio</label>
+                <select class="form-control" id="regulatorio">
+                  <option>SI</option>
+                  <option>NO</option>
+                </select>
               </div>
             </div>
+          </div>
 
-            <div class="form-row">
-              <div class="col-4">
-                <div class="form-group">
-                  <label for="monitoreo">Requiere Monitoreo Satelital *</label>
-                  <br>
-                  <label>
-                    <input type="radio" name="gender"> SI</label>
-                  <br>
-                  <label>
-                    <input type="radio" name="gender"> NO</label>
-                  <br>
-                </div>
+          <div class="form-row">
+            <div class="col-4">
+              <div class="form-group">
+                <label for="monitoreo">Requiere Monitoreo Satelital *</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender"> SI</label>
+                <br>
+                <label>
+                  <input type="radio" name="gender"> NO</label>
+                <br>
               </div>
             </div>
+          </div>
 
-            <div class="form-row">
-              <div class="col-4">
-                <div class="form-group">
-                  <label for="plazo">Plazo de Distribución</label>
-                  <select class="form-control" id="plazo">
-                    <option *ngFor="let plazo of plazos" [ngValue]="plazo">{{plazo.nombre}}</option>
-                  </select>
-                </div>
+          <div class="form-row">
+            <div class="col-4">
+              <div class="form-group">
+                <label for="plazo">Plazo de Distribución</label>
+                <select class="form-control" id="plazo">
+                  <option *ngFor="let plazo of plazos" [ngValue]="plazo">{{plazo.nombre}}</option>
+                </select>
               </div>
             </div>
+          </div>
+<!--  -->
+          <div class="form-row">
+            <div class="col-4">
+              <h5>Cantidad de clientes/colaboradores que contiene la campaña</h5>
+              <div class="form-group">
+                <label for="tipoDestino">Tipo de Destino</label>
+                <select (click)="mostrar=!mostrar" class="form-control" id="tipoDestino">
+                  <option *ngFor="let tipoDestino of tiposDestino" [ngValue]="tipoDestino">{{tipoDestino.nombre}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
-            <div class="form-row">
-              <div class="col-4">
-                <h5>Cantidad de clientes/colaboradores que contiene la campaña</h5>
-                <div class="form-group">
-                  <label for="tipoDestino">Tipo de Destino</label>
-                  <select class="form-control" id="tipoDestino">
-                    <option *ngFor="let tipoDestino of tiposDestino" [ngValue]="tipoDestino">{{tipoDestino.nombre}}</option>
-                  </select>
-                </div>
+          <div class="form-row" *ngIf="!mostrar">
+            <div class="col-3">
+              <div class="form-group">
+                <label for="cliLima">Clientes en Lima *</label>
+                <input class="form-control col-5" type="text" name="cliLima" id="cliLima" formControlName="cliLima">
+                <span *ngIf="!campanaForm.get('cliLima').valid && campanaForm.get('cliLima').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de clientes en Lima.
+                </span>
               </div>
             </div>
+            <div class="col-3">
+              <div class="form-group">
+                <label for="cliProvincia">Clientes en Provincia *</label>
+                <input class="form-control col-5" type="text" name="cliProvincia" id="cliProvincia" formControlName="cliProvincia">
+                <span *ngIf="!campanaForm.get('cliProvincia').valid && campanaForm.get('cliProvincia').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de clientes en Provincia.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-row" *ngIf="mostrar">
+            <div class="col-3">
+              <div class="form-group">
+                <label for="colLima">Colaboradores en Lima *</label>
+                <input class="form-control col-5" type="text" name="colLima" id="colLima" formControlName="colLima">
+                <span *ngIf="!campanaForm.get('colLima').valid && campanaForm.get('colLima').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de colaboradores en Lima.
+                </span>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <label for="colProvincia">Colaboradores en Provincia *</label>
+                <input class="form-control col-5" type="text" name="colProvincia" id="colProvincia" formControlName="colProvincia">
+                <span *ngIf="!campanaForm.get('colProvincia').valid && campanaForm.get('colProvincia').touched" class="text-danger small">
+                  Es necesario ingresar la cantidad de colaboradores en Provincia.
+                </span>
+              </div>
+            </div>
+          </div>
+<!--  -->
+          <br>
 
-            <div class="form-row">
-              <div class="col-2">
-                <div class="form-group">
-                  <label for="cliLima">Clientes en Lima *</label>
-                  <input class="form-control col-5" type="text" name="cliLima" id="cliLima" formControlName="cliLima">
-                  <span *ngIf="!campanaForm.get('cliLima').valid && campanaForm.get('cliLima').touched" class="text-danger small">
-                    Es necesario ingresar la cantidad de clientes en Lima.
-                  </span>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="form-group">
-                  <label for="cliProvincia">Clientes en Provincia *</label>
-                  <input class="form-control col-5" type="text" name="cliProvincia" id="cliProvincia" formControlName="cliProvincia">
-                  <span *ngIf="!campanaForm.get('cliProvincia').valid && campanaForm.get('cliProvincia').touched" class="text-danger small">
-                    Es necesario ingresar la cantidad de clientes en Provincia.
-                  </span>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="form-group">
-                  <label for="colLima">Colaboradores en Lima *</label>
-                  <input class="form-control col-5" type="text" name="colLima" id="colLima" formControlName="colLima">
-                  <span *ngIf="!campanaForm.get('colLima').valid && campanaForm.get('colLima').touched" class="text-danger small">
-                    Es necesario ingresar la cantidad de colaboradores en Lima.
-                  </span>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="form-group">
-                  <label for="colProvincia">Colaboradores en Provincia *</label>
-                  <input class="form-control col-5" type="text" name="colProvincia" id="colProvincia" formControlName="colProvincia">
-                  <span *ngIf="!campanaForm.get('colProvincia').valid && campanaForm.get('colProvincia').touched" class="text-danger small">
-                    Es necesario ingresar la cantidad de colaboradores en Provincia.
-                  </span>
+          <div class="row">
+            <div class="col-4">
+              <div class="form-row align-items-center">
+                <div class="col-sm-8">
+                  <input type="file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    id="excel" (change)="onChangeExcelFile($event.srcElement.files[0])">
                 </div>
               </div>
             </div>
-
-            <br>
-
-            <div class="row">
-              <div class="col-4">
-                <div class="form-row align-items-center">
-                  <div class="col-sm-8">
-                    <input type="file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                      id="excel" (change)="onChangeExcelFile($event.srcElement.files[0])">
-                  </div>
-                </div>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <ng2-smart-table [settings]="tableSettings" [source]="dataItemsCampanaCargados"></ng2-smart-table>
             </div>
-            <div class="row">
-              <div class="col">
-                <ng2-smart-table [settings]="tableSettings" [source]="dataItemsCampanaCargados"></ng2-smart-table>
-              </div>
-            </div>
+          </div>
 
 
         </div>
@@ -550,7 +551,7 @@
   <div class="row justify-content-center">
     <div class="col-11 mt-4 mb-4">
       <div class="form-group">
-        <button type="submit" class="btn btn-primary form-control mt-2">
+        <button class="btn btn-primary form-control mt-2" [disabled]="!campanaForm.valid" type="submit">
           CREAR CAMPAÑA
         </button>
       </div>

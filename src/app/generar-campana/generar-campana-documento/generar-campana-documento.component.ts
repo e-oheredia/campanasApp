@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { Plazo } from '../../model/plazo.model';
 import { PlazoService } from '../../services/plazo.service';
 import { TipoDocumento } from '../../model/tipodocumento.model';
-import { TipoDocumentoService} from '../../services/tipodocumento.service';
+import { TipoDocumentoService } from '../../services/tipodocumento.service';
 import { TipoDestino } from '../../model/tipodestino.model';
 import { TipoDestinoService } from '../../services/tipodestino.service';
 import { PaqueteHabilitado } from '../../model/paquetehabilitado.model';
@@ -30,36 +30,36 @@ import { NotifierService } from '../../../../node_modules/angular-notifier';
 })
 export class GenerarCampanaDocumentoComponent implements OnInit {
 
-  constructor(private plazoService:PlazoService,
-              private tipoDocumentoService:TipoDocumentoService,
-              private tipoDestinoService:TipoDestinoService,
-              private paqueteHabilitadoService:PaqueteHabilitadoService,
-              private tipoAgrupadoService:TipoAgrupadoService,
-              private accionRestosProveedorService:AccionRestosProveedorService, 
-              private itemCampanaService: ItemCampanaService, 
-              private utilsService: UtilsService, 
-              private notifier: NotifierService
-            ) { }
+  constructor(private plazoService: PlazoService,
+    private tipoDocumentoService: TipoDocumentoService,
+    private tipoDestinoService: TipoDestinoService,
+    private paqueteHabilitadoService: PaqueteHabilitadoService,
+    private tipoAgrupadoService: TipoAgrupadoService,
+    private accionRestosProveedorService: AccionRestosProveedorService,
+    private itemCampanaService: ItemCampanaService,
+    private utilsService: UtilsService,
+    private notifier: NotifierService
+  ) { }
 
   campanaForm: FormGroup;
-  
-  plazos:Plazo[]=[];
-  tiposDocumento:TipoDocumento[]=[];
-  tiposDestino:TipoDestino[]=[];
-  paqueteHabilitados:PaqueteHabilitado[]=[];
-  tiposAgrupado:TipoAgrupado[]=[];
-  accionesRestosProveedor:AccionRestosProveedor[]=[];
+
+  plazos: Plazo[] = [];
+  tiposDocumento: TipoDocumento[] = [];
+  tiposDestino: TipoDestino[] = [];
+  paqueteHabilitados: PaqueteHabilitado[] = [];
+  tiposAgrupado: TipoAgrupado[] = [];
+  accionesRestosProveedor: AccionRestosProveedor[] = [];
   itemsCampanaCargados: ItemCampana[] = [];
   dataItemsCampanaCargados: LocalDataSource = new LocalDataSource();
   excelFile: File;
-  tableSettings = AppSettings.tableSettings;  
-  centroCostosList : CentroCostos[] = [];    
-  grupoCentroCostos : GrupoCentroCostos;
+  tableSettings = AppSettings.tableSettings;
+  centroCostosList: CentroCostos[] = [];
+  grupoCentroCostos: GrupoCentroCostos;
 
   columnsItemsCampanaCargados = {
     razonSocial: {
       title: 'Razón Social'
-    },        
+    },
     apellidoPaterno: {
       title: 'Apellido Paterno'
     },
@@ -85,30 +85,30 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
 
 
   ngOnInit() {
-    this.tableSettings.columns = this.columnsItemsCampanaCargados; 
+    this.tableSettings.columns = this.columnsItemsCampanaCargados;
     this.cargarVista();
     this.campanaForm = new FormGroup({
-      'nombreCampana' : new FormControl("", Validators.required),
-      'cliLima' : new FormControl("", Validators.required),
-      'cliProvincia' : new FormControl("", Validators.required),
-      'colLima' : new FormControl("", Validators.required),
-      'colProvincia' : new FormControl("", Validators.required),
-      'imprenta' : new FormControl("", Validators.required),
-      'direccion' : new FormControl("", Validators.required),
-      'contacto' : new FormControl("", Validators.required),
-      'fechaHoraRecojo' : new FormControl("", Validators.required),
-      'contactoRezago' : new FormControl("", Validators.required),
-      'direccionRezago' : new FormControl("", Validators.required),
-      'observacionRezago' : new FormControl("", Validators.required),
-      'contactoCargo' : new FormControl("", Validators.required),
-      'direccionCargo' : new FormControl("", Validators.required),
-      'observacionCargo' : new FormControl("", Validators.required),
-      'accionporcargos' : new FormControl("", Validators.required),
+      'nombreCampana': new FormControl("", Validators.required),
+      'cliLima': new FormControl("", Validators.required),
+      'cliProvincia': new FormControl("", Validators.required),
+      'colLima': new FormControl("", Validators.required),
+      'colProvincia': new FormControl("", Validators.required),
+      'imprenta': new FormControl("", Validators.required),
+      'direccion': new FormControl("", Validators.required),
+      'contacto': new FormControl("", Validators.required),
+      'fechaHoraRecojo': new FormControl("", Validators.required),
+      'contactoRezago': new FormControl("", Validators.required),
+      'direccionRezago': new FormControl("", Validators.required),
+      'observacionRezago': new FormControl("", Validators.required),
+      'contactoCargo': new FormControl("", Validators.required),
+      'direccionCargo': new FormControl("", Validators.required),
+      'observacionCargo': new FormControl("", Validators.required),
+      'accionporcargos': new FormControl("", Validators.required),
     }, this.noDocumentsLoaded.bind(this));
     this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
   }
 
-  cargarVista(){
+  cargarVista() {
     this.listarTiposDocumento();
     this.listarPlazos();
     this.listarTiposDestino();
@@ -117,50 +117,50 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     this.listarAccionRestosProveedor();
   }
 
-  listarTiposDocumento(){
+  listarTiposDocumento() {
     this.tipoDocumentoService.listarAll().subscribe(
-      tiposdocumento => {this.tiposDocumento = tiposdocumento}
+      tiposdocumento => { this.tiposDocumento = tiposdocumento }
     )
   }
 
-  listarPlazos(){
+  listarPlazos() {
     this.plazoService.listarAll().subscribe(
-      plazos => {this.plazos = plazos}
+      plazos => { this.plazos = plazos }
     )
   }
 
-  listarTiposDestino(){
+  listarTiposDestino() {
     this.tipoDestinoService.listarAll().subscribe(
-      tiposdestino => { this.tiposDestino = tiposdestino}
+      tiposdestino => { this.tiposDestino = tiposdestino }
     )
   }
 
-  listarHabilitados(){
+  listarHabilitados() {
     this.paqueteHabilitadoService.listarAll().subscribe(
-      paquetehabilitado => { this.paqueteHabilitados = paquetehabilitado}
-    )
-  }
-  
-  listarTiposAgrupado(){
-    this.tipoAgrupadoService.listarAll().subscribe(
-      tiposagrupado => { this.tiposAgrupado = tiposagrupado}
+      paquetehabilitado => { this.paqueteHabilitados = paquetehabilitado }
     )
   }
 
-  listarAccionRestosProveedor(){
+  listarTiposAgrupado() {
+    this.tipoAgrupadoService.listarAll().subscribe(
+      tiposagrupado => { this.tiposAgrupado = tiposagrupado }
+    )
+  }
+
+  listarAccionRestosProveedor() {
     this.accionRestosProveedorService.listarAll().subscribe(
-      accionesrestoproveedor => { this.accionesRestosProveedor = accionesrestoproveedor}
+      accionesrestoproveedor => { this.accionesRestosProveedor = accionesrestoproveedor }
     )
   }
 
   noDocumentsLoaded(form: FormGroup): { [key: string]: boolean } | null {
     if (this.itemsCampanaCargados.length == 0) {
-      return { 'noDocumentsLoaded': true }  
-    }    
+      return { 'noDocumentsLoaded': true }
+    }
     return null;
   }
 
-  onChangeExcelFile(file: File){
+  onChangeExcelFile(file: File) {
     if (file == null) {
       this.excelFile = null;
       this.dataItemsCampanaCargados = new LocalDataSource();
@@ -171,7 +171,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     this.importarExcel();
   }
 
-  importarExcel(){
+  importarExcel() {
     if (this.excelFile == null) {
       this.dataItemsCampanaCargados = new LocalDataSource();
       this.itemsCampanaCargados = [];
@@ -180,7 +180,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     this.mostrarItemsCampanaCargados(this.excelFile);
   }
 
-  mostrarItemsCampanaCargados(file: File){
+  mostrarItemsCampanaCargados(file: File) {
     this.dataItemsCampanaCargados.reset();
     this.itemsCampanaCargados = [];
     this.itemCampanaService.mostrarItemsCampanaCargados(file, 0, (data) => {
@@ -207,10 +207,28 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   }
 
   agregarCentroCostoItem() {
-    let cc = new CentroCostos(null,this.campanaForm.get("cuentaContable").value,this.campanaForm.get("centroCostos").value,this.campanaForm.get("ordenEstadistica").value,this.campanaForm.get("grupoArticulo").value,this.campanaForm.get("porcentajePago").value);
-    this.grupoCentroCostos.centroscostos.push(cc);    
+    let cc = new CentroCostos(null, this.campanaForm.get("cuentaContable").value, this.campanaForm.get("centroCostos").value, this.campanaForm.get("ordenEstadistica").value, this.campanaForm.get("grupoArticulo").value, this.campanaForm.get("porcentajePago").value);
+    this.grupoCentroCostos.centroscostos.push(cc);
   }
 
+  mostrar = true;
 
+  destinoOnChange(sel) {
+    if (sel.value == "EXTERNA") {
+      let divC = document.getElementById("nExterna");
+      divC.style.display = "";
+
+      let divT = document.getElementById("nInterna");
+      divT.style.display = "none";
+
+    } else {
+
+      let divC = document.getElementById("nExterna");
+      divC.style.display = "none";
+
+      let divT = document.getElementById("nInterna");
+      divT.style.display = "";
+    }
+  }
 
 }
