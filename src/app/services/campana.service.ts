@@ -1,3 +1,4 @@
+import { BuzonService } from './buzon.service';
 import { Observable } from 'rxjs';
 import { Campana } from '../model/campana.model';
 import { AppSettings } from '../settings/app.settings';
@@ -12,7 +13,8 @@ export class CampanaService {
     REQUEST_URL = AppSettings.API_ENDPOINT + AppSettings.CAMPANA_URL;
 
     constructor(
-        private requester: RequesterService
+        private requester: RequesterService, 
+        private buzonService: BuzonService
     ) {
 
     }
@@ -28,6 +30,7 @@ export class CampanaService {
     }
 
     registrarCampana(campana: Campana): Observable<Campana[]> {
+        campana.buzon = this.buzonService.getBuzonActual();
         return this.requester.post<Campana[]>(this.REQUEST_URL, campana, {});
     }
 

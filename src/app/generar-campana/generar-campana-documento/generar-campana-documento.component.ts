@@ -9,6 +9,7 @@ import { UtilsService } from './../../services/utils.service';
 import { ItemCampanaService } from './../../services/itemcampana.service';
 import { ItemCampana } from '../../model/itemcampana.model';
 import { Component, OnInit } from '@angular/core';
+
 import { Plazo } from '../../model/plazo.model';
 import { PlazoService } from '../../services/plazo.service';
 import { TipoDocumento } from '../../model/tipodocumento.model';
@@ -19,6 +20,7 @@ import { TipoAgrupado } from '../../model/tipoagrupado.model';
 import { TipoAgrupadoService } from '../../services/tipoagrupado.service';
 import { AccionRestosProveedor } from '../../model/accionrestosproveedor.model';
 import { AccionRestosProveedorService } from '../../services/accionrestosproveedor.service';
+
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NotifierService } from '../../../../node_modules/angular-notifier';
@@ -87,36 +89,57 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   };
 
 
+  //: number = 1; //1 BCP - 2 OTROS
+
+  selectCCOO: boolean = true;
+
   ngOnInit() {
     this.tableSettings.columns = this.columnsItemsCampanaCargados;
     this.cargarVista();
     this.campanaForm = new FormGroup({
       'nombreCampana': new FormControl("", Validators.required),
       'cliLima': new FormControl("", Validators.required),
-      'cliProvincia': new FormControl("", Validators.required),
-      'colLima': new FormControl("", Validators.required),
-      'colProvincia': new FormControl("", Validators.required),
-      'imprenta': new FormControl("", Validators.required),
-      'direccion': new FormControl("", Validators.required),
-      'contacto': new FormControl("", Validators.required),
-      'fechaHoraRecojo': new FormControl("", Validators.required),
-      'contactoRezago': new FormControl("", Validators.required),
-      'direccionRezago': new FormControl("", Validators.required),
-      'observacionRezago': new FormControl("", Validators.required),
-      'contactoCargo': new FormControl("", Validators.required),
-      'direccionCargo': new FormControl("", Validators.required),
-      'observacionCargo': new FormControl("", Validators.required),
-      'accionporcargos': new FormControl("", Validators.required),
+      'cliProvincia': new FormControl("", Validators.required),      
+      'imprenta': new FormControl("", [this.requiredIfRequiereImpresion.bind(this)]),
+      'direccion': new FormControl("", [this.requiredIfRequiereImpresion.bind(this)]),
+      'contacto': new FormControl("", [this.requiredIfRequiereImpresion.bind(this)]),
+      'fechaHoraRecojo': new FormControl("", [this.requiredIfRequiereImpresion.bind(this)]),
+      'contactoRezago': new FormControl("", [this.requiredIfRequiereDevolucionRezago.bind(this)]),
+      'direccionRezago': new FormControl("", [this.requiredIfRequiereDevolucionRezago.bind(this)]),
+      'observacionRezago': new FormControl("", [this.requiredIfRequiereDevolucionRezago.bind(this)]),
+      'contactoCargo': new FormControl("", [this.requiredIfRequiereDevolucionCargo.bind(this)]),
+      'direccionCargo': new FormControl("", [this.requiredIfRequiereDevolucionCargo.bind(this)]),
+      'observacionCargo': new FormControl("", [this.requiredIfRequiereDevolucionCargo.bind(this)]),
+      'accionporcargos': new FormControl("",  [this.requiredIfNotRequiereDevolucionCargo.bind(this)]),
       'tipoDocumento': new FormControl(null, Validators.required),
-      'requiereGps': new FormControl(null, Validators.required),
+      'requiereGps': new FormControl(true, Validators.required),
       'plazo': new FormControl(null, Validators.required),
       'tipoDestino': new FormControl(null, Validators.required),
-      'requiereGeorreferenciacion': new FormControl(null, Validators.required),
-      'paqueteHabilitado': new FormControl(null, Validators.required),
-      'accionporrezagos': new FormControl(null, Validators.required),
-      'regulatorio': new FormControl(null, Validators.required),
+      'requiereGeorreferenciacion': new FormControl(true, Validators.required),
+      'requiereImpresion': new FormControl(true, Validators.required),
+      'requiereHabilitado': new FormControl(true, Validators.required),
+      'paqueteHabilitado': new FormControl(null, [this.requiredIfRequiereHabilitado.bind(this)]),
+      'requiereAgrupado': new FormControl(true, Validators.required),
+      'requiereCentroCostoBCP': new FormControl(true, Validators.required),
+      'tipoAgrupado': new FormControl(null, [this.requiredIfRequiereAgrupado.bind(this)]),
+      'requiereDevolucionRezago': new FormControl(true, Validators.required),
+      'accionporrezagos': new FormControl(null, [this.requiredIfNotRequiereDevolucionRezago.bind(this)]),
+      'requiereDevolucionCargo': new FormControl(true, Validators.required),
+      'regulatorio': new FormControl(true, Validators.required),
+      'costoCampana': new FormControl(),
+      'cuentaContable': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
+      'centroCostos': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
+      'ordenEstadistica': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
+      'grupoArticulo': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
+      'porcentajePago': new FormControl(null, [this.requiredIfCentroCostoBCP.bind(this)]),
+      'razonSocialEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
+      'rucEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
+      'direccionEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
+      'contactoEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
+
     }, this.noDocumentsLoaded.bind(this));
     this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
+
   }
 
   cargarVista() {
@@ -126,6 +149,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     this.listarHabilitados();
     this.listarTiposAgrupado();
     this.listarAccionRestosProveedor();
+    this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
   }
 
   listarTiposDocumento() {
@@ -163,6 +187,9 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       accionesrestoproveedor => { this.accionesRestosProveedor = accionesrestoproveedor }
     )
   }
+
+
+
 
   noDocumentsLoaded(form: FormGroup): { [key: string]: boolean } | null {
     if (this.itemsCampanaCargados.length == 0) {
@@ -217,23 +244,138 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     });
   }
 
+  mostrar = true;
+
   agregarCentroCostoItem() {
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) ||
+      this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('cuentaContable').value) ||
+      this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('centroCostos').value) ||
+      this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('ordenEstadistica').value) ||
+      this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('grupoArticulo').value) ||
+      this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('porcentajePago').value)
+    ) {
+      return;
+    }
+
     let cc = new CentroCostos(null, this.campanaForm.get("cuentaContable").value, this.campanaForm.get("centroCostos").value, this.campanaForm.get("ordenEstadistica").value, this.campanaForm.get("grupoArticulo").value, this.campanaForm.get("porcentajePago").value);
+
+    let p = 0;
+    this.grupoCentroCostos.centroscostos.forEach(element => {
+      p += element.porcentaje;
+    });
+
+    p += cc.porcentaje;
+
+    if (p > 100) {
+      return;
+    }
+
     this.grupoCentroCostos.centroscostos.push(cc);
+
+  }
+
+
+  requiredIfEmpresaAuspiciadora(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || (this.utilsService.isUndefinedOrNullOrEmpty(control.value)) && this.campanaForm.get("requiereCentroCostoBCP").value === false ) {
+      return { 'requiredIfEmpresaAuspiciadora': true }
+    }
+
+    return null;
+
+  }
+
+  requiredIfCentroCostoBCP(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || (this.utilsService.isUndefinedOrNullOrEmpty(control.value)) && this.campanaForm.get("requiereCentroCostoBCP").value === true ) {
+      return { 'requiredIfCentroCostoBCP': true }
+    }
+
+    return null;
+
+  }
+
+  requiredIfRequiereImpresion(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || (this.utilsService.isUndefinedOrNullOrEmpty(control.value)) && this.campanaForm.get("requiereImpresion").value === true )   {
+      return { 'requiredIfRequiereImpresion': true }
+    }
+
+    return null;
+
+  }
+
+  requiredIfRequiereHabilitado(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || (this.utilsService.isUndefinedOrNullOrEmpty(control.value)) && this.campanaForm.get("requiereHabilitado").value === true )   {
+      return { 'requiredIfRequiereHabilitado': true }
+    }
+
+    return null;
+  }
+
+  requiredIfRequiereAgrupado(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || (this.utilsService.isUndefinedOrNullOrEmpty(control.value)) && this.campanaForm.get("requiereAgrupado").value === true )   {
+      return { 'requiredIfRequiereHabilitado': true }
+    }
+
+    return null;
+  }
+
+  requiredIfRequiereDevolucionRezago(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || (this.utilsService.isUndefinedOrNullOrEmpty(control.value)) && this.campanaForm.get("requiereDevolucionRezago").value === true )   {
+      return { 'requiredIfRequiereHabilitado': true }
+    }
+
+    return null;
+  }
+
+  requiredIfRequiereDevolucionCargo(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || (this.utilsService.isUndefinedOrNullOrEmpty(control.value)) && this.campanaForm.get("requiereDevolucionCargo").value === true )   {
+      return { 'requiredIfRequiereHabilitado': true }
+    }
+
+    return null;
+  }
+  
+
+  requiredIfNotRequiereDevolucionCargo(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || (this.utilsService.isUndefinedOrNullOrEmpty(control.value)) && this.campanaForm.get("requiereDevolucionCargo").value === false )   {
+      return { 'requiredIfRequiereHabilitado': true }     
+      
+    }
+
+    return null;
+  }
+  
+
+  requiredIfNotRequiereDevolucionRezago(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || (this.utilsService.isUndefinedOrNullOrEmpty(control.value)) && this.campanaForm.get("requiereDevolucionRezago").value === false )   {
+      return { 'requiredIfRequiereHabilitado': true }
+      
+    }
+    return null;
+    
   }
 
   registrarCampana(values: any) {
+    console.log(this.campanaForm);
     let campana: Campana = new Campana();
     campana.itemsCampana = this.itemsCampanaCargados;
     campana.nombre = values.nombreCampana;
     campana.tipoDocumento = values.tipoDocumento;
-    campana.regulatorio = values.regulatorio == 1;
-    campana.requiereGps = values.requiereGps == 1;
+    campana.regulatorio = values.regulatorio;
+    campana.requiereGps = values.requiereGps;
     campana.plazo = values.plazo;
     campana.tipoDestino = values.tipoDestino;
     campana.cantidadLima = values.cliLima;
     campana.cantidadProvincia = values.cliProvincia;
-    campana.requiereGeorreferencia = values.requiereGeorreferenciacion == 1;
+    campana.requiereGeorreferencia = values.requiereGeorreferenciacion;
     if (values.imprenta !== null) {
       let proveedorImpresion = {
         nombre: values.imprenta,
@@ -279,7 +421,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       }
     }
 
-    if (this.grupoCentroCostos !== null) {
+    if (this.grupoCentroCostos.centroscostos.length > 0) {
       campana.auspiciador = this.grupoCentroCostos;
     } else {
       campana.auspiciador = {
@@ -290,21 +432,69 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       }
     }
 
-    console.log(campana);
-
     this.campanaService.registrarCampana(campana).subscribe(
       () => {
         this.notifier.notify("success", "Se ha registrado la campaña correctamente");
       }
     )
-
-
-
-
-
-
   }
 
+  onChangeRequiereImpresion(value) {
+    if (!value) {
+      this.campanaForm.controls['imprenta'].setValue(null);
+      this.campanaForm.controls['direccion'].setValue(null);
+      this.campanaForm.controls['contacto'].setValue(null);
+      this.campanaForm.controls['fechaHoraRecojo'].setValue(null);
+      this.campanaForm.controls['contactoRezago'].setValue(null);
+    }
+  }
 
+  onChangeRequiereHabilitado(value) {
+    if (!value) {
+      this.campanaForm.controls['paqueteHabilitado'].setValue(null);
+    }
+  }
+
+  onChangeRequiereAgrupado(value) {
+    if (!value) {
+      this.campanaForm.controls['tipoAgrupado'].setValue(null);
+    }
+  }
+
+  onChangeRequiereDevolucionRezago(value) {
+    if (!value) {
+      this.campanaForm.controls['contactoRezago'].setValue(null);
+      this.campanaForm.controls['direccionRezago'].setValue(null);
+      this.campanaForm.controls['observacionRezago'].setValue(null);
+    }else{
+      this.campanaForm.controls['accionporrezagos'].setValue(null);
+    }
+  }
+
+  onChangeRequiereDevolucionCargo(value) {
+    if (!value) {
+      this.campanaForm.controls['contactoCargo'].setValue(null);
+      this.campanaForm.controls['direccionCargo'].setValue(null);
+      this.campanaForm.controls['observacionCargo'].setValue(null);
+    }else{
+      this.campanaForm.controls['accionporcargos'].setValue(null);
+    }
+  }
+
+  onChangeRequiereCentroCostoBCP(value) {
+    if (!value) {
+      this.centroCostosList = [];
+      this.campanaForm.controls['cuentaContable'].setValue(null);
+      this.campanaForm.controls['centroCostos'].setValue(null);
+      this.campanaForm.controls['ordenEstadistica'].setValue(null);
+      this.campanaForm.controls['grupoArticulo'].setValue(null);
+      this.campanaForm.controls['porcentajePago'].setValue(null);
+    }else{
+      this.campanaForm.controls['razonSocialEmpresaAuspiciadora'].setValue(null);
+      this.campanaForm.controls['rucEmpresaAuspiciadora'].setValue(null);
+      this.campanaForm.controls['direccionEmpresaAuspiciadora'].setValue(null);
+      this.campanaForm.controls['contactoEmpresaAuspiciadora'].setValue(null);
+    }
+  }
 
 }
