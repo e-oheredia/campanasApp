@@ -27,4 +27,8 @@ export class CampanaService {
         return this.requester.put<Campana[]>(this.REQUEST_URL + campana.id + "/seleccionproveedor", campana, {});
     }
 
+    registrarCampana(campana: Campana): Observable<Campana[]> {
+        return this.requester.post<Campana[]>(this.REQUEST_URL, campana, {});
+    }
+
 }   
