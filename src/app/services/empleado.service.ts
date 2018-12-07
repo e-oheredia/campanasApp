@@ -1,6 +1,6 @@
-import { Buzon } from './../model/buzon.model';
-import { AppSettings } from './../settings/app.settings';
-import { Empleado } from './../model/empleado.model';
+import { Buzon } from '../model/buzon.model';
+import { AppSettings } from '../settings/app.settings';
+import { Empleado } from '../model/empleado.model';
 import { Injectable } from "@angular/core";
 import { RequesterService } from "./requester.service";
 import { Observable } from "rxjs";

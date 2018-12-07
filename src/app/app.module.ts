@@ -7,14 +7,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SeleccionProveedorModule } from './seleccion-proveedor/seleccion-proveedor.module';
 
+import { GenerarCampanaModule } from './generar-campana/generar-campana.module';
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, 
-    LayoutModule, 
+    AppRoutingModule,
+    LayoutModule,
+    GenerarCampanaModule,
     SeleccionProveedorModule, 
     NotifierModule
   ],

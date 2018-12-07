@@ -11,11 +11,8 @@ export class PaqueteHabilitadoService {
 
     REQUEST_URL = AppSettings.API_ENDPOINT + AppSettings.PAQUETE_HABILITADO_URL;
 
-    constructor(
-        private requester: RequesterService
-    ) {
-
-    }
+    constructor(private requester: RequesterService) {}
+    
 
     listarAll(): Observable<PaqueteHabilitado[]>{
         return this.requester.get<PaqueteHabilitado[]>(this.REQUEST_URL, {});
