@@ -49,7 +49,16 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       'cliProvincia' : new FormControl("", Validators.required),
       'colLima' : new FormControl("", Validators.required),
       'colProvincia' : new FormControl("", Validators.required),
-      'imprenta' : new FormControl("", Validators.required)
+      'imprenta' : new FormControl("", Validators.required),
+      'direccion' : new FormControl("", Validators.required),
+      'contacto' : new FormControl("", Validators.required),
+      'fechaHoraRecojo' : new FormControl("", Validators.required),
+      'contactoRezago' : new FormControl("", Validators.required),
+      'direccionRezago' : new FormControl("", Validators.required),
+      'observacionRezago' : new FormControl("", Validators.required),
+      'contactoCargo' : new FormControl("", Validators.required),
+      'direccionCargo' : new FormControl("", Validators.required),
+      'observacionCargo' : new FormControl("", Validators.required),
     })
   }
 

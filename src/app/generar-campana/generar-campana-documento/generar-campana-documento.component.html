@@ -224,13 +224,24 @@
                   Es necesario ingresar la imprenta/sede.
                 </span>
                 <br>
-                <!-- ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
                 <label for="direccion">Dirección *</label>
-                <input class="form-control" type="text" name="direccion" id="">
+                <input class="form-control" type="text" name="direccion" id="direccion" formControlName="direccion">
+                <span *ngIf="!campanaForm.get('direccion').valid && campanaForm.get('direccion').touched" class="text-danger small">
+                  Es necesario ingresar la dirección.
+                </span>
+                <br>
                 <label for="contacto">Contacto *</label>
-                <input class="form-control" type="text" name="contacto" id="">
-                <label for="horarioRecojo">Fecha y Hora de Recojo *</label>
-                <input class="form-control" type="text" name="horarioRecojo" id="">
+                <input class="form-control" type="text" name="contacto" id="contacto" formControlName="contacto">
+                <span *ngIf="!campanaForm.get('contacto').valid && campanaForm.get('contacto').touched" class="text-danger small">
+                  Es necesario ingresar el contacto.
+                </span>
+                <br>
+                <label for="fechaHoraRecojo">Fecha y Hora de Recojo *</label>
+                <input class="form-control" type="text" name="fechaHoraRecojo" id="fechaHoraRecojo" formControlName="fechaHoraRecojo">
+                <span *ngIf="!campanaForm.get('fechaHoraRecojo').valid && campanaForm.get('fechaHoraRecojo').touched" class="text-danger small">
+                  Es necesario ingresar la fecha y hora del recojo.
+                </span>
+                <br>
               </div>
             </div>
           </div>
@@ -263,6 +274,13 @@
                   <option *ngFor="let paqueteHabilitado of paqueteHabilitados" [ngValue]="paqueteHabilitado">{{paqueteHabilitado.descripcion}}</option>
                 </select>
                 <br>
+                <label>OPCION 1: Embolsado (1 micra) + Etiquetado</label><br>
+                <label>OPCION 2: Embolsado (1 micra) + Ensobrado + Etiquetado</label><br>
+                <label>OPCION 3: Embolsado (1 micra) + Ensobrado + Doblado + Etiquetado</label><br>
+                <label>OPCION 4: Embolsado (1 micra) + Inserto + Etiquetado</label><br>
+                <label>OPCION 5: Embolsado (2 micra) + Ensobrado + Etiquetado</label><br>
+                <label>OPCION 6: Embolsado (1 micra) + Etiquetado (3 Etiquetas)</label><br>
+                <label>OPCION 7: Embolsado (2 micra) + Ensobrado + Etiquetado + Inserto</label><br>
                 <br>
               </div>
             </div>
@@ -279,6 +297,7 @@
                   usuario lo requiere. Tener en cuenta
                   que esta tarea aplica solo para campañas dirigidas a colaboradores del banco.
                 </h6>
+                <br>
                 <select class="form-control" id="tipoAgrupado">
                   <option *ngFor="let tipoAgrupado of tiposAgrupado" [ngValue]="tipoAgrupado">{{tipoAgrupado.nombre}}</option>
                 </select>
@@ -310,14 +329,24 @@
                 <label for="devolverRezagos">¿Desea que devolvamos los rezagos físicos? *</label><br>
                 <label><input type="radio" name="devolverRezagos"> SI</label><br>
                 <label><input type="radio" name="devolverRezagos"> NO</label><br>
-
-                <label for="contacto">Contacto *</label>
-                <input class="form-control" type="text" name="contacto" id="">
-                <label for="contacto">Dirección *</label>
-                <input class="form-control" type="text" name="direccion" id="">
-                <label for="observacion">Observación *</label>
-                <input class="form-control" type="text" name="observacion" f id="">
-
+                <br>
+                <label for="contactoRezago">Contacto *</label>
+                <input class="form-control" type="text" name="contactoRezago" id="contactoRezago" formControlName="contactoRezago">
+                <span *ngIf="!campanaForm.get('contactoRezago').valid && campanaForm.get('contactoRezago').touched" class="text-danger small">
+                  Es necesario ingresar el contacto.
+                </span>
+                <br>
+                <label for="direccionRezago">Dirección *</label>
+                <input class="form-control" type="text" name="direccionRezago" id="direccionRezago" formControlName="direccionRezago">
+                <span *ngIf="!campanaForm.get('direccionRezago').valid && campanaForm.get('direccionRezago').touched" class="text-danger small">
+                  Es necesario ingresar la dirección.
+                </span>
+                <br>
+                <label for="observacionRezago">Observación *</label>
+                <input class="form-control" type="text" name="observacionRezago" f id="observacionRezago" formControlName="observacionRezago">
+                <span *ngIf="!campanaForm.get('observacionRezago').valid && campanaForm.get('observacionRezago').touched" class="text-danger small">
+                  Es necesario ingresar la observación.
+                </span>
                 <br>
 
                 <label for="accionporrezagos">¿Qué desea que se haga con los rezagos físicos?</label>
@@ -329,9 +358,9 @@
             </div>
           </div>
 
-
-
           <br>
+          <hr>
+          <hr>
           <hr>
 
           <div class="form-row">
@@ -340,13 +369,25 @@
                 <label for="devolverCargos">¿Desea que devolvamos los cargos físicos? *</label><br>
                 <label><input type="radio" name="devolverCargos"> SI</label><br>
                 <label><input type="radio" name="devolverCargos"> NO</label><br>
-
-                <label for="contacto">Contacto *</label>
-                <input class="form-control" type="text" name="contacto" id="">
-                <label for="contacto">Dirección *</label>
-                <input class="form-control" type="text" name="direccion" id="">
-                <label for="observacion">Observación *</label>
-                <input class="form-control" type="text" name="observacion" id="">
+                <br>
+                <label for="contactoCargo">Contacto *</label>
+                <input class="form-control" type="text" name="contactoCargo" id="contactoCargo" formControlName="contactoCargo">
+                <span *ngIf="!campanaForm.get('contactoCargo').valid && campanaForm.get('contactoCargo').touched" class="text-danger small">
+                  Es necesario ingresar el contacto.
+                </span>
+                <br>
+                <label for="direccionCargo">Dirección *</label>
+                <input class="form-control" type="text" name="direccionCargo" id="direccionCargo" formControlName="direccionCargo">
+                <span *ngIf="!campanaForm.get('direccionCargo').valid && campanaForm.get('direccionCargo').touched" class="text-danger small">
+                  Es necesario ingresar la dirección.
+                </span>
+                <br>
+                <label for="observacionCargo">Observación *</label>
+                <input class="form-control" type="text" name="observacionCargo" id="observacionCargo" formControlName="observacionCargo">
+                <span *ngIf="!campanaForm.get('observacionCargo').valid && campanaForm.get('observacionCargo').touched" class="text-danger small">
+                  Es necesario ingresar la observación.
+                </span>
+                <br>
 
                 <br>
 
