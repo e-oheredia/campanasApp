@@ -455,7 +455,7 @@
             </div>
           </div>
 
-          <div *ngIf="campanaForm.get('costoCampana').value == 1">
+          <div *ngIf="campanaForm.get('costoCampana') !== null && campanaForm.get('costoCampana').value == 1">
             <div class="form-row">
               <div class="col-12">
                 <div class="form-group">
@@ -515,7 +515,7 @@
             </div>
           </div>
           <!-- Si selecciona OTROS -->
-          <div *ngIf="campanaForm.get('costoCampana').value==2">
+          <div *ngIf="campanaForm.get('costoCampana') !== null && campanaForm.get('costoCampana').value==2">
             <div class="form-row">
               <div class="col-4">
                 <div class="form-group">

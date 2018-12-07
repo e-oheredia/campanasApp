@@ -103,6 +103,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       'contactoCargo' : new FormControl("", Validators.required),
       'direccionCargo' : new FormControl("", Validators.required),
       'observacionCargo' : new FormControl("", Validators.required),
+      'accionporcargos' : new FormControl("", Validators.required),
     }, this.noDocumentsLoaded.bind(this));
     this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
   }
