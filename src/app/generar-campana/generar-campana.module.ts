@@ -1,3 +1,4 @@
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -10,7 +11,8 @@ import { DatosBuzonComponent } from './datos-buzon/datos-buzon.component';
     imports: [
       CommonModule, 
       ReactiveFormsModule, 
-      FormsModule      
+      FormsModule,
+      Ng2SmartTableModule
     ],
     declarations: [
       GenerarCampanaDocumentoComponent,
