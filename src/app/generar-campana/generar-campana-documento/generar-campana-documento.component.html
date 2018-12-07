@@ -15,37 +15,29 @@
 
 <app-datos-buzon></app-datos-buzon>
 
-<div class="row justify-content-center">
-  <div class="col-11">
-    <div class="card mb-2">
 
-      <div class="card-header">
-        <h5>DATOS GENERALES DE LA CAMPAÑA</h5>
-      </div>
+<form [formGroup]="campanaForm">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <div class="card mb-2">
 
-      <div class="card-body">
-        <form>
+        <div class="card-header">
+          <h5>DATOS GENERALES DE LA CAMPAÑA</h5>
+        </div>
+
+        <div class="card-body">
+
 
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
                 <label for="nombreCampana">Nombre de la Campaña *</label>
-                <input class="form-control" type="text" name="nombreCampana" id="nombreCampana" formControlName="nombreCampana">
-                <span *ngIf="!campanaForm.get('nombreCampana').valid && campanaForm.get('nombreCampana').touched" class="text-danger small">
-                  Es necesario ingresar el nombre de la campaña
-                </span>
+                <input class="form-control" type="text" name="nombreCampana" id="nombreCampana">
+
               </div>
             </div>
 
-            <div class="col">
-              <div class="form-group">
-                <label for="direccion">Dirección *</label>
-                <input class="form-control" type="text" name="direccion" id="direccion" formControlName="direccion">
-                <span *ngIf="!documentoForm.get('direccion').valid && documentoForm.get('direccion').touched" class="text-danger small">
-                  Es necesario ingresar la dirección
-                </span>
-              </div>
-            </div>
+
 
           </div>
 
@@ -157,27 +149,27 @@
             </div>
           </div>
 
-        </form>
-      </div>
 
+        </div>
+
+      </div>
     </div>
   </div>
-</div>
 
 
 
 
 
-<div class="row justify-content-center">
-  <div class="col-11">
-    <div class="card mb-2">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <div class="card mb-2">
 
-      <div class="card-header">
-        <h5>REQUERIMIENTOS DE LA CAMPAÑA</h5>
-      </div>
+        <div class="card-header">
+          <h5>REQUERIMIENTOS DE LA CAMPAÑA</h5>
+        </div>
 
-      <div class="card-body">
-        <form>
+        <div class="card-body">
+
 
           <div class="form-row">
             <div class="col-10">
@@ -267,25 +259,25 @@
             </div>
           </div>
 
-        </form>
-      </div>
 
+        </div>
+
+      </div>
     </div>
   </div>
-</div>
 
 
 
-<div class="row justify-content-center">
-  <div class="col-11">
-    <div class="card mb-2">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <div class="card mb-2">
 
-      <div class="card-header">
-        <h5>MATERIALES DE LA CAMPAÑA</h5>
-      </div>
+        <div class="card-header">
+          <h5>MATERIALES DE LA CAMPAÑA</h5>
+        </div>
 
-      <div class="card-body">
-        <form>
+        <div class="card-body">
+
 
           <div class="form-row">
             <div class="col-4">
@@ -343,96 +335,138 @@
           </div>
           <br>
 
-        </form>
-      </div>
 
+        </div>
+
+      </div>
     </div>
   </div>
-</div>
 
 
-<div class="row justify-content-center">
-  <div class="col-11">
-    <div class="card mb-2">
+  <div class="row justify-content-center">
+    <div class="col-11">
+      <div class="card mb-2">
 
-      <div class="card-header">
-        <h5>DATOS DE COSTOS DE CAMPAÑA</h5>
-      </div>
+        <div class="card-header">
+          <h5>DATOS DE COSTOS DE CAMPAÑA</h5>
+        </div>
 
-      <div class="card-body">
-        <h6>Estos datos te los puede brindar tu área de contabilidad</h6>
-        <form>
+        <div class="card-body">
+          <h6>Estos datos te los puede brindar tu área de contabilidad</h6>
+
+
 
           <div class="form-row">
             <div class="col-4">
               <div class="form-group">
-                <label for="costoCampaña">Los costos de la campaña se cargarán en: *</label><br>
-                <label><input type="radio" name="gender" value="male"> BCP</label><br>
-                <label><input type="radio" name="gender" value="female"> OTROS</label><br>
+                <label for="costoCampana">Los costos de la campaña se cargarán en: *</label><br>
+                <label><input type="radio" name="costoCampana" formControlName="costoCampana" required value="1"
+                    checked> BCP</label><br>
+                <label><input type="radio" name="costoCampana" formControlName="costoCampana" required value="2"> OTROS</label>
+              </div>
+            </div>
+          </div>
+          <!-- Si selecciona BCP -->
+          <div *ngIf="campanaForm.get('costoCampana').value == 1">
+            <div class="form-row">
+              <div class="col-12">
+                <div class="form-group">
+                  
 
-                <label for="contacto">Cuenta Contable *</label>
-                <input class="form-control" type="text" name="contacto" id="">
-                <label for="contacto">Centro de Costos *</label>
-                <input class="form-control" type="text" name="direccion" id="">
-                <label for="observacion">Orden Estadística *</label>
-                <input class="form-control" type="text" name="observacion" id="">
-                <label for="observacion">Grupo de artículo *</label>
-                <input class="form-control" type="text" name="observacion" id="">
-                <label for="observacion">Porcentaje de pago *</label>
-                <input class="form-control" type="text" name="observacion" id="">
+                  <div class="col-4 mt-4">
+                    <label for="cuentaContable">Cuenta Contable *</label>
+                    <input class="form-control" type="text" name="cuentaContable" formControlName="cuentaContable" />
+                    <label for="centroCostos">Centro de Costos *</label>
+                    <input class="form-control" type="text" name="centroCostos" formControlName="centroCostos" />
+                    <label for="ordenEstadistica">Orden Estadística *</label>
+                    <input class="form-control" type="text" name="ordenEstadistica" formControlName="ordenEstadistica" />
+                    <label for="grupoArticulo">Grupo de artículo *</label>
+                    <input class="form-control" type="text" name="grupoArticulo" formControlName="grupoArticulo" />
+                    <label for="porcentajePago">Porcentaje de pago *</label>
+                    <input class="form-control" type="text" name="porcentajePago" formControlName="porcentajePago" />
 
-                <div class="col-4 mt-4">
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-primary form-control mt-2">
-                      AGREGAR
-                    </button>
                   </div>
+
+                  <div class="col-12 mt-12">
+                    <div class="form-group">
+                      <div class="col-4 mt-4">
+                        <button type="submit" class="btn btn-primary form-control mt-2" (click)="agregarCentroCostoItem()">
+                          AGREGAR
+                        </button>
+                      </div>
+
+                    </div>
+                    <div class="form-group">
+                      
+
+                      <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                                <th>Cuenta contable</th>
+                                <th>Centro de Costos</th>
+                                <th>Orden Estadística</th>
+                                <th>Grupo Artículo</th>
+                                <th>Porcentaje Pago</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let ccoo of grupoCentroCostos.centroscostos">
+                              <td scope="col">{{ ccoo.cuentaContableCodigo }}</td>
+                              <td scope="col">{{ ccoo.centroCostosCodigo }}</td>
+                              <td scope="col">{{ ccoo.ordenEstadistica }}</td>
+                              <td scope="col">{{ ccoo.grupoArticulo }}</td>
+                              <td scope="col">{{ ccoo.porcentaje }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                  </div>
+
                 </div>
-
               </div>
             </div>
           </div>
-          <br>
+          <!-- Si selecciona OTROS -->
+          <div *ngIf="campanaForm.get('costoCampana').value==2">
+            <div class="form-row">
+              <div class="col-4">
+                <div class="form-group">
+                  <label>Si el servicio no será pagado por BCP, indicar los siguientes datos para la generación de la
+                    factura: *</label><br>
+                  <h6>Está prohibido realizar envíos de índole personal</h6>
 
+                  <label for="razonSocial">Razón Social *</label>
+                  <input class="form-control" type="text" name="razonSocial" id="">
+                  <label for="ruc">RUC *</label>
+                  <input class="form-control" type="text" name="ruc" id="">
+                  <label for="direccion">Dirección *</label>
+                  <input class="form-control" type="text" name="direccion" id="">
+                  <label for="contacto">Contacto *</label>
+                  <input class="form-control" type="text" name="contacto" id="">
 
-          <br>
-          <br>
-
-          <div class="form-row">
-            <div class="col-4">
-              <div class="form-group">
-                <label>Si el servicio no será pagado por BCP, indicar los siguientes datos para la generación de la
-                  factura: *</label><br>
-                <h6>Está prohibido realizar envíos de índole personal</h6>
-
-                <label for="razonSocial">Razón Social *</label>
-                <input class="form-control" type="text" name="razonSocial" id="">
-                <label for="ruc">RUC *</label>
-                <input class="form-control" type="text" name="ruc" id="">
-                <label for="direccion">Dirección *</label>
-                <input class="form-control" type="text" name="direccion" id="">
-                <label for="contacto">Contacto *</label>
-                <input class="form-control" type="text" name="contacto" id="">
-
+                </div>
               </div>
             </div>
           </div>
+
 
           <textarea rows="10" cols="81"></textarea>
 
-        </form>
+
+        </div>
+
       </div>
-
     </div>
   </div>
-</div>
 
-<div class="row justify-content-center">
-  <div class="col-11 mt-4 mb-4">
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary form-control mt-2">
-        CREAR CAMPAÑA
-      </button>
+  <div class="row justify-content-center">
+    <div class="col-11 mt-4 mb-4">
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary form-control mt-2">
+          CREAR CAMPAÑA
+        </button>
+      </div>
     </div>
   </div>
-</div>
+
+</form>
