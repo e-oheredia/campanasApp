@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { SeleccionProveedorModule } from './seleccion-proveedor/seleccion-proveedor.module';
 
 import { GenerarCampanaModule } from './generar-campana/generar-campana.module';
+import { TrackingCampanaComponent } from './modals/tracking-campana/tracking-campana.component';
 
 @NgModule({
   declarations: [
