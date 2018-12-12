@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { SeleccionProveedorModule } from './seleccion-proveedor/seleccion-proveedor.module';
 
 import { GenerarCampanaModule } from './generar-campana/generar-campana.module';
+import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.module'
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { GenerarCampanaModule } from './generar-campana/generar-campana.module';
     LayoutModule,
     GenerarCampanaModule,
     SeleccionProveedorModule, 
-    NotifierModule
+    NotifierModule,
+    VisualizarPedidosGeoreferenciaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
