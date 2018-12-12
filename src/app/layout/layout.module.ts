@@ -32,6 +32,7 @@ import { AccionRestosProveedorService } from '../services/accionrestosproveedor.
 import { ProvinciaService } from '../services/provincia.service';
 import { ReadExcelService } from '../services/readexcel.service';
 import { TrackingCampanaComponent } from '../modals/tracking-campana/tracking-campana.component';
+import { WriteExcelService } from '../services/write-excel.service';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,9 @@ import { TrackingCampanaComponent } from '../modals/tracking-campana/tracking-ca
     DistritoService,
     ItemCampanaService,
     UtilsService,
-    ReadExcelService
+    ReadExcelService,
+    ItemCampanaService,
+    WriteExcelService
   ], 
   entryComponents: [
     TrackingCampanaComponent
