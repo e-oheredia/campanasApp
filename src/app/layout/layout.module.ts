@@ -1,3 +1,4 @@
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { UtilsService } from './../services/utils.service';
 import { ItemCampanaService } from './../services/itemcampana.service';
 import { DistritoService } from './../services/distrito.service';
@@ -30,13 +31,15 @@ import { TipoAgrupadoService } from '../services/tipoagrupado.service';
 import { AccionRestosProveedorService } from '../services/accionrestosproveedor.service';
 import { ProvinciaService } from '../services/provincia.service';
 import { ReadExcelService } from '../services/readexcel.service';
+import { TrackingCampanaComponent } from '../modals/tracking-campana/tracking-campana.component';
 import { WriteExcelService } from '../services/write-excel.service';
 
 @NgModule({
   declarations: [
     TituloComponent,
     HeaderComponent,
-    TreeViewComponent    
+    TreeViewComponent, 
+    TrackingCampanaComponent  
   ],
   imports: [
     CommonModule,
@@ -47,7 +50,8 @@ import { WriteExcelService } from '../services/write-excel.service';
     }),
     HttpClientModule,
     ModalModule.forRoot(),
-    NotifierModule
+    NotifierModule,
+    Ng2SmartTableModule
   ],
   exports: [
     HeaderComponent,
@@ -83,6 +87,9 @@ import { WriteExcelService } from '../services/write-excel.service';
     ReadExcelService,
     ItemCampanaService,
     WriteExcelService
+  ], 
+  entryComponents: [
+    TrackingCampanaComponent
   ]
 })
 export class LayoutModule { }

@@ -10,6 +10,7 @@ import { SeleccionProveedorModule } from './seleccion-proveedor/seleccion-provee
 import { GenerarCampanaModule } from './generar-campana/generar-campana.module';
 import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.module'
 
+
 @NgModule({
   declarations: [
     AppComponent
