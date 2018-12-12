@@ -25,6 +25,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NotifierService } from '../../../../node_modules/angular-notifier';
 
+import * as moment from "moment-timezone";
+
 
 
 @Component({
@@ -41,7 +43,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     private tipoAgrupadoService: TipoAgrupadoService,
     private accionRestosProveedorService: AccionRestosProveedorService,
     private itemCampanaService: ItemCampanaService,
-    private utilsService: UtilsService,
+    public utilsService: UtilsService,
     private notifier: NotifierService, 
     private campanaService: CampanaService
   ) { }
@@ -98,8 +100,6 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     this.cargarVista();
     this.campanaForm = new FormGroup({
       'nombreCampana': new FormControl("", Validators.required),
-      'cliLima': new FormControl("", Validators.required),
-      'cliProvincia': new FormControl("", Validators.required),      
       'imprenta': new FormControl("", [this.requiredIfRequiereImpresion.bind(this)]),
       'direccion': new FormControl("", [this.requiredIfRequiereImpresion.bind(this)]),
       'contacto': new FormControl("", [this.requiredIfRequiereImpresion.bind(this)]),
@@ -116,10 +116,10 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       'plazo': new FormControl(null, Validators.required),
       'tipoDestino': new FormControl(null, Validators.required),
       'requiereGeorreferenciacion': new FormControl(true, Validators.required),
-      'requiereImpresion': new FormControl(true, Validators.required),
+      'requiereImpresion': new FormControl(false, Validators.required),
       'requiereHabilitado': new FormControl(true, Validators.required),
       'paqueteHabilitado': new FormControl(null, [this.requiredIfRequiereHabilitado.bind(this)]),
-      'requiereAgrupado': new FormControl(true, Validators.required),
+      'requiereAgrupado': new FormControl(false, Validators.required),
       'requiereCentroCostoBCP': new FormControl(true, Validators.required),
       'tipoAgrupado': new FormControl(null, [this.requiredIfRequiereAgrupado.bind(this)]),
       'requiereDevolucionRezago': new FormControl(true, Validators.required),
@@ -127,17 +127,17 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       'requiereDevolucionCargo': new FormControl(true, Validators.required),
       'regulatorio': new FormControl(true, Validators.required),
       'costoCampana': new FormControl(),
-      'cuentaContable': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
-      'centroCostos': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
-      'ordenEstadistica': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
-      'grupoArticulo': new FormControl("", [this.requiredIfCentroCostoBCP.bind(this)]),
-      'porcentajePago': new FormControl(null, [this.requiredIfCentroCostoBCP.bind(this)]),
+      'cuentaContable': new FormControl(""),
+      'centroCostos': new FormControl(""),
+      'ordenEstadistica': new FormControl(""),
+      'grupoArticulo': new FormControl(""),
+      'porcentajePago': new FormControl(null),
       'razonSocialEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
       'rucEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
       'direccionEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
       'contactoEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
-
-    }, this.noDocumentsLoaded.bind(this));
+      'archivoExcel': new FormControl(null)
+    }, [this.noDocumentsLoaded.bind(this), this.porcentajeCompletoSiRequiereCentroCostosBCP.bind(this)]);
     this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
 
   }
@@ -254,6 +254,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('grupoArticulo').value) ||
       this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm.get('porcentajePago').value)
     ) {
+      this.notifier.notify("warning", "Ingrese todos los campos correctamente");
       return;
     }
 
@@ -271,7 +272,11 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     }
 
     this.grupoCentroCostos.centrosCostos.push(cc);
-
+    this.campanaForm.controls["cuentaContable"].reset();
+    this.campanaForm.controls["centroCostos"].reset();
+    this.campanaForm.controls["ordenEstadistica"].reset();
+    this.campanaForm.controls["grupoArticulo"].reset();
+    this.campanaForm.controls["porcentajePago"].reset();
   }
 
 
@@ -359,8 +364,16 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       return { 'requiredIfRequiereHabilitado': true }
       
     }
-    return null;
-    
+    return null;    
+  }
+
+  porcentajeCompletoSiRequiereCentroCostosBCP(control: FormControl): { [key: string]: boolean } | null {
+
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || (this.utilsService.getSumaAtributoLista(this.itemsCampanaCargados, "porcentaje") < 100 && this.campanaForm.get("requiereCentroCostoBCP").value === true )) {
+      return { 'porcentajeCompletoSiRequiereCentroCostosBCP': true }
+    }
+
+    return null;  
   }
 
   registrarCampana(values: any) {
@@ -373,15 +386,13 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     campana.requiereGps = values.requiereGps;
     campana.plazo = values.plazo;
     campana.tipoDestino = values.tipoDestino;
-    campana.cantidadLima = values.cliLima;
-    campana.cantidadProvincia = values.cliProvincia;
     campana.requiereGeorreferencia = values.requiereGeorreferenciacion;
-    if (values.imprenta !== null) {
+    if (values.imprenta !== null && values.imprenta !== "") {
       let proveedorImpresion = {
         nombre: values.imprenta,
         direccion: values.direccion,
         contacto: values.contacto,
-        fechaRecojo: values.fechaHoraRecojo
+        fechaRecojo: moment(values.fechaHoraRecojo).format("DD-MM-YYYY HH:mm:ss")
       }
       campana.proveedorImpresion = proveedorImpresion;
     }
@@ -390,7 +401,11 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       campana.paqueteHabilitado = values.paqueteHabilitado;
     }
 
-    if (values.contactoRezago !== null) {
+    if (values.tipoAgrupado !== null) {
+      campana.tipoAgrupado = values.tipoAgrupado;
+    }
+
+    if (values.contactoRezago !== null && values.contactoRezago !== "") {
       campana.accionRestosRezagosCampana = {
         accionRestosCampana: {
           contacto: values.contactoRezago,
@@ -435,6 +450,8 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     this.campanaService.registrarCampana(campana).subscribe(
       () => {
         this.notifier.notify("success", "Se ha registrado la campaña correctamente");
+        this.campanaForm.reset();
+        this.itemsCampanaCargados = [];
       }
     )
   }
@@ -496,6 +513,17 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       this.campanaForm.controls['direccionEmpresaAuspiciadora'].setValue(null);
       this.campanaForm.controls['contactoEmpresaAuspiciadora'].setValue(null);
     }
+  }
+
+  onChangeTipoDestino(value: TipoDestino) {
+    if (value.nombre.toUpperCase() === "INTERNA") {
+      this.campanaForm.controls['tipoAgrupado'].setValue(null);
+      this.campanaForm.controls['requiereAgrupado'].setValue(false);
+    }
+  }
+
+  contarDocumentosDeLima(documentos: ItemCampana[]): number {
+    return documentos.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length;    
   }
 
 }

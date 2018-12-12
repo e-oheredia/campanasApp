@@ -68,5 +68,9 @@ export class UtilsService {
         return month[fecha.getMonth()];
     }
 
+    getSumaAtributoLista(lista: any[], atributo: string) {
+        return lista.reduce((a, b) => +a + +b[atributo], 0);
+    }
+
 
 }

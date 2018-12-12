@@ -22,8 +22,6 @@ export class Campana {
     public nombre: string;
     public regulatorio: boolean;
     public requiereGps: boolean;
-    public cantidadLima: number;
-    public cantidadProvincia: number;
     public requiereGeorreferencia: boolean;
     public autorizado: boolean;
     public plazo: Plazo;

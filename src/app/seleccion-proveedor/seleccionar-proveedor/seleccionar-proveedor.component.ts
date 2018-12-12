@@ -1,3 +1,4 @@
+import { ItemCampana } from './../../model/itemcampana.model';
 import { Proveedor } from '../../model/proveedor.model';
 import { TipoCampana } from '../../model/tipocampana.model';
 import { ProveedorService } from '../../services/proveedor.service';
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TipoCampanaService } from '../../services/tipocampana.service';
 import { NotifierService } from 'angular-notifier';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-seleccionar-proveedor',
@@ -21,7 +23,8 @@ export class SeleccionarProveedorComponent implements OnInit {
     public campanaService: CampanaService, 
     public tipoCampanaService: TipoCampanaService,
     public proveedorService: ProveedorService,
-    public notifier: NotifierService
+    public notifier: NotifierService, 
+    public utilsService: UtilsService
   ) { }
 
   proveedorCampanaForm: FormGroup;
@@ -60,8 +63,11 @@ export class SeleccionarProveedorComponent implements OnInit {
         this.notifier.notify("success", "Se ha asignado el proveedor correctamente")
         this.bsModalRef.hide();
       }
-    )
-    
+    )    
+  }
+
+  contarDocumentosDeLima(documentos: ItemCampana[]): number {
+    return documentos.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length;    
   }
 
 
