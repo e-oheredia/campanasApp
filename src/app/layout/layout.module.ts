@@ -30,6 +30,7 @@ import { TipoAgrupadoService } from '../services/tipoagrupado.service';
 import { AccionRestosProveedorService } from '../services/accionrestosproveedor.service';
 import { ProvinciaService } from '../services/provincia.service';
 import { ReadExcelService } from '../services/readexcel.service';
+import { WriteExcelService } from '../services/write-excel.service';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { ReadExcelService } from '../services/readexcel.service';
     ItemCampanaService,
     UtilsService,
     ReadExcelService,
-    ItemCampanaService
+    ItemCampanaService,
+    WriteExcelService
   ]
 })
 export class LayoutModule { }

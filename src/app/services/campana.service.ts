@@ -5,6 +5,8 @@ import { AppSettings } from '../settings/app.settings';
 import { Injectable } from '@angular/core';
 import { RequesterService } from './requester.service';
 import { HttpParams } from '@angular/common/http';
+import { WriteExcelService } from './write-excel.service';
+import * as moment from 'moment-timezone';
 
 
 @Injectable()
@@ -14,6 +16,7 @@ export class CampanaService {
 
     constructor(
         private requester: RequesterService, 
+        private writeExcelService: WriteExcelService,
         private buzonService: BuzonService
     ) {
 
@@ -25,6 +28,12 @@ export class CampanaService {
         });
     }    
 
+    listarCampanasPorEstados(estadosCampana: number[]): Observable<Campana[]>{
+        return this.requester.get<Campana[]>(this.REQUEST_URL, {
+            params: new HttpParams().append('estadoIds', estadosCampana.toString())
+        });
+    } 
+
     seleccionarProveedor(campana: Campana): Observable<Campana[]> {
         return this.requester.put<Campana[]>(this.REQUEST_URL + campana.id + "/seleccionproveedor", campana, {});
     }
@@ -32,6 +41,32 @@ export class CampanaService {
     registrarCampana(campana: Campana): Observable<Campana[]> {
         campana.buzon = this.buzonService.getBuzonActual();
         return this.requester.post<Campana[]>(this.REQUEST_URL, campana, {});
+    }
+
+    getUltimoSeguimientoCampana(campana: Campana){
+        return campana.seguimientosCampana.reduce(
+            (max,seguimientoCampana) => 
+            moment(seguimientoCampana.fecha, "DD-MM-YYYY HH:mm:ss") > moment(max.fecha, "DD-MM-YYYY HH:mm:ss") ? seguimientoCampana : max, campana.seguimientosCampana[0]
+        )
+    }
+
+    exportarItemsCampanaPorGeoReferenciar(campana: Campana) {
+        let objects = [];
+        campana.itemsCampana.forEach(ItemCampana => {
+            objects.push({
+                "Numero de Campaña": campana.id, 
+                "Codigo de Item" : ItemCampana.id,
+                "Razon Social": ItemCampana.razonSocial,
+                "Nombres": ItemCampana.nombres,
+                "Apellido Paterno": ItemCampana.apellidoPaterno,
+                "Apellido Materno": ItemCampana.apellidoMaterno,
+                "Dirección": ItemCampana.direccion,
+                "Distrito": ItemCampana.distrito.nombre,
+                "Provincia" : ItemCampana.distrito.provincia.nombre,
+                "Departamento" : ItemCampana.distrito.provincia.departamento.nombre
+            })
+        });
+        this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
     }
 
 }   

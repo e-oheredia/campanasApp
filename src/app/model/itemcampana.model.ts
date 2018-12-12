@@ -3,6 +3,7 @@ export class ItemCampana {
     constructor(){
     }
 
+    public id : number;
     public distrito: Distrito;
     public nombres: string;
     public apellidoPaterno: string;
