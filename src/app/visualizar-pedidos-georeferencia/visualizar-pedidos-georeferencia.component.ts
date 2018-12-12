@@ -84,8 +84,8 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
             nombre: campana.nombre,
             tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,            
-            cantidadLima: campana.cantidadLima,
-            cantidadProvincia: campana.cantidadProvincia,
+            cantidadLima: campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
+            cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
             estado: this.campanaService.getUltimoSeguimientoCampana(campana).estadoCampana.nombre
           });
         });
