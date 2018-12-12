@@ -97,8 +97,8 @@ export class SeleccionProveedorComponent implements OnInit {
             regulatorio: campana.regulatorio ? 'Sí':'No',
             tipoDocumento: campana.tipoDocumento.nombre,
             tipoDestino: campana.tipoDestino.nombre,
-            cantidadLima: campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase() === "LIMA").length,
-            cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase() === "LIMA").length
+            cantidadLima: campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
+            cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length
           });
         });
         this.dataCampanasCreadas.load(dataCampanasCreadas);

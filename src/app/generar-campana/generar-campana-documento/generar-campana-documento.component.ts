@@ -119,7 +119,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       'requiereImpresion': new FormControl(false, Validators.required),
       'requiereHabilitado': new FormControl(true, Validators.required),
       'paqueteHabilitado': new FormControl(null, [this.requiredIfRequiereHabilitado.bind(this)]),
-      'requiereAgrupado': new FormControl(true, Validators.required),
+      'requiereAgrupado': new FormControl(false, Validators.required),
       'requiereCentroCostoBCP': new FormControl(true, Validators.required),
       'tipoAgrupado': new FormControl(null, [this.requiredIfRequiereAgrupado.bind(this)]),
       'requiereDevolucionRezago': new FormControl(true, Validators.required),
@@ -136,7 +136,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       'rucEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
       'direccionEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
       'contactoEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
-
+      'archivoExcel': new FormControl(null)
     }, [this.noDocumentsLoaded.bind(this), this.porcentajeCompletoSiRequiereCentroCostosBCP.bind(this)]);
     this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
 
@@ -451,6 +451,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       () => {
         this.notifier.notify("success", "Se ha registrado la campaña correctamente");
         this.campanaForm.reset();
+        this.itemsCampanaCargados = [];
       }
     )
   }
@@ -522,7 +523,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   }
 
   contarDocumentosDeLima(documentos: ItemCampana[]): number {
-    return documentos.filter(documento => documento.distrito.provincia.nombre.toUpperCase() === "LIMA").length;    
+    return documentos.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length;    
   }
 
 }

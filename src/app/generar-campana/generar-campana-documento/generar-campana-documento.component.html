@@ -123,7 +123,7 @@
                 <div class="col-sm-8">
                   <label for="excel">Excel de Registros</label>
                   <input type="file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="excel"
-                    (change)="onChangeExcelFile($event.srcElement.files[0])">
+                    (change)="onChangeExcelFile($event.srcElement.files[0])" formControlName="archivoExcel">
                 </div>
               </div>
             </div>
