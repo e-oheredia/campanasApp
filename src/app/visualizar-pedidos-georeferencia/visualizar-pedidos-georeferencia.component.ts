@@ -25,7 +25,7 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
   dataCampanasCreadas: LocalDataSource = new LocalDataSource();
   campanas: Campana[] = [];
 
-  estadosCampana : number[] = [EstadoCampanaEnum.ASIGNADA,EstadoCampanaEnum.GEOREFERENCIADA];
+  estadosCampana : number[] = [EstadoCampanaEnum.ASIGNADA,EstadoCampanaEnum.GEOREFERENCIADA_Y_MODIFICADA];
 
   ngOnInit() {
     this.tituloService.setTitulo("Selección de Proveedor");
