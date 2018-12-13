@@ -7,6 +7,7 @@ import { ModificarBaseComponent } from './modificar-base/modificar-base.componen
 import { ConfirmacionGeoComponent } from './confirmacion-geo.component';
 import { ButtonViewComponent } from '../table-management/button-view/button-view.component';
 import { TableManagementModule } from '../table-management/table-management.module';
+import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
 
 @NgModule({
     imports: [
@@ -18,11 +19,14 @@ import { TableManagementModule } from '../table-management/table-management.modu
     ],
     declarations: [
       ModificarBaseComponent,
-      ConfirmacionGeoComponent
+      ConfirmacionGeoComponent,
+      
     ],
     entryComponents: [
       ButtonViewComponent,
-      ConfirmacionGeoComponent
+      ConfirmacionGeoComponent,
+      ModificarBaseComponent,
+      ConfirmModalComponent
     ]
   })
 

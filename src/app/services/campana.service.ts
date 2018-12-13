@@ -22,6 +22,12 @@ export class CampanaService {
 
     }
 
+    getFechaCreacion(campana: Campana): Date | string {
+        return campana.seguimientosCampana.find(seguimientoCampana =>
+            seguimientoCampana.estadoCampana.id === 1
+        ).fecha;
+    }
+
     listarCampanasPorEstado(estadoCampana: number): Observable<Campana[]>{
         return this.requester.get<Campana[]>(this.REQUEST_URL, {
             params: new HttpParams().append('estadoId', estadoCampana.toString())
@@ -68,5 +74,10 @@ export class CampanaService {
         });
         this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
     }
+
+    confirmarGeoService(id: number): Observable<Campana>{
+        return this.requester.put<Campana>(this.REQUEST_URL + id.toString() + "/", {}, {});
+    }
+
 
 }   

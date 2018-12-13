@@ -8,7 +8,9 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AppSettings } from '../settings/app.settings';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ButtonViewComponent } from '../table-management/button-view/button-view.component';
+import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
 import { ModificarBaseComponent } from './modificar-base/modificar-base.component';
+import { NotifierService } from 'angular-notifier';
 
 
 @Component({
@@ -21,7 +23,8 @@ export class ConfirmacionGeoComponent implements OnInit {
   constructor(
     private tituloService:TituloService,
     private campanaService:CampanaService,
-    private modalService:BsModalService
+    private modalService:BsModalService,
+    private notifier: NotifierService
   ) { }
 
 
@@ -43,6 +46,9 @@ export class ConfirmacionGeoComponent implements OnInit {
             this.visualizarSeguimiento(row);
           })
         }
+      },
+      id: {
+        title: 'Número de campaña'
       },
       nombre: {
         title: 'Nombre de Campaña'
@@ -81,7 +87,7 @@ export class ConfirmacionGeoComponent implements OnInit {
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction:(instance: any) => {
-          instance.claseIcono = "fas fa-download";
+          instance.claseIcono = "fas fa-pen";
           instance.pressed.subscribe(row => {
             this.modificarBase(row);
           });
@@ -92,7 +98,7 @@ export class ConfirmacionGeoComponent implements OnInit {
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction:(instance: any) => {
-          instance.claseIcono = "fas fa-download";
+          instance.claseIcono = "fas fa-check-circle";
           instance.pressed.subscribe(row => {
             this.confirmarBase(row);
           });
@@ -110,9 +116,25 @@ export class ConfirmacionGeoComponent implements OnInit {
     // 
   }
 
-  confirmarBase(row){
-    // 
+  confirmarBase(id: number){
+    let bsModalRef: BsModalRef = this.modalService.show(ConfirmModalComponent,{
+      initialState: {
+        mensaje: "¿Está seguro de confirmar la base georeferenciada?"
+      }
+    });
+    bsModalRef.content.confirmarEvent.subscribe(() => {
+      this.campanaService.confirmarGeoService(id).subscribe(
+        () => {
+          this.notifier.notify('success', 'Se ha autorizado correctamente el envío');
+          this.listarCampanasGeoreferenciadas();
+        },
+        error => {
+          console.log('holitas')
+        }
+      )
+    });
   }
+
 
 
   visualizarSeguimiento(row) {
@@ -127,20 +149,21 @@ export class ConfirmacionGeoComponent implements OnInit {
 
   listarCampanasGeoreferenciadas(){
     this.dataCampanasGeoreferenciadas.reset();
-    this.campanas = [];
     this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.GEOREFERENCIADA).subscribe(
       campanas => {
         this.campanas = campanas;
         let dataCampanasGeoreferenciadas = [];
-        campanas.forEach(campana => {
+        campanas.forEach(
+          campana => {
           dataCampanasGeoreferenciadas.push({
+            id: campana.id,
             nombre: campana.nombre,
             tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,
-            noDistribuible: campana.itemsCampana.filter(documento => documento.enviable===false).length,
-            normalizado: campana.itemsCampana.filter(documento => documento.enviable===true).length,
-            contador: campana.seguimientosCampana.filter(seguimientocampana => seguimientocampana.estadoCampana.id===EstadoCampanaEnum.GEOREFERENCIADA),
-            fechaIngresoCampana: dataCampanasGeoreferenciadas
+            noDistribuible: campana.itemsCampana.filter(documento => documento.enviable===true).length,
+            normalizado: campana.itemsCampana.filter(documento => documento.enviable===false).length,
+            contador: campana.seguimientosCampana.filter(seguimientocampana => seguimientocampana.estadoCampana.id===EstadoCampanaEnum.GEOREFERENCIADA).length,
+            fechaIngresoCampana: this.campanaService.getFechaCreacion(campana)
           });
         });
         this.dataCampanasGeoreferenciadas.load(dataCampanasGeoreferenciadas);
