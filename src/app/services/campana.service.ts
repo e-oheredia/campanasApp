@@ -69,4 +69,8 @@ export class CampanaService {
         this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
     }
 
+    listarCampanaParaRecotizar() {
+        return this.requester.get<Campana[]>(this.REQUEST_URL + "/pararecotizacion", {});
+    }
+
 }   

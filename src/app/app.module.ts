@@ -1,3 +1,4 @@
+import { RecotizacionCampanaModule } from './recotizacion-campana/recotizacion-campana.module';
 import { NotifierModule } from 'angular-notifier';
 import { LayoutModule } from './layout/layout.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,7 +23,8 @@ import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-geore
     GenerarCampanaModule,
     SeleccionProveedorModule, 
     NotifierModule,
-    VisualizarPedidosGeoreferenciaModule
+    VisualizarPedidosGeoreferenciaModule, 
+    RecotizacionCampanaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
