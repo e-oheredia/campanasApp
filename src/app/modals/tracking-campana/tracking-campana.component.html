@@ -1,0 +1,110 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Tracking de la Campaña</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-12">
+      <div class="pb-2 mt-4 mb-2">
+        <div class="card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Campaña
+                </div>
+                <div class="col-7">
+                  {{campana.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Solicitante
+                </div>
+                <div class="col-7">
+                  {{campana.buzon.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Area Solicitante
+                </div>
+                <div class="col-7">
+                  {{campana.buzon.area.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Tipo de Documento
+                </div>
+                <div class="col-7">
+                  {{campana.tipoDocumento.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Plazo
+                </div>
+                <div class="col-7">
+                  {{campana.plazo.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Cantidad Lima
+                </div>
+                <div class="col-7">
+                  {{contarDocumentosDeLima(campana.itemsCampana)}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Cantidad Provincia
+                </div>
+                <div class="col-7">
+                  {{campana.itemsCampana.length - contarDocumentosDeLima(campana.itemsCampana)}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Paquete Habilitado
+                </div>
+                <div class="col-7" *ngIf="campana.paqueteHabilitado; else sinPaquete">
+                  {{campana.paqueteHabilitado.descripcion}}: <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.descripcion}}</span>
+                </div>
+                <ng-template #sinPaquete>
+                    <div class="col-7">
+                        No necesita habilitado
+                      </div>
+                </ng-template>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="pb-2 mt-4 mb-2">
+        <ng2-smart-table [settings]="settings2" [source]="dataSeguimientosCampana"></ng2-smart-table>
+      </div>
+    </div>
+  </div>
+</div>

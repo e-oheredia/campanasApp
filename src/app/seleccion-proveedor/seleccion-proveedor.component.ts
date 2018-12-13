@@ -1,3 +1,4 @@
+import { TrackingCampanaComponent } from './../modals/tracking-campana/tracking-campana.component';
 import { Campana } from '../model/campana.model';
 import { SeleccionarProveedorComponent } from './seleccionar-proveedor/seleccionar-proveedor.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -18,11 +19,11 @@ export class SeleccionProveedorComponent implements OnInit {
 
   constructor(
     private tituloService: TituloService, 
-    private campanaService: CampanaService, 
+    private campanaService: CampanaService,
     private modalService: BsModalService
   ) { }
 
-  settings = AppSettings.tableSettings;
+  settings = Object.assign({}, AppSettings.tableSettings);
   dataCampanasCreadas: LocalDataSource = new LocalDataSource();
   campanas: Campana[] = [];
 
@@ -30,9 +31,20 @@ export class SeleccionProveedorComponent implements OnInit {
   ngOnInit() {
     this.tituloService.setTitulo("Selección de Proveedor");
     this.settings.columns = {
+      linkTracking: {
+        title: 'Tracking',
+        type: 'custom',
+        renderComponent: ButtonViewComponent,
+        onComponentInitFunction: (instance: any) => {
+          instance.claseIcono = "fas fa-clipboard-list";
+          instance.pressed.subscribe(row => {
+            this.visualizarSeguimiento(row);
+          });
+        }
+      },
       id: {
         title: 'Número de Campaña'
-      },
+      },      
       nombre: {
         title: 'Nombre'
       },
@@ -82,9 +94,18 @@ export class SeleccionProveedorComponent implements OnInit {
     )
   }
 
+  visualizarSeguimiento(row) {
+    let bsModalRef: BsModalRef = this.modalService.show(TrackingCampanaComponent, {
+      initialState: {
+        campana: this.campanas.find(campana => campana.id == row.id)
+      },
+      class: 'modal-lg'
+    });
+  }
+
   listarCampanasCreadas() {
-    this.dataCampanasCreadas.reset();
-    this.campanas = [];
+    this.dataCampanasCreadas = new LocalDataSource();
+    this.campanas = []; 
     this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.CREADO).subscribe(
       campanas => {
         this.campanas = campanas;

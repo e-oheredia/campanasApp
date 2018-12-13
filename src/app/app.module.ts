@@ -9,6 +9,8 @@ import { SeleccionProveedorModule } from './seleccion-proveedor/seleccion-provee
 
 import { GenerarCampanaModule } from './generar-campana/generar-campana.module';
 import { ConfirmacionGeoModule } from './confirmacion-geo/confirmacion-geo.module';
+import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.module'
+
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { ConfirmacionGeoModule } from './confirmacion-geo/confirmacion-geo.modul
     GenerarCampanaModule,
     SeleccionProveedorModule, 
     NotifierModule,
-    ConfirmacionGeoModule
+    ConfirmacionGeoModule,
+    VisualizarPedidosGeoreferenciaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

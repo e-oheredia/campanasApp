@@ -1,3 +1,4 @@
+import { TrackingCampanaComponent } from './../modals/tracking-campana/tracking-campana.component';
 import { Campana } from '../model/campana.model';
 import { Component, OnInit } from '@angular/core';
 import { EstadoCampanaEnum } from '../enum/estadocampana.enum';
@@ -32,7 +33,18 @@ export class ConfirmacionGeoComponent implements OnInit {
   ngOnInit() {
     this.tituloService.setTitulo("Confirmación de Bases Georeferenciadas");
     this.settings.columns = {
-      id: {
+      linkTracking: {
+        title: 'Tracking',
+        type: 'custom',
+        renderComponent: ButtonViewComponent,
+        onComponentInitFunction:(instance:any)=>{
+          instance.claseIcono="fas fa-clipboard-list";
+          instance.pressed.subscribe(row=>{
+            this.visualizarSeguimiento(row);
+          })
+        }
+      },
+      nombre: {
         title: 'Nombre de Campaña'
       },
       tipoCampana: {
@@ -42,13 +54,10 @@ export class ConfirmacionGeoComponent implements OnInit {
         title: 'Tipo de Documento'
       },
       noDistribuible: {
-        title: 'No Distribuible'
+        title: 'No Distribuibles'
       },
       normalizado: {
-        title: 'Normalizado'
-      },
-      estado: {
-        title: 'Estado'
+        title: 'Normalizados'
       },
       contador: {
         title: 'Contador Geo'
@@ -56,64 +65,82 @@ export class ConfirmacionGeoComponent implements OnInit {
       fechaIngresoCampana: {
         title: 'Fecha de Ingreso de Campaña'
       },
-      descargar: {
-        title: 'Descarga'
-      },
-      modificar: {
-        title: 'Modificar'
-      },
-      confirmar: {
-        title: 'Confirmar Base con Geo'
-      },
-      button: {
-        title: 'Asignar Proveedor',
+      buttonDescargar: {
+        title: 'Descargar Base',
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {
-          instance.claseIcono = "fas fa-hand-pointer";
+          instance.claseIcono = "fas fa-download";
           instance.pressed.subscribe(row => {
-            this.asignarProveedor(row);
+            this.descargarBase(row);
           });
         }
       },
+      buttonModificar: {
+        title: 'Modificar',
+        type: 'custom',
+        renderComponent: ButtonViewComponent,
+        onComponentInitFunction:(instance: any) => {
+          instance.claseIcono = "fas fa-download";
+          instance.pressed.subscribe(row => {
+            this.modificarBase(row);
+          });
+        }
+      },
+      buttonConfirmar: {
+        title: 'Confirmar Base con Geo',
+        type: 'custom',
+        renderComponent: ButtonViewComponent,
+        onComponentInitFunction:(instance: any) => {
+          instance.claseIcono = "fas fa-download";
+          instance.pressed.subscribe(row => {
+            this.confirmarBase(row);
+          });
+        }
+      }
     };
     this.listarCampanasGeoreferenciadas();
   }
 
+  descargarBase(row) {
+    this.campanaService.exportarItemsCampanaPorGeoReferenciar(this.campanas.find(campana => campana.id == row.id));
+  }
+
+  modificarBase(row){
+    // 
+  }
+
+  confirmarBase(row){
+    // 
+  }
 
 
-  asignarProveedor(row){
-    let bsModalRef: BsModalRef = this.modalService.show(ModificarBaseComponent, {
+  visualizarSeguimiento(row) {
+    let bsModalRef: BsModalRef = this.modalService.show(TrackingCampanaComponent, {
       initialState: {
         campana: this.campanas.find(campana => campana.id == row.id)
       },
       class: 'modal-lg'
     });
-    
-    this.modalService.onHide.subscribe(
-      () => this.listarCampanasGeoreferenciadas()
-    )
   }
-
 
 
   listarCampanasGeoreferenciadas(){
     this.dataCampanasGeoreferenciadas.reset();
     this.campanas = [];
-    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.CREADO).subscribe(
+    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.GEOREFERENCIADA).subscribe(
       campanas => {
         this.campanas = campanas;
         let dataCampanasGeoreferenciadas = [];
         campanas.forEach(campana => {
           dataCampanasGeoreferenciadas.push({
-            id: campana.id,
             nombre: campana.nombre,
-            solicitante: campana.buzon.nombre,
-            regulatorio: campana.regulatorio ? 'Sí':'No',
+            tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,
-            tipoDestino: campana.tipoDestino.nombre,
-            cantidadLima: campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
-            cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length
+            noDistribuible: campana.itemsCampana.filter(documento => documento.enviable===false).length,
+            normalizado: campana.itemsCampana.filter(documento => documento.enviable===true).length,
+            contador: campana.seguimientosCampana.filter(seguimientocampana => seguimientocampana.estadoCampana.id===EstadoCampanaEnum.GEOREFERENCIADA),
+            fechaIngresoCampana: dataCampanasGeoreferenciadas
           });
         });
         this.dataCampanasGeoreferenciadas.load(dataCampanasGeoreferenciadas);
@@ -121,6 +148,7 @@ export class ConfirmacionGeoComponent implements OnInit {
 
     )
   }
+
 
 
 }
