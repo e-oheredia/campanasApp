@@ -1,3 +1,4 @@
+import { ItemCampana } from './../model/itemcampana.model';
 import { TrackingCampanaComponent } from './../modals/tracking-campana/tracking-campana.component';
 import { ButtonViewComponent } from './../table-management/button-view/button-view.component';
 import { Campana } from './../model/campana.model';
@@ -7,6 +8,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CampanaService } from './../services/campana.service';
 import { TituloService } from './../services/titulo.service';
 import { Component, OnInit } from '@angular/core';
+import { EstadoCampanaEnum } from '../enum/estadocampana.enum';
+import { RecotizarCampanaComponent } from './recotizar-campana/recotizar-campana.component';
 
 @Component({
   selector: 'app-recotizacion-campana',
@@ -79,7 +82,16 @@ export class RecotizacionCampanaComponent implements OnInit {
   }
 
   recotizarCampana(row: any){
-
+    let bsModalRef: BsModalRef = this.modalService.show(RecotizarCampanaComponent, {
+      initialState: {
+        campana: this.campanas.find(campana => campana.id == row.id)
+      },
+      class: 'modal-lg'
+    });
+    
+    this.modalService.onHide.subscribe(
+      () => this.listarCampanasParaRecotizar()
+    )
   }
 
   visualizarSeguimiento(row: any) {
@@ -92,7 +104,7 @@ export class RecotizacionCampanaComponent implements OnInit {
   }
 
   listarCampanasParaRecotizar() {
-    this.campanaService.listarCampanaParaRecotizar().subscribe(
+    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.GEOREFERENCIADA_Y_CONFIRMADA).subscribe(
       campanas => {
         this.campanas = campanas;
         let dataCampanasParaRecotizar = [];
@@ -104,13 +116,17 @@ export class RecotizacionCampanaComponent implements OnInit {
             regulatorio: campana.regulatorio ? 'Sí':'No',
             tipoDocumento: campana.tipoDocumento.nombre,
             tipoDestino: campana.tipoDestino.nombre,
-            cantidadLima: campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
-            cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length
+            cantidadLima: this.contarDocumentos(campana.itemsCampana) + " / " + this.contarDocumentos(campana.itemsCampana, true, true),
+            cantidadProvincia:this.contarDocumentos(campana.itemsCampana, false) + " / " + this.contarDocumentos(campana.itemsCampana, false, true)
           });
         });
         this.dataCampanasParaRecotizar.load(dataCampanasParaRecotizar);
       }
     )
+  }
+
+  contarDocumentos(documentos: ItemCampana[], lima: boolean = true, normalizado: boolean = false): number {
+    return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;    
   }
 
 

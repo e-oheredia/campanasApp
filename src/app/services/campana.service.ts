@@ -43,6 +43,10 @@ export class CampanaService {
         return this.requester.post<Campana[]>(this.REQUEST_URL, campana, {});
     }
 
+    recotizarCampana(campana: Campana): Observable<Campana[]> {
+        return this.requester.put<Campana[]>(this.REQUEST_URL + campana.id + "/recotizacion", campana, {});
+    }
+
     getUltimoSeguimientoCampana(campana: Campana){
         return campana.seguimientosCampana.reduce(
             (max,seguimientoCampana) => 
