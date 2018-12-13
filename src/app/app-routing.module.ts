@@ -2,6 +2,7 @@ import { SeleccionProveedorComponent } from './seleccion-proveedor/seleccion-pro
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GenerarCampanaDocumentoComponent } from './generar-campana/generar-campana-documento/generar-campana-documento.component';
+import { ConfirmacionGeoComponent } from './confirmacion-geo/confirmacion-geo.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'ingresar-campana',
     component: GenerarCampanaDocumentoComponent
+  },
+  {
+    path: 'confirmar-geo',
+    component: ConfirmacionGeoComponent
   }
 ];
 
