@@ -36,6 +36,7 @@ export class ConfirmacionGeoComponent implements OnInit {
   ngOnInit() {
     this.tituloService.setTitulo("Confirmación de Bases Georeferenciadas");
     this.settings.columns = {
+
       linkTracking: {
         title: 'Tracking',
         type: 'custom',
@@ -104,6 +105,7 @@ export class ConfirmacionGeoComponent implements OnInit {
           });
         }
       }
+      
     };
     this.listarCampanasGeoreferenciadas();
   }
