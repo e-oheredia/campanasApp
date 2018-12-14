@@ -56,14 +56,15 @@ export class CampanaService {
             objects.push({
                 "Numero de Campaña": campana.id, 
                 "Codigo de Item" : ItemCampana.id,
-                "Razon Social": ItemCampana.razonSocial,
-                "Nombres": ItemCampana.nombres,
+                "Razon Social": ItemCampana.razonSocial,                
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,
-                "Dirección": ItemCampana.direccion,
-                "Distrito": ItemCampana.distrito.nombre,
+                "Nombres": ItemCampana.nombres,
+                "Departamento" : ItemCampana.distrito.provincia.departamento.nombre,                
                 "Provincia" : ItemCampana.distrito.provincia.nombre,
-                "Departamento" : ItemCampana.distrito.provincia.departamento.nombre
+                "Distrito": ItemCampana.distrito.nombre,
+                "Dirección": ItemCampana.direccion,
+                "Estado" : ""
             })
         });
         this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);

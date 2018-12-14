@@ -10,6 +10,7 @@ import { DistritoService } from './distrito.service';
 import { ProvinciaService } from './provincia.service';
 import { DepartamentoService } from './departamento.service';
 import { ReadExcelService } from './readexcel.service';
+import { Campana } from '../model/campana.model';
 
 @Injectable()
 export class ItemCampanaService {
@@ -113,7 +114,7 @@ export class ItemCampanaService {
                 itemCampanaCargado.distrito = distrito;
                 itemCampanaCargado.direccion = data[i][7] || "";
 
-               
+              
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;
             }
@@ -123,6 +124,102 @@ export class ItemCampanaService {
         });
     }
 
-    
+    mostrarItemsCampanaBase(file: File, sheet: number,  campana: Campana, callback: Function) {
+        this.readExcelService.excelToJson(file, sheet, (data: Array<any>) => {
+            
+            if (campana.itemsCampana.length != data.length){
+                callback({
+                    mensaje: "Error, la base cuenta con mas registros "
+                });
+                return;
+            }
+
+            let itemsCampanaCargados: ItemCampana[] = [];
+            let i = 1
+            while (true) {
+
+                if (data.length == i) {
+                    break;
+                }
+                if (data[i].length === 0) {
+                    break;
+                }
+
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][1])) {
+                    callback({
+                        mensaje: "Ingrese el codigo de documento en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                let itemCampanaCargado: ItemCampana = new ItemCampana();
+                itemCampanaCargado.id = data[i][1];
+                
+                itemCampanaCargado.razonSocial = data[i][2] || "";
+
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][3])) {
+                    callback({
+                        mensaje: "Ingrese los nombres en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                itemCampanaCargado.nombres = data[i][3] || "";
+
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][4])) {
+                    callback({
+                        mensaje: "Ingrese el apellido Paterno en la fila " + (i + 1)
+                    });
+                    return;
+                }              
+
+                itemCampanaCargado.apellidoPaterno = data[i][4] || "";
+
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][5])) {
+                    callback({
+                        mensaje: "Ingrese el apellido Materno en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                itemCampanaCargado.apellidoMaterno = data[i][5] || "";
+
+                itemCampanaCargado.direccion = data[i][6] || "";
+
+                if (this.departamentoService.listarDepartamentoByNombre(data[i][9]) === null) {
+                    callback({
+                        mensaje: "Ingrese Departamento válido en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                if (this.provinciaService.listarProvinciaByNombreProvinciaAndNombreDepartamento(data[i][8], data[i][9]) === null) {
+                    callback({
+                        mensaje: "Ingrese Provincia válida en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                let distrito = this.distritoService.listarDistritoByNombreDistritoAndNombreProvincia(data[i][7], data[i][8])
+
+                if (distrito === null) {
+                    callback({
+                        mensaje: "Ingrese Distrito válido en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                itemCampanaCargado.distrito = distrito;
+                itemCampanaCargado.direccion = data[i][6] || "";
+
+               itemCampanaCargado.enviable = data[i][10] == "Normalizado" ? true: false;
+                itemsCampanaCargados.push(itemCampanaCargado);
+                i++;
+            }
+
+            callback(itemsCampanaCargados);
+
+        });
+    }
 
 }
