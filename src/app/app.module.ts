@@ -9,12 +9,15 @@ import { AppComponent } from './app.component';
 import { SeleccionProveedorModule } from './seleccion-proveedor/seleccion-proveedor.module';
 
 import { GenerarCampanaModule } from './generar-campana/generar-campana.module';
-import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.module'
+import { ConfirmacionGeoModule } from './confirmacion-geo/confirmacion-geo.module';
+import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.module';
+import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component'
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ConfirmModalComponent
   ],
   imports: [
     BrowserModule,
@@ -23,6 +26,7 @@ import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-geore
     GenerarCampanaModule,
     SeleccionProveedorModule, 
     NotifierModule,
+    ConfirmacionGeoModule,
     VisualizarPedidosGeoreferenciaModule, 
     RecotizacionCampanaModule
   ],

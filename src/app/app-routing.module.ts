@@ -3,6 +3,7 @@ import { SeleccionProveedorComponent } from './seleccion-proveedor/seleccion-pro
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GenerarCampanaDocumentoComponent } from './generar-campana/generar-campana-documento/generar-campana-documento.component';
+import { ConfirmacionGeoComponent } from './confirmacion-geo/confirmacion-geo.component';
 import { VisualizarPedidosGeoreferenciaComponent } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.component';
 
 const routes: Routes = [
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'ingresar-campana',
     component: GenerarCampanaDocumentoComponent
+  },
+  {
+    path: 'confirmar-geo',
+    component: ConfirmacionGeoComponent
   },
   {
     path: 'visualizar-pedidos-georeferencia',

@@ -19,7 +19,7 @@ export class SeleccionProveedorComponent implements OnInit {
 
   constructor(
     private tituloService: TituloService, 
-    private campanaService: CampanaService, 
+    private campanaService: CampanaService,
     private modalService: BsModalService
   ) { }
 
