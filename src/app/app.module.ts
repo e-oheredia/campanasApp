@@ -1,3 +1,4 @@
+import { RecotizacionCampanaModule } from './recotizacion-campana/recotizacion-campana.module';
 import { NotifierModule } from 'angular-notifier';
 import { LayoutModule } from './layout/layout.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -26,7 +27,8 @@ import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.comp
     SeleccionProveedorModule, 
     NotifierModule,
     ConfirmacionGeoModule,
-    VisualizarPedidosGeoreferenciaModule
+    VisualizarPedidosGeoreferenciaModule, 
+    RecotizacionCampanaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

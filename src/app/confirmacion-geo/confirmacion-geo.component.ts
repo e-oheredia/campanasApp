@@ -116,14 +116,14 @@ export class ConfirmacionGeoComponent implements OnInit {
     // 
   }
 
-  confirmarBase(id: number){
+  confirmarBase(campana: Campana){
     let bsModalRef: BsModalRef = this.modalService.show(ConfirmModalComponent,{
       initialState: {
         mensaje: "¿Está seguro de confirmar la base georeferenciada?"
       }
     });
     bsModalRef.content.confirmarEvent.subscribe(() => {
-      this.campanaService.confirmarGeoService(id).subscribe(
+      this.campanaService.confirmarBaseGeo(campana).subscribe(
         () => {
           this.notifier.notify('success', 'Se ha autorizado correctamente el envío');
           this.listarCampanasGeoreferenciadas();

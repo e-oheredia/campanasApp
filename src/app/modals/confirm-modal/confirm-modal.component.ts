@@ -17,8 +17,8 @@ export class ConfirmModalComponent implements OnInit {
   }
 
   confirmar(){
-    this.confirmarEvent.emit();
     this.bsModalRef.hide();
+    this.confirmarEvent.emit();
   }
 
 }

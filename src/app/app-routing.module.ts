@@ -1,3 +1,4 @@
+import { RecotizacionCampanaComponent } from './recotizacion-campana/recotizacion-campana.component';
 import { SeleccionProveedorComponent } from './seleccion-proveedor/seleccion-proveedor.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'visualizar-pedidos-georeferencia',
     component: VisualizarPedidosGeoreferenciaComponent
+  },
+  {
+    path: 'recotizacion-campana',
+    component: RecotizacionCampanaComponent
   }
 ];
 
