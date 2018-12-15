@@ -23,10 +23,11 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
   ) { }
 
   settings = AppSettings.tableSettings;
-  dataCampanasCreadas: LocalDataSource = new LocalDataSource();
+  dataCampanasPorGeoreferenciar: LocalDataSource = new LocalDataSource();
   campanas: Campana[] = [];
+  prefijo = AppSettings.PREFIJO;
 
-  estadosCampana : number[] = [EstadoCampanaEnum.ASIGNADA,EstadoCampanaEnum.GEOREFERENCIADA];
+  estadosCampana : number[] = [EstadoCampanaEnum.ASIGNADA,EstadoCampanaEnum.GEOREFERENCIADA_Y_CONFIRMADA];
 
   ngOnInit() {
     this.tituloService.setTitulo("Campañas por Georeferenciar");
@@ -86,27 +87,27 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
   subirBase(row) {
     let bsModalRef: BsModalRef = this.modalService.show(SubirBaseGeoreferenciadaComponent, {
       initialState: {
-        campana: this.campanas.find(campana => campana.id == row.id),
+        campana: this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)),
         title : 'Subir Base',
       },
       class: 'modal-lg'
     });
     
     this.modalService.onHide.subscribe(
-      () => this.listarCampanasPorGeoreferenciar()
+      () => this.listarCampanasPorGeoreferenciar()  
     )
   }
 
   listarCampanasPorGeoreferenciar() {
-    this.dataCampanasCreadas.reset();
+    this.dataCampanasPorGeoreferenciar.reset();
     this.campanas = [];
     this.campanaService.listarCampanasPorEstados(this.estadosCampana).subscribe(
       campanas => {
         this.campanas = campanas;
-        let dataCampanasCreadas = [];
+        let dataCampanasPorGeoreferenciar = [];
         campanas.forEach(campana => {
-          dataCampanasCreadas.push({
-            id: campana.id,
+          dataCampanasPorGeoreferenciar.push({
+            id: this.campanaService.codigoAutogenerado(campana.id,this.prefijo.DOCUMENTO),
             nombre: campana.nombre,
             tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,            
@@ -115,7 +116,7 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
             estado: this.campanaService.getUltimoSeguimientoCampana(campana).estadoCampana.nombre
           });
         });
-        this.dataCampanasCreadas.load(dataCampanasCreadas);
+        this.dataCampanasPorGeoreferenciar.load(dataCampanasPorGeoreferenciar);
       }
 
     )

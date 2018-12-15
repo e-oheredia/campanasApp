@@ -1,9 +1,9 @@
 <div class="card">
 
-  <form [formGroup]="campanaForm" (ngSubmit)=subirBase()>
+  <form [formGroup]="campanaForm" (ngSubmit)=onSubmit(campanaForm.value)>
 
     <div class="card-header">
-      <h6>Subir Base</h6>
+      <h6>Seleccionar base de campaña</h6>
     </div>
     <div class="card-body">
 
@@ -26,8 +26,10 @@
     </div>
 
     <div class="card-body">
-      <button class="btn btn-primary">Go somewhere</button>
+      <button type="submit" class="btn btn-success">Aceptar</button>
+      <button type="cancel" class="btn btn-danger">Cancelar</button>
     </div>
+
 
 
   </form>

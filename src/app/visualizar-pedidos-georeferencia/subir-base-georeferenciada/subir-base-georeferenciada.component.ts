@@ -22,7 +22,8 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
     public bsModalRef: BsModalRef,
     public utilsService: UtilsService,
     private notifier: NotifierService,
-    private itemCampanaService: ItemCampanaService
+    private itemCampanaService: ItemCampanaService,
+    private campanaService: CampanaService, 
   ) { }
 
   campana: Campana;
@@ -30,26 +31,15 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
   itemsCampanaCargados: ItemCampana[] = [];
   excelFile: File;
   tableSettings = AppSettings.tableSettings;
+  prefijo = AppSettings.PREFIJO;
 
   campanaForm: FormGroup;
 
 
-  columnsItemsCampanaCargados = {
+  columnsItemsCampanaCargados = {    
     id: {
       title: 'Id documento'
-    },
-    razonSocial: {
-      title: 'Razón Social'
-    },
-    nombres: {
-      title: 'Nombres'
-    },
-    apellidoPaterno: {
-      title: 'Apellido Paterno'
-    },
-    apellidoMaterno: {
-      title: 'Apellido Materno'
-    },
+    },    
     direccion: {
       title: 'Dirección'
     },   
@@ -69,16 +59,15 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.tableSettings.columns = this.columnsItemsCampanaCargados;
-    
+    this.tableSettings.columns = this.columnsItemsCampanaCargados;           
     this.campanaForm = new FormGroup({
       'archivoExcel': new FormControl(null)
     })
   }
 
   subirBase() {
-
-    console.log(this.campana);
+    this.campana.itemsCampana = this.itemsCampanaCargados;
+    this.campanaService.georeferenciarBase(this.campana);
   }
 
   onChangeExcelFile(file: File) {
@@ -119,12 +108,8 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
           dataItemsCampanaCargados.push({
             departamento: element.distrito.provincia.departamento.nombre,
             provincia: element.distrito.provincia.nombre,
-            distrito: element.distrito.nombre,
-            nombres: element.nombres,
-            apellidoPaterno: element.apellidoPaterno,
-            apellidoMaterno: element.apellidoMaterno,
-            direccion: element.direccion,
-            razonSocial: element.razonSocial,
+            distrito: element.distrito.nombre,           
+            direccion: element.direccion,            
             estado: element.enviable == true ? "Normalizado" : "No distribuible",
             id: element.id
           })
@@ -135,4 +120,16 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
       this.notifier.notify('error', data.mensaje);
     });
   }
+
+  onSubmit(form: any){
+    this.campana.itemsCampana = this.itemsCampanaCargados;
+    console.log(this.campanaService.codigoAutogenerado(this.campana.id,this.prefijo.DOCUMENTO))
+    this.campanaService.georeferenciarBase(this.campana).subscribe(
+      () => {
+        this.notifier.notify("success", "Se ha asignado el proveedor correctamente")
+        this.bsModalRef.hide();
+      }
+    )    
+  }
+
 }
