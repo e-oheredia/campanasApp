@@ -1,0 +1,143 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">RecotizarCampana</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-12">
+      <div class="pb-2 mt-4 mb-2">
+        <div class="card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Campaña
+                </div>
+                <div class="col-7">
+                  {{campana.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Solicitante
+                </div>
+                <div class="col-7">
+                  {{campana.buzon.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Area Solicitante
+                </div>
+                <div class="col-7">
+                  {{campana.buzon.area.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Tipo de Documento
+                </div>
+                <div class="col-7">
+                  {{campana.tipoDocumento.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Plazo
+                </div>
+                <div class="col-7">
+                  {{campana.plazo.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Cantidad Lima / Normalizados
+                </div>
+                <div class="col-7">
+                  {{contarDocumentos(campana.itemsCampana) + " / " + contarDocumentos(campana.itemsCampana, true, true)}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Cantidad Provincia / Normalizados
+                </div>
+                <div class="col-7">
+                  {{contarDocumentos(campana.itemsCampana, false) + " / " + contarDocumentos(campana.itemsCampana, false, true)}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Paquete Habilitado
+                </div>
+                <div class="col-7" *ngIf="campana.paqueteHabilitado; else sinPaquete">
+                  {{campana.paqueteHabilitado.descripcion}}: <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.descripcion}}</span>
+                </div>
+                <ng-template #sinPaquete>
+                    <div class="col-7">
+                        No necesita habilitado
+                      </div>
+                </ng-template>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Tipo de Campaña
+                </div>
+                <div class="col-7">
+                  {{campana.tipoCampana.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Proveedor
+                </div>
+                <div class="col-7">
+                  {{campana.proveedor.nombre}}
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="pb-2 mt-4 mb-2">
+        <form [formGroup]="cotizacionCampanaForm" (ngSubmit)="onSubmit(cotizacionCampanaForm.value)">          
+          <div class="form-group">
+            <label for="costoCampana">Costo de la Campaña</label>
+            <input class="form-control" type="number" id="costoCampana" formControlName="costoCampana">
+            <span *ngIf="!cotizacionCampanaForm.get('costoCampana').valid && cotizacionCampanaForm.get('costoCampana').touched" class="text-danger small">
+              Es necesario ingresar el costo de la campaña
+            </span>
+          </div>
+          <div class="row">
+            <div class="col text-right">
+              <button type="submit" class="btn btn-primary" [disabled]="!cotizacionCampanaForm.valid">Asignar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,7 +27,8 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
   campanas: Campana[] = [];
   prefijo = AppSettings.PREFIJO;
 
-  estadosCampana : number[] = [EstadoCampanaEnum.ASIGNADA,EstadoCampanaEnum.GEOREFERENCIADA_Y_CONFIRMADA];
+  estadosCampana : number[] = [EstadoCampanaEnum.ASIGNADA,EstadoCampanaEnum.GEOREFERENCIADA_Y_MODIFICADA];
+
 
   ngOnInit() {
     this.tituloService.setTitulo("Campañas por Georeferenciar");

@@ -22,7 +22,13 @@ export class CampanaService {
 
     }
 
-    listarCampanasPorEstado(estadoCampana: number): Observable<Campana[]> {
+    getFechaCreacion(campana: Campana): Date | string {
+        return campana.seguimientosCampana.find(seguimientoCampana =>
+            seguimientoCampana.estadoCampana.id === 1
+        ).fecha;
+    }
+
+    listarCampanasPorEstado(estadoCampana: number): Observable<Campana[]>{
         return this.requester.get<Campana[]>(this.REQUEST_URL, {
             params: new HttpParams().append('estadoId', estadoCampana.toString())
         });
@@ -43,7 +49,12 @@ export class CampanaService {
         return this.requester.post<Campana[]>(this.REQUEST_URL, campana, {});
     }
 
-    getUltimoSeguimientoCampana(campana: Campana) {
+    recotizarCampana(campana: Campana): Observable<Campana[]> {
+        return this.requester.put<Campana[]>(this.REQUEST_URL + campana.id + "/recotizacion", campana, {});
+    }
+
+    getUltimoSeguimientoCampana(campana: Campana){
+
         return campana.seguimientosCampana.reduce(
             (max, seguimientoCampana) =>
                 moment(seguimientoCampana.fecha, "DD-MM-YYYY HH:mm:ss") > moment(max.fecha, "DD-MM-YYYY HH:mm:ss") ? seguimientoCampana : max, campana.seguimientosCampana[0]
@@ -70,8 +81,6 @@ export class CampanaService {
         this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
     }
 
-
-
     georeferenciarBase(campana: Campana): Observable<Campana> {
         return this.requester.put<Campana>(this.REQUEST_URL + "subirbasegeo", campana, {});
     }
@@ -83,12 +92,19 @@ export class CampanaService {
         var length = id.toString().length;
         var cero = "0";
         autogenerado = prefijo + cero.repeat(longitud - length) + id.toString();
-        return autogenerado;
-        
+        return autogenerado;        
     }
 
     extraerIdAutogenerado(autogenerado: String){
         return parseInt(autogenerado.substring(3,10));
+    }
+    confirmarBaseGeo(campana: Campana): Observable<Campana>{
+        return this.requester.put<Campana>(this.REQUEST_URL + campana.id + "/confirmarbasegeo", campana, {});
+    }
+
+    listarCampanaParaRecotizar() {
+        return this.requester.get<Campana[]>(this.REQUEST_URL + "/pararecotizacion", {});
+
     }
 
 }   

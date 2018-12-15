@@ -59,7 +59,7 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.tableSettings.columns = this.columnsItemsCampanaCargados;           
+    this.tableSettings.columns = this.columnsItemsCampanaCargados;         
     this.campanaForm = new FormGroup({
       'archivoExcel': new FormControl(null)
     })
