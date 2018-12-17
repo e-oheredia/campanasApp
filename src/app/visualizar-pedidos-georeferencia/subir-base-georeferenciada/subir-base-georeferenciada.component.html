@@ -1,0 +1,38 @@
+<div class="card">
+
+  <form [formGroup]="campanaForm" (ngSubmit)=onSubmit(campanaForm.value)>
+
+    <div class="card-header">
+      <h6>Seleccionar base de campaña</h6>
+    </div>
+    <div class="card-body">
+
+      <div class="col-md-12">
+        <label for="excel">Excel de Registros</label>
+        <input type="file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          id="excel" (change)="onChangeExcelFile($event.srcElement.files[0])" formControlName="archivoExcel">
+      </div>
+
+
+    </div>
+    <div class="card-body">
+
+      <div class="row" *ngIf="itemsCampanaCargados.length !== 0">
+        <div class="col-12">
+          <ng2-smart-table [settings]="tableSettings" [source]="dataItemsCampanaCargados"></ng2-smart-table>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-body">
+      <button type="submit" class="btn btn-success">Aceptar</button>
+      <button type="cancel" class="btn btn-danger">Cancelar</button>
+    </div>
+
+
+
+  </form>
+
+
+</div>

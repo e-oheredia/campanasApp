@@ -7,6 +7,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ButtonViewComponent } from '../table-management/button-view/button-view.component';
 import { EstadoCampanaEnum } from '../enum/estadocampana.enum';
 import { LocalDataSource } from 'ng2-smart-table';
+import { SubirBaseGeoreferenciadaComponent } from './subir-base-georeferenciada/subir-base-georeferenciada.component';
 
 @Component({
   selector: 'app-visualizar-pedidos-georeferencia',
@@ -22,13 +23,15 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
   ) { }
 
   settings = AppSettings.tableSettings;
-  dataCampanasCreadas: LocalDataSource = new LocalDataSource();
+  dataCampanasPorGeoreferenciar: LocalDataSource = new LocalDataSource();
   campanas: Campana[] = [];
+  prefijo = AppSettings.PREFIJO;
 
   estadosCampana : number[] = [EstadoCampanaEnum.ASIGNADA,EstadoCampanaEnum.GEOREFERENCIADA_Y_MODIFICADA];
 
+
   ngOnInit() {
-    this.tituloService.setTitulo("Selección de Proveedor");
+    this.tituloService.setTitulo("Campañas por Georeferenciar");
     this.settings.columns = {
       id: {
         title: 'Número de Campaña'
@@ -63,24 +66,49 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
         }
       },
       
+      buttonCarga: {
+        title: 'Subir Base',
+        type: 'custom',
+        renderComponent: ButtonViewComponent,
+        onComponentInitFunction: (instance: any) => {
+          instance.claseIcono = "fas fa-hand-pointer";
+          instance.pressed.subscribe(row => {
+            this.subirBase(row);
+          });
+        }
+      },
     };
-    this.listarCampanasCreadas();
+    this.listarCampanasPorGeoreferenciar();
   }
 
   descargarBase(row) {
     this.campanaService.exportarItemsCampanaPorGeoReferenciar(this.campanas.find(campana => campana.id == row.id));
   }
 
-  listarCampanasCreadas() {
-    this.dataCampanasCreadas.reset();
+  subirBase(row) {
+    let bsModalRef: BsModalRef = this.modalService.show(SubirBaseGeoreferenciadaComponent, {
+      initialState: {
+        campana: this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)),
+        title : 'Subir Base',
+      },
+      class: 'modal-lg'
+    });
+    
+    this.modalService.onHide.subscribe(
+      () => this.listarCampanasPorGeoreferenciar()  
+    )
+  }
+
+  listarCampanasPorGeoreferenciar() {
+    this.dataCampanasPorGeoreferenciar.reset();
     this.campanas = [];
     this.campanaService.listarCampanasPorEstados(this.estadosCampana).subscribe(
       campanas => {
         this.campanas = campanas;
-        let dataCampanasCreadas = [];
+        let dataCampanasPorGeoreferenciar = [];
         campanas.forEach(campana => {
-          dataCampanasCreadas.push({
-            id: campana.id,
+          dataCampanasPorGeoreferenciar.push({
+            id: this.campanaService.codigoAutogenerado(campana.id,this.prefijo.DOCUMENTO),
             nombre: campana.nombre,
             tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,            
@@ -89,7 +117,7 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
             estado: this.campanaService.getUltimoSeguimientoCampana(campana).estadoCampana.nombre
           });
         });
-        this.dataCampanasCreadas.load(dataCampanasCreadas);
+        this.dataCampanasPorGeoreferenciar.load(dataCampanasPorGeoreferenciar);
       }
 
     )
