@@ -107,7 +107,7 @@
             <div class="col-4">
               <div class="form-group">
                 <label for="tipoDestino">Tipo de Destino</label>
-                <select class="form-control" id="tipoDestino" formControlName="tipoDestino" (change) = "onChangeTipoDestino(campanaForm.get('tipoDestino').value)">
+                <select class="form-control" id="tipoDestino" formControlName="tipoDestino" (change)="onChangeTipoDestino(campanaForm.get('tipoDestino').value)">
                   <option *ngFor="let tipoDestino of tiposDestino" [ngValue]="tipoDestino">{{tipoDestino.nombre}}</option>
                 </select>
                 <span *ngIf="!campanaForm.get('tipoDestino').valid && campanaForm.get('tipoDestino').touched" class="text-danger small">
@@ -131,32 +131,32 @@
           <br>
           <div class="row" *ngIf="itemsCampanaCargados.length !== 0">
             <div class="col-12">
-                <div class="pb-2 mt-4 mb-2">
-                    <div class="card">
-                      <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                          <div class="row">
-                            <div class="col-5">
-                              Cantidad Lima
-                            </div>
-                            <div class="col-7">
-                              {{contarDocumentosDeLima(itemsCampanaCargados)}}
-                            </div>
-                          </div>
-                        </li>
-                        <li class="list-group-item">
-                          <div class="row">
-                            <div class="col-5">
-                              Cantidad Provincia
-                            </div>
-                            <div class="col-7">
-                             {{itemsCampanaCargados.length - contarDocumentosDeLima(itemsCampanaCargados)}}
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+              <div class="pb-2 mt-4 mb-2">
+                <div class="card">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-5">
+                          Cantidad Lima
+                        </div>
+                        <div class="col-7">
+                          {{contarDocumentosDeLima(itemsCampanaCargados)}}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-5">
+                          Cantidad Provincia
+                        </div>
+                        <div class="col-7">
+                          {{itemsCampanaCargados.length - contarDocumentosDeLima(itemsCampanaCargados)}}
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="col-12">
               <ng2-smart-table [settings]="tableSettings" [source]="dataItemsCampanaCargados"></ng2-smart-table>
@@ -318,36 +318,20 @@
             </div>
           </div>
 
-          <div class="form-row" *ngIf="campanaForm.get('tipoDestino').value !== null && campanaForm.get('tipoDestino').value.nombre.toUpperCase() !== 'INTERNA'">
+          <div class="form-row" *ngIf="campanaForm.get('tipoDestino').value !== null && campanaForm.get('tipoDestino').value.nombre.toUpperCase() === 'INTERNA'">
             <div class="col-4">
-              <div class="form-group">
-                <label for="agrupado">Requiere Agrupado *</label>
-                <br>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" formControlName="requiereAgrupado" name="requiereAgrupado" id="requiere-agrupado-true"
-                    [value]="true" (change)="onChangeRequiereAgrupado(campanaForm.get('requiereAgrupado').value)">
-                  <label class="form-check-label" for="requiere-agrupado-true">Sí</label>
+              <h6>
+                Luego de ser habilitada, la campaña puede ser agrupada antes de iniciar con su distribución si el usuario lo requiere. Tener
+                en cuenta que esta tarea aplica solo para campañas dirigidas a colaboradores del banco.
+              </h6>
+              <br>
+              <div>
+                <div class="form-group" *ngFor="let tipoAgrupado of tiposAgrupado">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" [id]="'ta-' + tipoAgrupado.id" (change)="onChangeTipoAgrupadoElegido($event, tipoAgrupado)">
+                    <label class="form-check-label" [for]="'ta-' + tipoAgrupado.id">{{tipoAgrupado.nombre}}</label>
+                  </div>
                 </div>
-                <div class="form-check form-check-inline mr-5">
-                  <input class="form-check-input" type="radio" name="requiereAgrupado" formControlName="requiereAgrupado" id="requiere-agrupado-false"
-                    [value]="false" (change)="onChangeRequiereAgrupado(campanaForm.get('requiereAgrupado').value)">
-                  <label class="form-check-label" for="requiere-agrupado-false">No</label>
-                </div>
-                <br>
-                <h6>
-                  Luego de ser habilitada, la campaña puede ser agrupada antes de iniciar con su distribución si el usuario lo requiere. Tener
-                  en cuenta que esta tarea aplica solo para campañas dirigidas a colaboradores del banco.
-                </h6>
-                <br>
-                <div *ngIf="campanaForm.get('requiereAgrupado').value">
-                  <select class="form-control" id="tipoAgrupado" formControlName="tipoAgrupado">
-                    <option *ngFor="let tipoAgrupado of tiposAgrupado" [ngValue]="tipoAgrupado">{{tipoAgrupado.nombre}}</option>
-                  </select>
-                  <span *ngIf="!campanaForm.get('paqueteHabilitado').valid && campanaForm.get('paqueteHabilitado').touched" class="text-danger small">
-                    Es necesario ingresar el tipo de agrupado
-                  </span>
-                </div>
-
               </div>
             </div>
           </div>
@@ -477,8 +461,8 @@
                     <option *ngFor="let accionporcargos of accionesRestosProveedor" [ngValue]="accionporcargos">{{accionporcargos.nombre}}</option>
                   </select>
                   <span *ngIf="!campanaForm.get('accionporcargos').valid && campanaForm.get('accionporcargos').touched" class="text-danger small">
-                      Es necesario ingresar la accion de los cargos.
-                    </span>
+                    Es necesario ingresar la accion de los cargos.
+                  </span>
                 </ng-template>
 
 
@@ -590,23 +574,28 @@
                             <td scope="col">{{ ccoo.ordenEstadistica }}</td>
                             <td scope="col">{{ ccoo.grupoArticulo }}</td>
                             <td scope="col">{{ ccoo.porcentaje }}%</td>
-                            <td scope="col"><a class="pointable" (click)="grupoCentroCostos.centrosCostos.splice(i,1)"><i class="fas fa-times-circle"></i></a></td>
+                            <td scope="col">
+                              <a class="pointable" (click)="grupoCentroCostos.centrosCostos.splice(i,1)">
+                                <i class="fas fa-times-circle"></i>
+                              </a>
+                            </td>
                           </tr>
                         </tbody>
                       </table>
-                      <span *ngIf="grupoCentroCostos.centrosCostos.length > 0 && utilsService.getSumaAtributoLista(grupoCentroCostos.centrosCostos, 'porcentaje') < 100" class="text-danger small">
-                      El porcentaje total debe ser 100%
-                    </span>
+                      <span *ngIf="grupoCentroCostos.centrosCostos.length > 0 && utilsService.getSumaAtributoLista(grupoCentroCostos.centrosCostos, 'porcentaje') < 100"
+                        class="text-danger small">
+                        El porcentaje total debe ser 100%
+                      </span>
                     </div>
                     <ng-template #tablaVacia>
                       <div class="row">
-                          <div class="col">
-                              <div class="alert alert-info" role="alert">
-                                  Ingrese los centros de costos
-                              </div>
+                        <div class="col">
+                          <div class="alert alert-info" role="alert">
+                            Ingrese los centros de costos
                           </div>
+                        </div>
                       </div>
-                  </ng-template>
+                    </ng-template>
                   </div>
 
                 </div>

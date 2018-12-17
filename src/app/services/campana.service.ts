@@ -44,9 +44,9 @@ export class CampanaService {
         return this.requester.put<Campana[]>(this.REQUEST_URL + campana.id + "/seleccionproveedor", campana, {});
     }
 
-    registrarCampana(campana: Campana): Observable<Campana[]> {
+    registrarCampana(campana: Campana): Observable<Campana> {
         campana.buzon = this.buzonService.getBuzonActual();
-        return this.requester.post<Campana[]>(this.REQUEST_URL, campana, {});
+        return this.requester.post<Campana>(this.REQUEST_URL, campana, {});
     }
 
     recotizarCampana(campana: Campana): Observable<Campana[]> {
