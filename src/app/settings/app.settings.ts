@@ -30,6 +30,11 @@ export class AppSettings {
     public static PAQUETE_HABILITADO_URL = "paquetes/";
     public static ACCION_RESTOS_PROVEEDOR_URL = "accionesrestosproveedor/";
 
+    public static PREFIJO = {
+        DOCUMENTO : "DOC",
+        PAQUETE : "PAQ"
+    }
+
 
     /** IMAGENES */
 

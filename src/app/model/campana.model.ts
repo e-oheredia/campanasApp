@@ -41,4 +41,6 @@ export class Campana {
     public paqueteHabilitado: PaqueteHabilitado;
     public tipoCampana: TipoCampana;
     public costoCampana: number;
+
+    public autogenerado: String;
 }
