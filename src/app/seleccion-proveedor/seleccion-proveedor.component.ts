@@ -66,6 +66,9 @@ export class SeleccionProveedorComponent implements OnInit {
       cantidadProvincia: {
         title: 'Cantidad Provincia'
       },
+      fechaCreacion: {
+        title: 'Fecha de Creación'
+      },
       button: {
         title: 'Asignar Proveedor',
         type: 'custom',
@@ -119,7 +122,8 @@ export class SeleccionProveedorComponent implements OnInit {
             tipoDocumento: campana.tipoDocumento.nombre,
             tipoDestino: campana.tipoDestino.nombre,
             cantidadLima: campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
-            cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length
+            cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length, 
+            fechaCreacion: this.campanaService.getFechaCreacion(campana)
           });
         });
         this.dataCampanasCreadas.load(dataCampanasCreadas);

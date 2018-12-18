@@ -33,6 +33,7 @@ import { ProvinciaService } from '../services/provincia.service';
 import { ReadExcelService } from '../services/readexcel.service';
 import { TrackingCampanaComponent } from '../modals/tracking-campana/tracking-campana.component';
 import { WriteExcelService } from '../services/write-excel.service';
+import { MensajeExitoComponent } from '../modals/mensaje-exito/mensaje-exito.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { WriteExcelService } from '../services/write-excel.service';
     WriteExcelService
   ], 
   entryComponents: [
-    TrackingCampanaComponent
+    TrackingCampanaComponent, 
+    MensajeExitoComponent
   ]
 })
 export class LayoutModule { }
