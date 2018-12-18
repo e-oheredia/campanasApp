@@ -1,3 +1,4 @@
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CampanaService } from './../../services/campana.service';
 import { PaqueteHabilitado } from 'src/app/model/paquetehabilitado.model';
 import { TipoDestino } from 'src/app/model/tipodestino.model';
@@ -26,6 +27,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { NotifierService } from '../../../../node_modules/angular-notifier';
 
 import * as moment from "moment-timezone";
+import { MensajeExitoComponent } from '../../modals/mensaje-exito/mensaje-exito.component';
 
 
 
@@ -45,7 +47,8 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     private itemCampanaService: ItemCampanaService,
     public utilsService: UtilsService,
     private notifier: NotifierService, 
-    private campanaService: CampanaService
+    private campanaService: CampanaService,
+    private modalService: BsModalService
   ) { }
 
   campanaForm: FormGroup;
@@ -62,6 +65,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   tableSettings = AppSettings.tableSettings;
   centroCostosList: CentroCostos[] = [];
   grupoCentroCostos: GrupoCentroCostos;
+  tiposAgrupadoElegidos: TipoAgrupado[] = [];
 
   columnsItemsCampanaCargados = {
     razonSocial: {
@@ -119,9 +123,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       'requiereImpresion': new FormControl(false, Validators.required),
       'requiereHabilitado': new FormControl(true, Validators.required),
       'paqueteHabilitado': new FormControl(null, [this.requiredIfRequiereHabilitado.bind(this)]),
-      'requiereAgrupado': new FormControl(false, Validators.required),
-      'requiereCentroCostoBCP': new FormControl(true, Validators.required),
-      'tipoAgrupado': new FormControl(null, [this.requiredIfRequiereAgrupado.bind(this)]),
+      'requiereCentroCostoBCP': new FormControl(true, Validators.required),      
       'requiereDevolucionRezago': new FormControl(true, Validators.required),
       'accionporrezagos': new FormControl(null, [this.requiredIfNotRequiereDevolucionRezago.bind(this)]),
       'requiereDevolucionCargo': new FormControl(true, Validators.required),
@@ -319,15 +321,6 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     return null;
   }
 
-  requiredIfRequiereAgrupado(control: FormControl): { [key: string]: boolean } | null {
-
-    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || (this.utilsService.isUndefinedOrNullOrEmpty(control.value)) && this.campanaForm.get("requiereAgrupado").value === true )   {
-      return { 'requiredIfRequiereHabilitado': true }
-    }
-
-    return null;
-  }
-
   requiredIfRequiereDevolucionRezago(control: FormControl): { [key: string]: boolean } | null {
 
     if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || this.utilsService.isUndefinedOrNullOrEmpty(control) || (this.utilsService.isUndefinedOrNullOrEmpty(control.value)) && this.campanaForm.get("requiereDevolucionRezago").value === true )   {
@@ -387,6 +380,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     campana.plazo = values.plazo;
     campana.tipoDestino = values.tipoDestino;
     campana.requiereGeorreferencia = values.requiereGeorreferenciacion;
+    campana.tiposAgrupado = this.tiposAgrupadoElegidos;
     if (values.imprenta !== null && values.imprenta !== "") {
       let proveedorImpresion = {
         nombre: values.imprenta,
@@ -399,10 +393,6 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
 
     if (values.paqueteHabilitado !== null) {
       campana.paqueteHabilitado = values.paqueteHabilitado;
-    }
-
-    if (values.tipoAgrupado !== null) {
-      campana.tipoAgrupado = values.tipoAgrupado;
     }
 
     if (values.contactoRezago !== null && values.contactoRezago !== "") {
@@ -448,10 +438,15 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     }
 
     this.campanaService.registrarCampana(campana).subscribe(
-      () => {
-        this.notifier.notify("success", "Se ha registrado la campaña correctamente");
+      (campanaCreada) => {
+        
         this.campanaForm.reset();
         this.itemsCampanaCargados = [];
+        this.tiposAgrupadoElegidos = [];
+        let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
+          initialState : {
+            mensaje: "Se ha creado correctamente la campaña con código " + this.campanaService.codigoAutogenerado(campanaCreada.id, AppSettings.PREFIJO.DOCUMENTO) }
+        });
       }
     )
   }
@@ -469,12 +464,6 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   onChangeRequiereHabilitado(value) {
     if (!value) {
       this.campanaForm.controls['paqueteHabilitado'].setValue(null);
-    }
-  }
-
-  onChangeRequiereAgrupado(value) {
-    if (!value) {
-      this.campanaForm.controls['tipoAgrupado'].setValue(null);
     }
   }
 
@@ -516,10 +505,15 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   }
 
   onChangeTipoDestino(value: TipoDestino) {
-    if (value.nombre.toUpperCase() === "INTERNA") {
-      this.campanaForm.controls['tipoAgrupado'].setValue(null);
-      this.campanaForm.controls['requiereAgrupado'].setValue(false);
+    if (value.nombre.toUpperCase() === "EXTERNA") {
+      this.tiposAgrupadoElegidos = [];
     }
+  }
+
+  onChangeTipoAgrupadoElegido(event: any, tipoAgrupado: TipoAgrupado) {
+    
+    event.srcElement.checked ? this.tiposAgrupadoElegidos.push(tipoAgrupado) : this.tiposAgrupadoElegidos.splice(this.tiposAgrupadoElegidos.indexOf(tipoAgrupado), 1);
+
   }
 
   contarDocumentosDeLima(documentos: ItemCampana[]): number {

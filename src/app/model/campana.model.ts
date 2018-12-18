@@ -36,7 +36,7 @@ export class Campana {
     public auspiciador: Auspiciador | any;
     public itemsCampana: ItemCampana[];
     public seguimientosCampana: SeguimientoCampana[];
-    public tipoAgrupado: TipoAgrupado;
+    public tiposAgrupado: TipoAgrupado[];
     public proveedorImpresion: ProveedorImpresion | any;
     public paqueteHabilitado: PaqueteHabilitado;
     public tipoCampana: TipoCampana;

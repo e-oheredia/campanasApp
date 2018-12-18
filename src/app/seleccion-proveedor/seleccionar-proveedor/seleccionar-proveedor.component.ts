@@ -1,8 +1,9 @@
+import { MensajeExitoComponent } from './../../modals/mensaje-exito/mensaje-exito.component';
 import { ItemCampana } from './../../model/itemcampana.model';
 import { Proveedor } from '../../model/proveedor.model';
 import { TipoCampana } from '../../model/tipocampana.model';
 import { ProveedorService } from '../../services/proveedor.service';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Campana } from '../../model/campana.model';
 import { CampanaService } from '../../services/campana.service';
 import { Component, OnInit } from '@angular/core';
@@ -24,7 +25,8 @@ export class SeleccionarProveedorComponent implements OnInit {
     public tipoCampanaService: TipoCampanaService,
     public proveedorService: ProveedorService,
     public notifier: NotifierService, 
-    public utilsService: UtilsService
+    public utilsService: UtilsService,
+    private modalService: BsModalService
   ) { }
 
   proveedorCampanaForm: FormGroup;
@@ -60,7 +62,11 @@ export class SeleccionarProveedorComponent implements OnInit {
     this.campana.costoCampana = form.costoCampana;
     this.campanaService.seleccionarProveedor(this.campana).subscribe(
       () => {
-        this.notifier.notify("success", "Se ha asignado el proveedor correctamente")
+        let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
+          initialState : {
+            mensaje: "Se ha seleccionado correctamente al proveedor " + this.campana.proveedor.nombre
+          }
+        });
         this.bsModalRef.hide();
       }
     )    

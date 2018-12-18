@@ -1,9 +1,10 @@
+import { MensajeExitoComponent } from './../../modals/mensaje-exito/mensaje-exito.component';
 import { ItemCampana } from './../../model/itemcampana.model';
 import { Campana } from './../../model/campana.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UtilsService } from './../../services/utils.service';
 import { NotifierService } from 'angular-notifier';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CampanaService } from './../../services/campana.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -18,7 +19,8 @@ export class RecotizarCampanaComponent implements OnInit {
     public bsModalRef: BsModalRef,
     public campanaService: CampanaService, 
     public notifier: NotifierService, 
-    public utilsService: UtilsService
+    public utilsService: UtilsService, 
+    public modalService: BsModalService
   ) { }
 
   cotizacionCampanaForm: FormGroup;
@@ -34,7 +36,11 @@ export class RecotizarCampanaComponent implements OnInit {
     this.campana.costoCampana = form.costoCampana;
     this.campanaService.recotizarCampana(this.campana).subscribe(
       () => {
-        this.notifier.notify("success", "Se ha recotizado la campaña correctamente")
+        let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
+          initialState : {
+            mensaje: "Se ha recotizado correctamente la campaña"
+          }
+        });
         this.bsModalRef.hide();
       }
     )    
