@@ -115,4 +115,8 @@ export class CampanaService {
 
     }
 
+    modificarBase(campana: Campana): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + "modificarbasegeo", campana, {});
+    }
+
 }   

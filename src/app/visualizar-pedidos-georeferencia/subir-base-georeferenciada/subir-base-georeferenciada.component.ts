@@ -1,6 +1,7 @@
+import { MensajeExitoComponent } from './../../modals/mensaje-exito/mensaje-exito.component';
 import { Component, OnInit } from '@angular/core';
 import { Campana } from '../../model/campana.model';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ItemCampana } from './../../model/itemcampana.model';
 import { CampanaService } from '../../services/campana.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -24,6 +25,7 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
     private notifier: NotifierService,
     private itemCampanaService: ItemCampanaService,
     private campanaService: CampanaService, 
+    private modalService: BsModalService
   ) { }
 
   campana: Campana;
@@ -130,25 +132,18 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
 
   onSubmit(form: any){
 
-    
-    
-
     if(this.itemsCampanaCargados.length == 0){
       this.notifier.notify('error', "Debe seleccionar un archivo");
       return;
     } 
 
-
-    //this.campana.itemsCampana = this.itemsCampanaCargados;
-    /*
-    if( this.campana.itemsCampana.length <= 0){
-      this.notifier.notify('error', "Debe seleccionar un archivo");
-      return;
-    }
-*/
     this.campanaService.georeferenciarBase(this.campana).subscribe(
-      () => {
-        this.notifier.notify("success", "La base fue georeferenciada y enviada al usuario")
+      () => {        
+        let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
+          initialState : {
+            mensaje: "La base fue georeferenciada y enviada al usuario "
+          }
+        });
         this.bsModalRef.hide();        
       }
     )    

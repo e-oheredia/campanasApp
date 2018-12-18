@@ -129,7 +129,7 @@ export class ItemCampanaService {
     mostrarItemsCampanaBase(file: File, sheet: number, campana: Campana, callback: Function) {
         this.readExcelService.excelToJson(file, sheet, (data: Array<any>) => {
 
-            if (campana.itemsCampana.length != data.length - 1) {
+            if (campana.itemsCampana.filter(x=> x.enviable == false).length != data.length - 1) {
                 callback({
                     mensaje: "Error, la base cuenta con mas registros "
                 });
@@ -178,13 +178,14 @@ export class ItemCampanaService {
                     });
                     return;
                 }
+           
 
 
                 let itemCampanaCargado: ItemCampana = new ItemCampana();
                 itemCampanaCargado.id = data[i][1];
-                let distrito = this.distritoService.listarDistritoByNombreDistritoAndNombreProvincia(data[i][7], data[i][8])
+                let distrito = this.distritoService.listarDistritoByNombreDistritoAndNombreProvincia(data[i][8], data[i][7])
                 itemCampanaCargado.distrito = distrito;
-                itemCampanaCargado.direccion = data[i][6] || "";
+                itemCampanaCargado.direccion = data[i][9] || "";
 
                 if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][10])) {
                     callback({
@@ -200,6 +201,104 @@ export class ItemCampanaService {
                     return;
                 }
 
+                itemCampanaCargado.enviable = data[i][10] == "Normalizado" ? true : false;
+                itemsCampanaCargados.push(itemCampanaCargado);
+                i++;
+            }
+
+            callback(itemsCampanaCargados);
+
+        });
+    }
+
+
+    mostrarItemsPorModificar(file: File, sheet: number, campana: Campana, callback: Function) {
+        this.readExcelService.excelToJson(file, sheet, (data: Array<any>) => {
+
+            if (campana.itemsCampana.filter(x=> x.enviable == false).length != data.length - 1) {
+                callback({
+                    mensaje: "Error, la base cuenta con mas registros "
+                });
+                return;
+            }
+
+            if (this.utilsService.isUndefinedOrNullOrEmpty(data[0][1]) || this.utilsService.isUndefinedOrNullOrEmpty(data[0][6])
+            || this.utilsService.isUndefinedOrNullOrEmpty(data[0][7])|| this.utilsService.isUndefinedOrNullOrEmpty(data[0][8])|| 
+            this.utilsService.isUndefinedOrNullOrEmpty(data[0][9])) {
+                callback({
+                    mensaje: "Error, el formato de la base es incorrecto "
+                });
+                return;
+            }
+
+            let itemsCampanaCargados: ItemCampana[] = [];
+            let i = 1
+            while (true) {
+
+                if (data.length == i) {
+                    break;
+                }
+                if (data[i].length === 0) {
+                    break;
+                }
+
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][1])) {
+                    callback({
+                        mensaje: "Ingrese el codigo de documento en la fila " + (i + 1)
+                    });
+                    return;
+                }
+                
+                let item: ItemCampana = campana.itemsCampana.find(x => x.id === data[i][1]);
+
+                if (this.utilsService.isUndefinedOrNullOrEmpty(item)) {
+                    callback({
+                        mensaje: "El código de item de la fila " + (i + 1) + " no corresponde a la campaña seleccionada"
+                    });
+                    return;
+                }
+
+                if(item.enviable == true){
+                    callback({
+                        mensaje: "El código de item de la fila " + (i + 1) + " ya se encuentra Normalizada"
+                    });
+                    return;
+                }
+
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][9])) {
+                    callback({
+                        mensaje: "Ingrese una dirección en la fila " + (i + 1) 
+                    });
+                    return;
+                }
+
+                if (this.departamentoService.listarDepartamentoByNombre(data[i][6]) === null) {
+                    callback({
+                        mensaje: "Ingrese Departamento válido en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                if (this.provinciaService.listarProvinciaByNombreProvinciaAndNombreDepartamento(data[i][7], data[i][6]) === null) {
+                    callback({
+                        mensaje: "Ingrese Provincia válida en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                let distrito = this.distritoService.listarDistritoByNombreDistritoAndNombreProvincia(data[i][8], data[i][7])
+
+                if (distrito === null) {
+                    callback({
+                        mensaje: "Ingrese Distrito válido en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                let itemCampanaCargado: ItemCampana = new ItemCampana();
+                itemCampanaCargado.id = data[i][1];                
+                itemCampanaCargado.distrito = distrito;
+                itemCampanaCargado.direccion = data[i][9] || "";
                 itemCampanaCargado.enviable = data[i][10] == "Normalizado" ? true : false;
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;
