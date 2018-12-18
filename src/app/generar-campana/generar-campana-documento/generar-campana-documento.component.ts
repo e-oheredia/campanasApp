@@ -445,7 +445,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
         this.tiposAgrupadoElegidos = [];
         let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
           initialState : {
-            mensaje: "Se ha creado correctamente la campaña con código " + campanaCreada.id }
+            mensaje: "Se ha creado correctamente la campaña con código " + this.campanaService.codigoAutogenerado(campanaCreada.id, AppSettings.PREFIJO.DOCUMENTO) }
         });
       }
     )
