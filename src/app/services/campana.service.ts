@@ -7,6 +7,7 @@ import { RequesterService } from './requester.service';
 import { HttpParams } from '@angular/common/http';
 import { WriteExcelService } from './write-excel.service';
 import * as moment from 'moment-timezone';
+import { UtilsService } from './utils.service';
 
 
 @Injectable()
@@ -17,6 +18,7 @@ export class CampanaService {
     constructor(
         private requester: RequesterService,
         private writeExcelService: WriteExcelService,
+        private utilsService: UtilsService,
         private buzonService: BuzonService
     ) {
 
@@ -64,25 +66,31 @@ export class CampanaService {
     exportarItemsCampanaPorGeoReferenciar(campana: Campana) {
         let objects = [];
         campana.itemsCampana.forEach(ItemCampana => {
-            objects.push({
-                "Numero de Campaña": this.codigoAutogenerado(campana.id,"DOC"),
-                "Codigo de Item": ItemCampana.id,
-                "Razon Social": ItemCampana.razonSocial,
-                "Apellido Paterno": ItemCampana.apellidoPaterno,
-                "Apellido Materno": ItemCampana.apellidoMaterno,
-                "Nombres": ItemCampana.nombres,
-                "Departamento": ItemCampana.distrito.provincia.departamento.nombre,
-                "Provincia": ItemCampana.distrito.provincia.nombre,
-                "Distrito": ItemCampana.distrito.nombre,
-                "Dirección": ItemCampana.direccion,
-                "Estado": ""
-            })
+            if(ItemCampana.enviable === false){
+                objects.push({
+                    "Numero de Campaña": this.codigoAutogenerado(campana.id,"DOC"),
+                    "Codigo de Item": ItemCampana.id,
+                    "Razon Social": ItemCampana.razonSocial,
+                    "Apellido Paterno": ItemCampana.apellidoPaterno,
+                    "Apellido Materno": ItemCampana.apellidoMaterno,
+                    "Nombres": ItemCampana.nombres,
+                    "Departamento": ItemCampana.distrito.provincia.departamento.nombre,
+                    "Provincia": ItemCampana.distrito.provincia.nombre,
+                    "Distrito": ItemCampana.distrito.nombre,
+                    "Dirección": ItemCampana.direccion,
+                    "Estado": ""
+                })
+            }
+            
         });
-        this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
+        if (objects.length >0){
+            this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
+        }
+        
     }
 
     georeferenciarBase(campana: Campana): Observable<Campana> {
-        return this.requester.put<Campana>(this.REQUEST_URL + "subirbasegeo", campana, {});
+        return this.requester.put<Campana>(this.REQUEST_URL + "subirbaseproveedor", campana, {});
     }
 
     codigoAutogenerado(id: number, prefijo: String) {

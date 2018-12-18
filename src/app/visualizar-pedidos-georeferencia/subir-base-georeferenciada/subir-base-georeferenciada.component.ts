@@ -65,11 +65,6 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
     })
   }
 
-  subirBase() {
-    this.campana.itemsCampana = this.itemsCampanaCargados;
-    this.campanaService.georeferenciarBase(this.campana);
-  }
-
   onChangeExcelFile(file: File) {
     if (file == null) {
       this.excelFile = null;
@@ -100,34 +95,61 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
   mostrarItemsCampanaBase(file: File, campana : Campana) {
     this.dataItemsCampanaCargados.reset();
     this.itemsCampanaCargados = [];
+    
     this.itemCampanaService.mostrarItemsCampanaBase(file, 0, campana, (data) => {
+
       if (this.utilsService.isUndefinedOrNullOrEmpty(data.mensaje)) {
-        this.itemsCampanaCargados = data;
+        
+        
         let dataItemsCampanaCargados = [];
         data.forEach(element => {
-          dataItemsCampanaCargados.push({
-            departamento: element.distrito.provincia.departamento.nombre,
-            provincia: element.distrito.provincia.nombre,
-            distrito: element.distrito.nombre,           
-            direccion: element.direccion,            
-            estado: element.enviable == true ? "Normalizado" : "No distribuible",
-            id: element.id
-          })
+          
+         
+            dataItemsCampanaCargados.push({
+              departamento: element.distrito.provincia.departamento.nombre,
+              provincia: element.distrito.provincia.nombre,
+              distrito: element.distrito.nombre,           
+              direccion: element.direccion,            
+              estado: element.enviable == true ? "Normalizado" : "No distribuible",
+              id: element.id
+            })
+         
+            this.campana.itemsCampana.find(x=> x.id == element.id).enviable = element.enviable;
+          
+          
         });
+
+        this.itemsCampanaCargados = dataItemsCampanaCargados;
         this.dataItemsCampanaCargados.load(dataItemsCampanaCargados);
         return;
       }
       this.notifier.notify('error', data.mensaje);
     });
+
   }
 
   onSubmit(form: any){
-    this.campana.itemsCampana = this.itemsCampanaCargados;
-    console.log(this.campanaService.codigoAutogenerado(this.campana.id,this.prefijo.DOCUMENTO))
+
+    
+    
+
+    if(this.itemsCampanaCargados.length == 0){
+      this.notifier.notify('error', "Debe seleccionar un archivo");
+      return;
+    } 
+
+
+    //this.campana.itemsCampana = this.itemsCampanaCargados;
+    /*
+    if( this.campana.itemsCampana.length <= 0){
+      this.notifier.notify('error', "Debe seleccionar un archivo");
+      return;
+    }
+*/
     this.campanaService.georeferenciarBase(this.campana).subscribe(
       () => {
-        this.notifier.notify("success", "Se ha asignado el proveedor correctamente")
-        this.bsModalRef.hide();
+        this.notifier.notify("success", "La base fue georeferenciada y enviada al usuario")
+        this.bsModalRef.hide();        
       }
     )    
   }

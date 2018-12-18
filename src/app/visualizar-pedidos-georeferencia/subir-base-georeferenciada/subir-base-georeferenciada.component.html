@@ -1,10 +1,17 @@
 <div class="card">
 
+
+  <div class="modal-header">
+    <h6>Seleccionar base de campaña</h6>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+
+
   <form [formGroup]="campanaForm" (ngSubmit)=onSubmit(campanaForm.value)>
 
-    <div class="card-header">
-      <h6>Seleccionar base de campaña</h6>
-    </div>
     <div class="card-body">
 
       <div class="col-md-12">
@@ -25,14 +32,9 @@
 
     </div>
 
-    <div class="card-body">
+    <div class="modal-footer">
       <button type="submit" class="btn btn-success">Aceptar</button>
-      <button type="cancel" class="btn btn-danger">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">Cancelar</button>
     </div>
-
-
-
   </form>
-
-
 </div>

@@ -11,6 +11,7 @@ import { ProvinciaService } from './provincia.service';
 import { DepartamentoService } from './departamento.service';
 import { ReadExcelService } from './readexcel.service';
 import { Campana } from '../model/campana.model';
+import { CampanaService } from '../services/campana.service';
 
 @Injectable()
 export class ItemCampanaService {
@@ -21,7 +22,8 @@ export class ItemCampanaService {
         private provinciaService: ProvinciaService,
         private distritoService: DistritoService,
         private utilsService: UtilsService,
-        private buzonService: BuzonService
+        private buzonService: BuzonService,
+        private campanaService: CampanaService,
     ) {
         this.departamentosPeruSubscription = this.departamentoService.departamentosPeruChanged.subscribe(
             departamentosPeru => {
@@ -114,7 +116,7 @@ export class ItemCampanaService {
                 itemCampanaCargado.distrito = distrito;
                 itemCampanaCargado.direccion = data[i][7] || "";
 
-              
+
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;
             }
@@ -124,10 +126,10 @@ export class ItemCampanaService {
         });
     }
 
-    mostrarItemsCampanaBase(file: File, sheet: number,  campana: Campana, callback: Function) {
+    mostrarItemsCampanaBase(file: File, sheet: number, campana: Campana, callback: Function) {
         this.readExcelService.excelToJson(file, sheet, (data: Array<any>) => {
-            
-            if (campana.itemsCampana.length != data.length - 1){
+
+            if (campana.itemsCampana.length != data.length - 1) {
                 callback({
                     mensaje: "Error, la base cuenta con mas registros "
                 });
@@ -140,8 +142,6 @@ export class ItemCampanaService {
                 });
                 return;
             }
-
-
 
             let itemsCampanaCargados: ItemCampana[] = [];
             let i = 1
@@ -161,15 +161,27 @@ export class ItemCampanaService {
                     return;
                 }
 
+                //let item : ItemCampana = campana.itemsCampana.find(x=> x.id === this.campanaService.extraerIdAutogenerado(data[i][1]));
+
+                let item: ItemCampana = campana.itemsCampana.find(x => x.id === data[i][1]);
+
+                if (this.utilsService.isUndefinedOrNullOrEmpty(item)) {
+                    callback({
+                        mensaje: "El código de item de la fila " + (i + 1) + " no corresponde a la campaña seleccionada"
+                    });
+                    return;
+                }
+
+                if(item.enviable == true){
+                    callback({
+                        mensaje: "El código de item de la fila " + (i + 1) + " ya se encuentra Normalizada"
+                    });
+                    return;
+                }
+
+
                 let itemCampanaCargado: ItemCampana = new ItemCampana();
                 itemCampanaCargado.id = data[i][1];
-                
-                //itemCampanaCargado.razonSocial = data[i][2] || "";
-                //itemCampanaCargado.nombres = data[i][3] || "";
-                //itemCampanaCargado.apellidoPaterno = data[i][4] || "";
-                //itemCampanaCargado.apellidoMaterno = data[i][5] || "";
-                //itemCampanaCargado.direccion = data[i][6] || "";
-
                 let distrito = this.distritoService.listarDistritoByNombreDistritoAndNombreProvincia(data[i][7], data[i][8])
                 itemCampanaCargado.distrito = distrito;
                 itemCampanaCargado.direccion = data[i][6] || "";
@@ -180,7 +192,15 @@ export class ItemCampanaService {
                     });
                     return;
                 }
-               itemCampanaCargado.enviable = data[i][10] == "Normalizado" ? true: false;
+
+                if (data[i][10].toUpperCase() != "Normalizado".toUpperCase() && data[i][10].toUpperCase() != "No distribuible".toUpperCase()) {
+                    callback({
+                        mensaje: "Ingrese correctamente el estado del documento en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                itemCampanaCargado.enviable = data[i][10] == "Normalizado" ? true : false;
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;
             }
