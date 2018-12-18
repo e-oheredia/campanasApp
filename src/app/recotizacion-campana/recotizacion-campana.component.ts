@@ -27,6 +27,7 @@ export class RecotizacionCampanaComponent implements OnInit {
   settings = Object.assign({}, AppSettings.tableSettings);
   dataCampanasParaRecotizar: LocalDataSource = new LocalDataSource();
   campanas: Campana[] = [];
+  prefijo = AppSettings.PREFIJO;
 
   ngOnInit() {
     this.tituloService.setTitulo("Recotización de Campañas");
@@ -84,7 +85,7 @@ export class RecotizacionCampanaComponent implements OnInit {
   recotizarCampana(row: any){
     let bsModalRef: BsModalRef = this.modalService.show(RecotizarCampanaComponent, {
       initialState: {
-        campana: this.campanas.find(campana => campana.id == row.id)
+        campana: this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id))
       },
       class: 'modal-lg'
     });
@@ -97,7 +98,7 @@ export class RecotizacionCampanaComponent implements OnInit {
   visualizarSeguimiento(row: any) {
     let bsModalRef: BsModalRef = this.modalService.show(TrackingCampanaComponent, {
       initialState: {
-        campana: this.campanas.find(campana => campana.id == row.id)
+        campana: this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id))
       },
       class: 'modal-lg'
     });
@@ -110,7 +111,7 @@ export class RecotizacionCampanaComponent implements OnInit {
         let dataCampanasParaRecotizar = [];
         campanas.forEach(campana => {
           dataCampanasParaRecotizar.push({
-            id: campana.id,
+            id: this.campanaService.codigoAutogenerado(campana.id,this.prefijo.DOCUMENTO),
             nombre: campana.nombre,
             solicitante: campana.buzon.nombre,
             regulatorio: campana.regulatorio ? 'Sí':'No',

@@ -1,3 +1,4 @@
+import { MensajeExitoComponent } from './../modals/mensaje-exito/mensaje-exito.component';
 import { TrackingCampanaComponent } from './../modals/tracking-campana/tracking-campana.component';
 import { Campana } from '../model/campana.model';
 import { Component, OnInit } from '@angular/core';
@@ -151,7 +152,12 @@ export class ConfirmacionGeoComponent implements OnInit {
     bsModalRef.content.confirmarEvent.subscribe(() => {      
       this.campanaService.confirmarBaseGeo(c).subscribe(
         () => {
-          this.notifier.notify('success', 'Se ha autorizado correctamente el envío');
+         
+          let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
+            initialState : {
+              mensaje: "Se ha autorizado correctamente el envío "
+            }
+          });
           this.listarCampanasGeoreferenciadas();
         },
         error => {

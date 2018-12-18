@@ -26,7 +26,7 @@ export class SeleccionProveedorComponent implements OnInit {
   settings = Object.assign({}, AppSettings.tableSettings);
   dataCampanasCreadas: LocalDataSource = new LocalDataSource();
   campanas: Campana[] = [];
-
+  prefijo = AppSettings.PREFIJO;
 
   ngOnInit() {
     this.tituloService.setTitulo("Selección de Proveedor");
@@ -87,7 +87,7 @@ export class SeleccionProveedorComponent implements OnInit {
   asignarProveedor(row) {
     let bsModalRef: BsModalRef = this.modalService.show(SeleccionarProveedorComponent, {
       initialState: {
-        campana: this.campanas.find(campana => campana.id == row.id)
+        campana: this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id))
       },
       class: 'modal-lg'
     });
@@ -100,7 +100,7 @@ export class SeleccionProveedorComponent implements OnInit {
   visualizarSeguimiento(row) {
     let bsModalRef: BsModalRef = this.modalService.show(TrackingCampanaComponent, {
       initialState: {
-        campana: this.campanas.find(campana => campana.id == row.id)
+        campana: this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id))
       },
       class: 'modal-lg'
     });
@@ -115,7 +115,7 @@ export class SeleccionProveedorComponent implements OnInit {
         let dataCampanasCreadas = [];
         campanas.forEach(campana => {
           dataCampanasCreadas.push({
-            id: campana.id,
+            id: this.campanaService.codigoAutogenerado(campana.id,this.prefijo.DOCUMENTO),
             nombre: campana.nombre,
             solicitante: campana.buzon.nombre,
             regulatorio: campana.regulatorio ? 'Sí':'No',

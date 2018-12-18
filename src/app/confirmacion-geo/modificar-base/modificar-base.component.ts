@@ -1,6 +1,7 @@
+import { MensajeExitoComponent } from './../../modals/mensaje-exito/mensaje-exito.component';
 import { Component, OnInit } from '@angular/core';
 import { Campana } from '../../model/campana.model';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ItemCampana } from './../../model/itemcampana.model';
 import { CampanaService } from '../../services/campana.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -22,6 +23,7 @@ export class ModificarBaseComponent implements OnInit {
     public utilsService: UtilsService,
     private notifier: NotifierService,
     private itemCampanaService: ItemCampanaService,
+    private modalService: BsModalService,
     private campanaService: CampanaService, 
   ) { }
 
@@ -109,13 +111,7 @@ export class ModificarBaseComponent implements OnInit {
             this.campana.itemsCampana.find(x=> x.id == element.id).enviable = false;
             this.campana.itemsCampana.find(x=> x.id == element.id).direccion = element.direccion;
             this.campana.itemsCampana.find(x=> x.id == element.id).distrito = element.distrito;
-         
-            /*
-            let c = this.campana.itemsCampana.find(x=> x.id == element.id);
-            c.enviable = false;
-            c.direccion = element.direccion;
-            c.distrito = element.distrito;
-            */
+                   
           
         });
 
@@ -138,7 +134,12 @@ export class ModificarBaseComponent implements OnInit {
 
     this.campanaService.modificarBase(this.campana).subscribe(
       () => {
-        this.notifier.notify("success", "La base fue modificada y enviada a georeferenciar correctamente")
+        
+        let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
+          initialState : {
+            mensaje: "La base fue modificada y enviada a georeferenciar correctamente "
+          }
+        });
         this.bsModalRef.hide();        
       }
     )    
