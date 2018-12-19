@@ -64,7 +64,7 @@ export class SeleccionarProveedorComponent implements OnInit {
       () => {
         let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
           initialState : {
-            mensaje: "Se ha seleccionado correctamente al proveedor " + this.campana.proveedor.nombre
+            mensaje: "Se La asignación de tipo de campaña, proveedor y cotización fue correcta " + this.campana.proveedor.nombre
           }
         });
         this.bsModalRef.hide();
