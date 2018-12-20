@@ -362,7 +362,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
 
   porcentajeCompletoSiRequiereCentroCostosBCP(control: FormControl): { [key: string]: boolean } | null {
 
-    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || (this.utilsService.getSumaAtributoLista(this.itemsCampanaCargados, "porcentaje") < 100 && this.campanaForm.get("requiereCentroCostoBCP").value === true )) {
+    if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) || (this.utilsService.getSumaAtributoLista(this.grupoCentroCostos.centrosCostos, "porcentaje") < 100 && this.campanaForm.get("requiereCentroCostoBCP").value === true )) {
       return { 'porcentajeCompletoSiRequiereCentroCostosBCP': true }
     }
 
@@ -518,6 +518,16 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
 
   contarDocumentosDeLima(documentos: ItemCampana[]): number {
     return documentos.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length;    
+  }
+
+  onChangeGrupoCentroCostos(i: number){
+    this.grupoCentroCostos.centrosCostos.splice(i,1);
+    //this.grupoCentroCostos.centrosCostos.pop();
+    this.campanaForm.controls["cuentaContable"].reset();
+    this.campanaForm.controls["centroCostos"].reset();
+    this.campanaForm.controls["ordenEstadistica"].reset();
+    this.campanaForm.controls["grupoArticulo"].reset();
+    this.campanaForm.controls["porcentajePago"].reset();
   }
 
 }
