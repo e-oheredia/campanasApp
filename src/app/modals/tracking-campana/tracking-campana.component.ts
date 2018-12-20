@@ -43,7 +43,7 @@ export class TrackingCampanaComponent implements OnInit, OnDestroy {
   cargarSeguimientosCampana() {
     this.dataSeguimientosCampana.reset();
     let dataSeguimientosCampana = [];
-    this.campana.seguimientosCampana.sort((a,b) => moment(a.fecha) -  moment(b.fecha)).forEach(
+    this.campana.seguimientosCampana.sort((a,b) => a.id - b.id).forEach(
       seguimientoCampana => {
         dataSeguimientosCampana.push({
           estado: seguimientoCampana.estadoCampana.nombre,

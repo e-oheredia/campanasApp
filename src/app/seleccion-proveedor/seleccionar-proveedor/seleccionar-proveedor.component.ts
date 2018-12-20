@@ -64,7 +64,7 @@ export class SeleccionarProveedorComponent implements OnInit {
       () => {
         let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
           initialState : {
-            mensaje: "Se La asignación de tipo de campaña, proveedor y cotización fue correcta " // + this.campana.proveedor.nombre
+            mensaje: "La asignación de tipo de campaña, proveedor y cotización fue correcta " // + this.campana.proveedor.nombre
           }
         });
         this.bsModalRef.hide();

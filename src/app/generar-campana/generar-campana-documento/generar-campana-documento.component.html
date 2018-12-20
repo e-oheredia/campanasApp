@@ -122,7 +122,7 @@
               <div class="form-row align-items-center">
                 <div class="col-sm-8">
                   <label for="excel">Excel de Registros</label>
-                  <input type="file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="excel"
+                  <input type="file" class="form-control-file " accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="excel"
                     (change)="onChangeExcelFile($event.srcElement.files[0])" formControlName="archivoExcel">
                 </div>
               </div>
@@ -288,7 +288,7 @@
                 </h6>
                 <br>
                 <div *ngIf="campanaForm.get('requiereHabilitado').value">
-                  <label for="paqueteHabilitado">Elige tu opción de Habilitado</label>
+                  <label for="paqueteHabilitado">Paquete de Habilitados</label>
                   <br>
                   <select class="form-control" id="paqueteHabilitado" formControlName="paqueteHabilitado">
                     <option *ngFor="let paqueteHabilitado of paqueteHabilitados" [ngValue]="paqueteHabilitado">{{paqueteHabilitado.descripcion}}</option>
@@ -549,7 +549,7 @@
                   <div class="col-12 mt-12">
                     <div class="form-group">
                       <div class="col-4 mt-4">
-                        <button type="button" class="btn btn-primary form-control mt-2" (click)="agregarCentroCostoItem()">
+                        <button type="button" class="btn btn-secondary form-control mt-2" (click)="agregarCentroCostoItem()">
                           AGREGAR
                         </button>
                       </div>
@@ -663,7 +663,7 @@
   <div class="row justify-content-center">
     <div class="col-11 mt-4 mb-4">
       <div class="form-group">
-        <button class="btn btn-primary form-control mt-2" type="submit" [disabled]="!campanaForm.valid">
+        <button class="btn btn-success form-control mt-2" type="submit" [disabled]="!campanaForm.valid">
           CREAR CAMPAÑA
         </button>
       </div>

@@ -80,7 +80,7 @@ export class ConfirmacionGeoComponent implements OnInit {
         title: 'Fecha de Ingreso de Campaña'
       },
       buttonDescargar: {
-        title: 'Descargar Base',
+        title: 'Descargar base de No distribuibles',
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {
