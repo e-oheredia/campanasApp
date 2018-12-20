@@ -70,6 +70,9 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
       cantidadProvincia: {
         title: 'Cantidad Provincia'
       },
+      contadorGeo: {
+        title: 'Contador Geo'
+      },
       estado : {
         title: 'Estado'
       },
@@ -78,7 +81,7 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {
-          instance.claseIcono = "fas fa-hand-pointer";
+          instance.claseIcono = "fas fa-download";
           instance.pressed.subscribe(row => {
             this.descargarBase(row);
           });
@@ -90,7 +93,7 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {
-          instance.claseIcono = "fas fa-hand-pointer";
+          instance.claseIcono = "fas fa-upload";
           instance.pressed.subscribe(row => {
             this.subirBase(row);
           });
@@ -151,6 +154,7 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
             tipoDocumento: campana.tipoDocumento.nombre,            
             cantidadLima: campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
             cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
+            contadorGeo: campana.seguimientosCampana.filter(seguimientocampana => seguimientocampana.estadoCampana.id === EstadoCampanaEnum.GEOREFERENCIADA).length,
             estado: this.campanaService.getUltimoSeguimientoCampana(campana).estadoCampana.nombre
           });
         });
