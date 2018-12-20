@@ -116,7 +116,7 @@ export class ConfirmacionGeoComponent implements OnInit {
     };
   }
 
-  descargarBase(row) {
+  descargarBase(row) {    
     this.campanaService.exportarItemsCampanaPorGeoReferenciar(this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)));
   }
 
