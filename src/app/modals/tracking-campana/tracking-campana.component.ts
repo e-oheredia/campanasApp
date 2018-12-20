@@ -4,6 +4,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { Campana } from './../../model/campana.model';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-tracking-campana',
@@ -42,7 +43,7 @@ export class TrackingCampanaComponent implements OnInit, OnDestroy {
   cargarSeguimientosCampana() {
     this.dataSeguimientosCampana.reset();
     let dataSeguimientosCampana = [];
-    this.campana.seguimientosCampana.forEach(
+    this.campana.seguimientosCampana.sort((a,b) => moment(a.fecha) -  moment(b.fecha)).forEach(
       seguimientoCampana => {
         dataSeguimientosCampana.push({
           estado: seguimientoCampana.estadoCampana.nombre,

@@ -70,7 +70,7 @@ export class ItemCampanaService {
                     return;
                 }
 
-                itemCampanaCargado.apellidoPaterno = data[i][2] || "";
+                itemCampanaCargado.apellidoPaterno = data[i][1] || "";
 
                 if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][2])) {
                     callback({
@@ -79,7 +79,7 @@ export class ItemCampanaService {
                     return;
                 }
 
-                itemCampanaCargado.apellidoMaterno = data[i][3] || "";
+                itemCampanaCargado.apellidoMaterno = data[i][2] || "";
 
                 if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][3])) {
                     callback({
@@ -88,7 +88,7 @@ export class ItemCampanaService {
                     return;
                 }
 
-                itemCampanaCargado.nombres = data[i][1] || "";
+                itemCampanaCargado.nombres = data[i][3] || "";
 
                 if (this.departamentoService.listarDepartamentoByNombre(data[i][4]) === null) {
                     callback({
@@ -201,7 +201,7 @@ export class ItemCampanaService {
                     return;
                 }
 
-                itemCampanaCargado.enviable = data[i][10] == "Normalizado" ? true : false;
+                itemCampanaCargado.enviable = data[i][10].toUpperCase() === "Normalizado".toUpperCase() ? true : false;
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;
             }
