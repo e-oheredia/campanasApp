@@ -424,7 +424,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
           accionRestosProveedor: values.accionporcargos
         }
       }
-    }
+    }   
 
     if (this.grupoCentroCostos.centrosCostos.length > 0) {
       campana.auspiciador = this.grupoCentroCostos;
