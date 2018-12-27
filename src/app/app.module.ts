@@ -1,3 +1,4 @@
+import { SolicitudImpresionModule } from './solicitud-impresion/solicitud-impresion.module';
 import { RecotizacionCampanaModule } from './recotizacion-campana/recotizacion-campana.module';
 import { NotifierModule } from 'angular-notifier';
 import { LayoutModule } from './layout/layout.module';
@@ -30,7 +31,9 @@ import { MensajeExitoComponent } from './modals/mensaje-exito/mensaje-exito.comp
     NotifierModule,
     ConfirmacionGeoModule,
     VisualizarPedidosGeoreferenciaModule, 
-    RecotizacionCampanaModule
+    RecotizacionCampanaModule,
+    SolicitudImpresionModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
