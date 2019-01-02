@@ -1,3 +1,4 @@
+import { MensajeExitoComponent } from './../modals/mensaje-exito/mensaje-exito.component';
 import { TrackingCampanaComponent } from './../modals/tracking-campana/tracking-campana.component';
 import { ButtonViewComponent } from './../table-management/button-view/button-view.component';
 import { TituloService } from './../services/titulo.service';
@@ -26,7 +27,7 @@ export class SolicitudImpresionComponent implements OnInit {
   settings = AppSettings.tableSettings;
   dataCampanas: LocalDataSource = new LocalDataSource();
   prefijo = AppSettings.PREFIJO;
-  estadosCampana : number[] = [EstadoCampanaEnum.ASIGNADA];
+  estadosCampana : number[] = [EstadoCampanaEnum.CONFORMIDAD_VERIFICADA];
 
 
   ngOnInit() {
@@ -92,7 +93,7 @@ export class SolicitudImpresionComponent implements OnInit {
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {
-          instance.claseIcono = "fas fa-upload";
+          instance.claseIcono = "fas fa-print";
           instance.pressed.subscribe(row => {
             this.solicitarImpresion(row);
           });
@@ -117,13 +118,15 @@ export class SolicitudImpresionComponent implements OnInit {
             cotizacion: campana.costoCampana,
             fechaCreacion: this.campanaService.getFechaCreacion(campana)
           });
-        })
+        });
+        this.dataCampanas.load(dataCampanas);
       }
     )
   }
 
   descargarBase(row) {
-    this.campanaService.exportarItemsCampanaPorGeoReferenciar(this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)));
+    this.campanaService.exportarItemsCampana(this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)));
+
   }
 
   visualizarSeguimiento(row) {
@@ -138,7 +141,14 @@ export class SolicitudImpresionComponent implements OnInit {
   }
 
   solicitarImpresion(row) {
-
+    let idCampana = this.campanaService.extraerIdAutogenerado(row.id);
+    this.campanaService.solicitarImpresion(idCampana).subscribe( () => {
+      let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
+        initialState : {
+          mensaje: "Se ha solicitado la impresión a Logística Correctamente"
+        }
+      });  
+    })
   }
 
 }

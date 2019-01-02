@@ -1,3 +1,4 @@
+import { SolicitudImpresionComponent } from './solicitud-impresion/solicitud-impresion.component';
 import { RecotizacionCampanaComponent } from './recotizacion-campana/recotizacion-campana.component';
 import { SeleccionProveedorComponent } from './seleccion-proveedor/seleccion-proveedor.component';
 import { NgModule } from '@angular/core';
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'recotizacion-campana',
     component: RecotizacionCampanaComponent
+  },
+  {
+    path: 'solicitud-impresion',
+    component: SolicitudImpresionComponent
   }
 ];
 

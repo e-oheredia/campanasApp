@@ -506,7 +506,9 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
 
   onChangeTipoDestino(value: TipoDestino) {
     if (value.nombre.toUpperCase() === "EXTERNA") {
-      this.tiposAgrupadoElegidos = [];
+      this.tiposAgrupadoElegidos = [];      
+    }else{
+      this.campanaForm.controls['requiereGeorreferenciacion'].setValue(false);
     }
   }
 
