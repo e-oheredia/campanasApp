@@ -86,17 +86,6 @@ export class ConfirmacionCotizacionComponent implements OnInit {
             cotizacion: {
                 title: 'Cotizacion'
             },
-            buttonAdjuntarConformidad: {
-                title: 'Adjuntar Conformidad',
-                type: 'custom',
-                renderComponent: ButtonViewComponent,
-                onComponentInitFunction: (instance: any) => {
-                    instance.claseIcono = "fas fa-mail-bulk";
-                    instance.pressed.subscribe(row => {
-                        this.adjuntarPermiso(row);
-                    });
-                }
-            },
             buttonDescargar: {
                 title: 'Descargar Base Impresión',
                 type: 'custom',
@@ -105,6 +94,17 @@ export class ConfirmacionCotizacionComponent implements OnInit {
                     instance.claseIcono = "fas fa-download";
                     instance.pressed.subscribe(row => {
                         this.descargarBase(row);
+                    });
+                }
+            },
+            buttonAdjuntarConformidad: {
+                title: 'Adjuntar Conformidad',
+                type: 'custom',
+                renderComponent: ButtonViewComponent,
+                onComponentInitFunction: (instance: any) => {
+                    instance.claseIcono = "fas fa-mail-bulk";
+                    instance.pressed.subscribe(row => {
+                        this.adjuntarPermiso(row);
                     });
                 }
             }
