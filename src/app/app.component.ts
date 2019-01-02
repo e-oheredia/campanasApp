@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
                                    
                 }
                 this.menuService.llenarMenuAutenticado();
+                this.empleadoService.listarEmpleadoAutenticado();
               }
             );
           } else {

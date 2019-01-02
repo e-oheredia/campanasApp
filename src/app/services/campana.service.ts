@@ -89,6 +89,30 @@ export class CampanaService {
         
     }
 
+    exportarItemsCampana(campana: Campana) {
+        let objects = [];
+        campana.itemsCampana.sort((a,b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
+            objects.push({
+                "Numero de Campaña": this.codigoAutogenerado(campana.id,"DOC"),
+                "Correlativo": ItemCampana.correlativo,
+                "Razon Social": ItemCampana.razonSocial,
+                "Apellido Paterno": ItemCampana.apellidoPaterno,
+                "Apellido Materno": ItemCampana.apellidoMaterno,
+                "Nombres": ItemCampana.nombres,
+                "Departamento": ItemCampana.distrito.provincia.departamento.nombre,
+                "Provincia": ItemCampana.distrito.provincia.nombre,
+                "Distrito": ItemCampana.distrito.nombre,
+                "Dirección": ItemCampana.direccion,
+                "ESTADO": ItemCampana.enviable ? "NORMALIZADO" : "NO DISTRIBUIBLE"
+            })
+            
+        });
+        if (objects.length >0){
+            this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
+        }
+        
+    }
+
     georeferenciarBase(campana: Campana): Observable<Campana> {
         return this.requester.put<Campana>(this.REQUEST_URL + "subirbaseproveedor", campana, {});
     }
@@ -117,6 +141,10 @@ export class CampanaService {
 
     modificarBase(campana: Campana): Observable<Campana> {
         return this.requester.put<Campana>(this.REQUEST_URL + "modificarbasegeo", campana, {});
+    }
+
+    solicitarImpresion(campanaId: number): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/solicitarimpresion", null, {});
     }
 
 }   
