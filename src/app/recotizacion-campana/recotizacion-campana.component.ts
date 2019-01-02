@@ -52,6 +52,9 @@ export class RecotizacionCampanaComponent implements OnInit {
       solicitante: {
         title: 'Solicitante'
       },
+      areaSolicitante: {
+        title: 'Area Solicitante'
+      },
       regulatorio: {
         title: 'Regulatorio'
       },
@@ -114,6 +117,7 @@ export class RecotizacionCampanaComponent implements OnInit {
             id: this.campanaService.codigoAutogenerado(campana.id,this.prefijo.DOCUMENTO),
             nombre: campana.nombre,
             solicitante: campana.buzon.nombre,
+            areaSolicitante: campana.buzon.area.nombre,
             regulatorio: campana.regulatorio ? 'Sí':'No',
             tipoDocumento: campana.tipoDocumento.nombre,
             tipoDestino: campana.tipoDestino.nombre,
