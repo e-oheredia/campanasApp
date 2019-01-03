@@ -152,4 +152,11 @@ export class CampanaService {
         return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/solicitarimpresion", null, {});
     }
 
+    aceptarConformidad(campana: Campana): Observable<Campana>{
+        return this.requester.put<Campana>(this.REQUEST_URL + campana.id + "/aceptarconformidad", campana, {});
+    }
+
+    denegarConformidad(campana: Campana): Observable<Campana>{
+        return this.requester.put<Campana>(this.REQUEST_URL + campana.id + "/denegarconformidad", campana, {});
+    }
 }   

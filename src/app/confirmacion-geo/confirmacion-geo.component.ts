@@ -87,6 +87,7 @@ export class ConfirmacionGeoComponent implements OnInit {
           instance.claseIcono = "fas fa-download";
           instance.pressed.subscribe(row => {
             this.descargarBase(row);
+            
           });
         }
       },
@@ -146,7 +147,8 @@ export class ConfirmacionGeoComponent implements OnInit {
 
     let bsModalRef: BsModalRef = this.modalService.show(ConfirmModalComponent, {
       initialState: {
-        mensaje: "¿Está seguro de confirmar la base georeferenciada?"
+        mensaje: "¿Está seguro de confirmar la base georeferenciada?",
+        textoAceptar: "Confirmar",
       }
     });
     bsModalRef.content.confirmarEvent.subscribe(() => {      

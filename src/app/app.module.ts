@@ -11,10 +11,12 @@ import { SeleccionProveedorModule } from './seleccion-proveedor/seleccion-provee
 
 import { GenerarCampanaModule } from './generar-campana/generar-campana.module';
 import { ConfirmacionGeoModule } from './confirmacion-geo/confirmacion-geo.module';
+import { VerificarConformidadModule } from './verificar-conformidad/verificar-conformidad.module';
 import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.module';
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
 import { MensajeExitoComponent } from './modals/mensaje-exito/mensaje-exito.component'
 import { ConfirmacionCotizacionModule } from './confirmacion-cotizacion/confirmacion-cotizacion.module';
+
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import { ConfirmacionCotizacionModule } from './confirmacion-cotizacion/confirma
     ConfirmacionGeoModule,
     VisualizarPedidosGeoreferenciaModule, 
     RecotizacionCampanaModule,
+    VerificarConformidadModule,
     ConfirmacionCotizacionModule,
     SolicitudImpresionModule
   ],

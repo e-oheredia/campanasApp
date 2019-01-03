@@ -57,7 +57,7 @@ export class ItemCampanaService {
             let i = 1
             while (true) {
 
-                if (data[i].length === 0) {
+                if (data[i] === undefined || data[i].length === 0) {
                     break;
                 }
                 let itemCampanaCargado: ItemCampana = new ItemCampana();
