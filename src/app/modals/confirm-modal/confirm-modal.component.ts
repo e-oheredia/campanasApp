@@ -12,6 +12,9 @@ export class ConfirmModalComponent implements OnInit {
 
   @Output() confirmarEvent = new EventEmitter();
   mensaje: string;
+  titulo: string = "Confirmar Acción";
+  textoAceptar : string = "Aceptar";
+  textoCancelar: string = "Cancelar";
 
   ngOnInit() {
   }

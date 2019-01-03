@@ -10,9 +10,11 @@ import { SeleccionProveedorModule } from './seleccion-proveedor/seleccion-provee
 
 import { GenerarCampanaModule } from './generar-campana/generar-campana.module';
 import { ConfirmacionGeoModule } from './confirmacion-geo/confirmacion-geo.module';
+import { VerificarConformidadModule } from './verificar-conformidad/verificar-conformidad.module';
 import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.module';
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
 import { MensajeExitoComponent } from './modals/mensaje-exito/mensaje-exito.component'
+
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import { MensajeExitoComponent } from './modals/mensaje-exito/mensaje-exito.comp
     NotifierModule,
     ConfirmacionGeoModule,
     VisualizarPedidosGeoreferenciaModule, 
-    RecotizacionCampanaModule
+    RecotizacionCampanaModule,
+    VerificarConformidadModule
   ],
   providers: [],
   bootstrap: [AppComponent]

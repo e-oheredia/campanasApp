@@ -29,6 +29,7 @@ export class AppSettings {
     public static TIPO_CAMPANA_URL = "tiposcampana/";
     public static PAQUETE_HABILITADO_URL = "paquetes/";
     public static ACCION_RESTOS_PROVEEDOR_URL = "accionesrestosproveedor/";
+    public static URL_IMG = "http://localhost/img/"
 
     public static PREFIJO = {
         DOCUMENTO : "DOC",
