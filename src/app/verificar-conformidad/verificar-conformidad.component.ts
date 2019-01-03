@@ -120,7 +120,7 @@ export class VerificarConformidadComponent implements OnInit {
 
   //CONFORMIDAD_ADJUNTADA
   listarCampanasVerificarConformidad() {
-    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.GEOREFERENCIADA_Y_CONFIRMADA).subscribe(
+    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.CONFORMIDAD_ADJUNTADA).subscribe(
       campanas => {
         this.campanas = campanas;
         let dataCampanaVerficarConformidad = [];
@@ -135,6 +135,7 @@ export class VerificarConformidadComponent implements OnInit {
             cantidadProvincia:this.contarDocumentos(campana.itemsCampana, false),
             fechaIngreso: this.campanaService.getFechaCreacion(campana),
             cotizacion: campana.costoCampana,
+            rutaAutorizacion: campana.rutaAutorizacion
           });
         });
         this.dataCampanaVerficarConformidad.load(dataCampanaVerficarConformidad);

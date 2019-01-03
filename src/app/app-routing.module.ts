@@ -29,14 +29,14 @@ const routes: Routes = [
   {
     path: 'recotizacion-campana',
     component: RecotizacionCampanaComponent
+  },  
+  {
+    path: 'confirmacion-cotizacion',
+    component: ConfirmacionCotizacionComponent
   },
   {
     path: 'verificar-conformidad',
     component: VerificarConformidadComponent
-  },
-  {
-    path: 'confirmacion-cotizacion',
-    component: ConfirmacionCotizacionComponent
   },
   {
     path: 'solicitud-impresion',
