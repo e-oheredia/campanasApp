@@ -1,3 +1,4 @@
+import { SolicitudImpresionComponent } from './solicitud-impresion/solicitud-impresion.component';
 import { RecotizacionCampanaComponent } from './recotizacion-campana/recotizacion-campana.component';
 import { SeleccionProveedorComponent } from './seleccion-proveedor/seleccion-proveedor.component';
 import { NgModule } from '@angular/core';
@@ -6,6 +7,7 @@ import { GenerarCampanaDocumentoComponent } from './generar-campana/generar-camp
 import { ConfirmacionGeoComponent } from './confirmacion-geo/confirmacion-geo.component';
 import { VisualizarPedidosGeoreferenciaComponent } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.component';
 import { VerificarConformidadComponent } from './verificar-conformidad/verificar-conformidad.component';
+import { ConfirmacionCotizacionComponent } from './confirmacion-cotizacion/confirmacion-cotizacion.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,14 @@ const routes: Routes = [
   {
     path: 'verificar-conformidad',
     component: VerificarConformidadComponent
+  },
+  {
+    path: 'confirmacion-cotizacion',
+    component: ConfirmacionCotizacionComponent
+  },
+  {
+    path: 'solicitud-impresion',
+    component: SolicitudImpresionComponent
   }
 ];
 

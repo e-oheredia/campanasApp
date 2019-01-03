@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 //ts. dentro de este componente.
-import { ModificarBaseComponent } from './modificar-base/modificar-base.component';
-import { ConfirmacionGeoComponent } from './confirmacion-geo.component';
+import { ConfirmacionCotizacionComponent } from './confirmacion-cotizacion.component';
 //
 import { ButtonViewComponent } from '../table-management/button-view/button-view.component';
 import { TableManagementModule } from '../table-management/table-management.module';
 import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
+import { AdjuntarCorreoComponent } from './adjuntar-correo/adjuntar-correo.component';
 
 @NgModule({
     imports: [
@@ -19,16 +19,15 @@ import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.com
       FormsModule      
     ],
     declarations: [
-      ModificarBaseComponent,
-      ConfirmacionGeoComponent,
-      
+      ConfirmacionCotizacionComponent,
+      AdjuntarCorreoComponent
     ],
     entryComponents: [
       ButtonViewComponent,
-      ConfirmacionGeoComponent,
-      ModificarBaseComponent,
+      ConfirmacionCotizacionComponent,
+      AdjuntarCorreoComponent,
       ConfirmModalComponent
     ]
   })
 
-  export class ConfirmacionGeoModule {}
+  export class ConfirmacionCotizacionModule {}

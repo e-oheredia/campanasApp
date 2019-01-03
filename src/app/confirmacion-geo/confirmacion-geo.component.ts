@@ -92,7 +92,7 @@ export class ConfirmacionGeoComponent implements OnInit {
         }
       },
       buttonModificar: {
-        title: 'Modificar',
+        title: 'Modificar y volver a Georeferenciar',
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {

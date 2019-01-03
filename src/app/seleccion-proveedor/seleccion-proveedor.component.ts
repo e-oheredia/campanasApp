@@ -46,7 +46,7 @@ export class SeleccionProveedorComponent implements OnInit {
         title: 'Número de Campaña'
       },      
       nombre: {
-        title: 'Nombre'
+        title: 'Nombre de Campaña'
       },
       areaSolicitante: {
         title: 'Area solicitante'

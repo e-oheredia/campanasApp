@@ -1,3 +1,4 @@
+import { ButtonViewComponent } from './../table-management/button-view/button-view.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { UtilsService } from './../services/utils.service';
 import { ItemCampanaService } from './../services/itemcampana.service';
@@ -40,7 +41,7 @@ import { MensajeExitoComponent } from '../modals/mensaje-exito/mensaje-exito.com
     TituloComponent,
     HeaderComponent,
     TreeViewComponent, 
-    TrackingCampanaComponent  
+    TrackingCampanaComponent
   ],
   imports: [
     CommonModule,
@@ -91,7 +92,7 @@ import { MensajeExitoComponent } from '../modals/mensaje-exito/mensaje-exito.com
   ], 
   entryComponents: [
     TrackingCampanaComponent, 
-    MensajeExitoComponent
+    MensajeExitoComponent, 
   ]
 })
 export class LayoutModule { }

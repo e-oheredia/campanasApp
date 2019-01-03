@@ -1,3 +1,4 @@
+import { SolicitudImpresionModule } from './solicitud-impresion/solicitud-impresion.module';
 import { RecotizacionCampanaModule } from './recotizacion-campana/recotizacion-campana.module';
 import { NotifierModule } from 'angular-notifier';
 import { LayoutModule } from './layout/layout.module';
@@ -14,6 +15,7 @@ import { VerificarConformidadModule } from './verificar-conformidad/verificar-co
 import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.module';
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
 import { MensajeExitoComponent } from './modals/mensaje-exito/mensaje-exito.component'
+import { ConfirmacionCotizacionModule } from './confirmacion-cotizacion/confirmacion-cotizacion.module';
 
 
 
@@ -33,7 +35,9 @@ import { MensajeExitoComponent } from './modals/mensaje-exito/mensaje-exito.comp
     ConfirmacionGeoModule,
     VisualizarPedidosGeoreferenciaModule, 
     RecotizacionCampanaModule,
-    VerificarConformidadModule
+    VerificarConformidadModule,
+    ConfirmacionCotizacionModule,
+    SolicitudImpresionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

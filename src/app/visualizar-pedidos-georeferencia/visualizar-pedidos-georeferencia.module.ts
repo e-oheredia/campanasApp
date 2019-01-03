@@ -18,8 +18,7 @@ import { SubirBaseGeoreferenciadaComponent } from './subir-base-georeferenciada/
   ],
   entryComponents:[
     ButtonViewComponent,
-    SubirBaseGeoreferenciadaComponent
-    
+    SubirBaseGeoreferenciadaComponent    
   ]
 })
 export class VisualizarPedidosGeoreferenciaModule { }
