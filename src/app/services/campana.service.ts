@@ -88,12 +88,36 @@ export class CampanaService {
         }
     }
 
-    exportarItemsCampanaPendienteConfirmaciónAdjunta(campana: Campana) {
+    exportarItemsCampanaPendientesPorAdjuntarConfirmacion(campana: Campana) {
         let objects = [];
         campana.itemsCampana.sort((a,b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
             objects.push({
-                "Numero de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
-                "Codigo de Item": ItemCampana.id,
+                "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
+                "Código de Item": ItemCampana.id,
+                "Correlativo" : ItemCampana.correlativo,
+                "Razon Social": ItemCampana.razonSocial,
+                "Apellido Paterno": ItemCampana.apellidoPaterno,
+                "Apellido Materno": ItemCampana.apellidoMaterno,
+                "Nombres": ItemCampana.nombres,
+                "Departamento": ItemCampana.distrito.provincia.departamento.nombre,
+                "Provincia": ItemCampana.distrito.provincia.nombre,
+                "Distrito": ItemCampana.distrito.nombre,
+                "Dirección": ItemCampana.direccion,
+                "Estado": ItemCampana.enviable ? "NORMALIZADO" : "NO DISTRIBUIBLE"
+            })
+        });
+        if (objects.length > 0) {
+            this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
+        }
+    }
+
+    exportarItemsCampanaPendienteConfirmaciónAdjunta(campana: Campana) {
+        let objects = [];
+        campana.itemsCampana.filter(x => x.correlativo > 0).sort((a,b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
+            objects.push({
+                "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
+                "Código de Item": ItemCampana.id,
+                "Correlativo" : ItemCampana.correlativo,
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,

@@ -43,7 +43,7 @@ export class SeleccionProveedorComponent implements OnInit {
         }
       },
       id: {
-        title: 'Número de Campaña'
+        title: 'Código de Campaña'
       },      
       nombre: {
         title: 'Nombre de Campaña'

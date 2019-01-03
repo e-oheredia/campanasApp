@@ -56,7 +56,7 @@ export class ConfirmacionGeoComponent implements OnInit {
         }
       },
       id: {
-        title: 'Número de campaña'
+        title: 'Código de Campaña'
       },
       nombre: {
         title: 'Nombre de Campaña'
