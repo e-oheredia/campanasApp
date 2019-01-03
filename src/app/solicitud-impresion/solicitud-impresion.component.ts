@@ -53,7 +53,7 @@ export class SolicitudImpresionComponent implements OnInit {
         title: 'Número de Campaña'
       },     
       nombre: {
-        title: 'Nombre'
+        title: 'Nombre de Campaña'
       },
       tipoCampana: {
         title: 'Tipo de Campaña'
@@ -125,7 +125,7 @@ export class SolicitudImpresionComponent implements OnInit {
   }
 
   descargarBase(row) {
-    this.campanaService.exportarItemsCampana(this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)));
+    this.campanaService.exportarItemsCampanaPendienteConfirmaciónAdjunta(this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)));
 
   }
 

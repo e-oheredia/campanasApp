@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { GenerarCampanaDocumentoComponent } from './generar-campana/generar-campana-documento/generar-campana-documento.component';
 import { ConfirmacionGeoComponent } from './confirmacion-geo/confirmacion-geo.component';
 import { VisualizarPedidosGeoreferenciaComponent } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.component';
+import { ConfirmacionCotizacionComponent } from './confirmacion-cotizacion/confirmacion-cotizacion.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'recotizacion-campana',
     component: RecotizacionCampanaComponent
+  },
+  {
+    path: 'confirmacion-cotizacion',
+    component: ConfirmacionCotizacionComponent
   },
   {
     path: 'solicitud-impresion',

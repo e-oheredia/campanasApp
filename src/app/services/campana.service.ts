@@ -8,6 +8,7 @@ import { HttpParams } from '@angular/common/http';
 import { WriteExcelService } from './write-excel.service';
 import * as moment from 'moment-timezone';
 import { UtilsService } from './utils.service';
+import { ItemCampana } from '../model/itemcampana.model';
 
 
 @Injectable()
@@ -30,7 +31,7 @@ export class CampanaService {
         ).fecha;
     }
 
-    listarCampanasPorEstado(estadoCampana: number): Observable<Campana[]>{
+    listarCampanasPorEstado(estadoCampana: number): Observable<Campana[]> {
         return this.requester.get<Campana[]>(this.REQUEST_URL, {
             params: new HttpParams().append('estadoId', estadoCampana.toString())
         });
@@ -55,7 +56,7 @@ export class CampanaService {
         return this.requester.put<Campana[]>(this.REQUEST_URL + campana.id + "/recotizacion", campana, {});
     }
 
-    getUltimoSeguimientoCampana(campana: Campana){
+    getUltimoSeguimientoCampana(campana: Campana) {
 
         return campana.seguimientosCampana.reduce(
             (max, seguimientoCampana) =>
@@ -66,9 +67,9 @@ export class CampanaService {
     exportarItemsCampanaPorGeoReferenciar(campana: Campana) {
         let objects = [];
         campana.itemsCampana.forEach(ItemCampana => {
-            if(ItemCampana.enviable === false){
+            if (ItemCampana.enviable === false) {
                 objects.push({
-                    "Numero de Campaña": this.codigoAutogenerado(campana.id,"DOC"),
+                    "Numero de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                     "Codigo de Item": ItemCampana.id,
                     "Razon Social": ItemCampana.razonSocial,
                     "Apellido Paterno": ItemCampana.apellidoPaterno,
@@ -81,20 +82,18 @@ export class CampanaService {
                     "Estado": ""
                 })
             }
-            
         });
-        if (objects.length >0){
+        if (objects.length > 0) {
             this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
         }
-        
     }
 
-    exportarItemsCampana(campana: Campana) {
+    exportarItemsCampanaPendienteConfirmaciónAdjunta(campana: Campana) {
         let objects = [];
         campana.itemsCampana.sort((a,b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
             objects.push({
-                "Numero de Campaña": this.codigoAutogenerado(campana.id,"DOC"),
-                "Correlativo": ItemCampana.correlativo,
+                "Numero de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
+                "Codigo de Item": ItemCampana.id,
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,
@@ -103,14 +102,12 @@ export class CampanaService {
                 "Provincia": ItemCampana.distrito.provincia.nombre,
                 "Distrito": ItemCampana.distrito.nombre,
                 "Dirección": ItemCampana.direccion,
-                "ESTADO": ItemCampana.enviable ? "NORMALIZADO" : "NO DISTRIBUIBLE"
+                "Estado": ItemCampana.enviable ? "NORMALIZADO" : "NO DISTRIBUIBLE"
             })
-            
         });
-        if (objects.length >0){
+        if (objects.length > 0) {
             this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
         }
-        
     }
 
     georeferenciarBase(campana: Campana): Observable<Campana> {
@@ -124,13 +121,13 @@ export class CampanaService {
         var length = id.toString().length;
         var cero = "0";
         autogenerado = prefijo + cero.repeat(longitud - length) + id.toString();
-        return autogenerado;        
+        return autogenerado;
     }
 
-    extraerIdAutogenerado(autogenerado: String){
-        return parseInt(autogenerado.substring(3,10));
+    extraerIdAutogenerado(autogenerado: String) {
+        return parseInt(autogenerado.substring(3, 10));
     }
-    confirmarBaseGeo(campana: Campana): Observable<Campana>{
+    confirmarBaseGeo(campana: Campana): Observable<Campana> {
         return this.requester.put<Campana>(this.REQUEST_URL + campana.id + "/confirmarbasegeo", campana, {});
     }
 
@@ -140,7 +137,15 @@ export class CampanaService {
     }
 
     modificarBase(campana: Campana): Observable<Campana> {
-        return this.requester.put<Campana>(this.REQUEST_URL + "modificarbasegeo", campana, {});
+        return this.requester.put<Campana>(this.REQUEST_URL + "/modificarbasegeo", campana, {});
+    }
+
+    adjuntarConformidad(campana: Campana, file: File): Observable<Campana> {
+        let form: FormData = new FormData;
+        if (file !== null && file != undefined) {
+            form.append("file", file);
+        }
+        return this.requester.post<Campana>(this.REQUEST_URL + campana.id + "/adjuntarconformidad", form, {});
     }
 
     solicitarImpresion(campanaId: number): Observable<Campana> {

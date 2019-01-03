@@ -56,7 +56,7 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
         title: 'Número de Campaña'
       },     
       nombre: {
-        title: 'Nombre'
+        title: 'Nombre de Campaña'
       },
       tipoCampana: {
         title: 'Tipo de Campaña'

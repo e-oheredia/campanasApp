@@ -1,0 +1,84 @@
+<!-- <div class="card">
+
+
+  <div class="modal-header">
+    <h6>{{titulo}}</h6>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+
+
+  <form [formGroup]="adjuntoForm" (ngSubmit)=onSubmit(adjuntoForm.value)>
+
+    <div class="card-body">
+
+      <div class="col-md-12">
+        <label for="excel">{{mensaje}}</label>
+        <input type="file" class="form-control-file" [accept]="archivosPermitidos"
+          id="excel" (change)="onChangeExcelFile($event.srcElement.files[0])" formControlName="archivo">
+      </div>
+
+
+    </div>
+    <div class="card-body">
+
+      <div class="row" *ngIf="itemsCampanaCargados.length !== 0">
+        <div class="col-12">
+          <ng2-smart-table [settings]="tableSettings" [source]="dataItemsCampanaCargados"></ng2-smart-table>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success">Aceptar</button>
+      <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">Cancelar</button>
+    </div>
+  </form>
+</div> -->
+
+
+
+
+
+
+
+
+
+<!-- <div class="card">
+
+  <div class="modal-header">
+    <h6>Adjuntar conformidad de Gerencia</h6>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]="campanaForm" (ngSubmit)=onSubmit(campanaForm.value)>
+
+    <div class="card-body">
+      <div class="col-md-12">
+        <label for="excel">Correo de su Gerencia</label>
+        <input type="file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          id="excel" (change)="onChangeExcelFile($event.srcElement.files[0])" formControlName="archivoExcel">
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row" *ngIf="itemsCampanaCargados.length !== 0">
+        <div class="col-12">
+          <ng2-smart-table [settings]="tableSettings" [source]="dataItemsCampanaCargados"></ng2-smart-table>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success">Aceptar</button>
+      <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">Cancelar</button>
+    </div>
+
+  </form>
+
+</div> -->

@@ -14,6 +14,7 @@ import { ConfirmacionGeoModule } from './confirmacion-geo/confirmacion-geo.modul
 import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.module';
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
 import { MensajeExitoComponent } from './modals/mensaje-exito/mensaje-exito.component'
+import { ConfirmacionCotizacionModule } from './confirmacion-cotizacion/confirmacion-cotizacion.module';
 
 
 @NgModule({
@@ -32,8 +33,8 @@ import { MensajeExitoComponent } from './modals/mensaje-exito/mensaje-exito.comp
     ConfirmacionGeoModule,
     VisualizarPedidosGeoreferenciaModule, 
     RecotizacionCampanaModule,
+    ConfirmacionCotizacionModule,
     SolicitudImpresionModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]
