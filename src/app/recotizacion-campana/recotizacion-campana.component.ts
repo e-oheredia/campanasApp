@@ -47,7 +47,7 @@ export class RecotizacionCampanaComponent implements OnInit {
         title: 'Número de Campaña'
       },      
       nombre: {
-        title: 'Nombre'
+        title: 'Nombre de Campaña'
       },
       solicitante: {
         title: 'Solicitante'

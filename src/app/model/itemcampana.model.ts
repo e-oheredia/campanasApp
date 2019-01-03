@@ -10,5 +10,6 @@ export class ItemCampana {
     public apellidoMaterno: string;
     public direccion: string;
     public razonSocial: string;
+    public correlativo: number;
     public enviable: boolean;
 }

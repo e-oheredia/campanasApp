@@ -179,7 +179,7 @@
         <div class="card-body">
 
 
-          <div class="form-row">
+          <div class="form-row" *ngIf="campanaForm.get('tipoDestino') && campanaForm.get('tipoDestino').value && campanaForm.get('tipoDestino').value.id == 2" >
             <div class="col-10">
               <div class="form-group">
                 <label for="geo">Requiere Georreferenciación *</label>
@@ -456,7 +456,9 @@
                 <br>
                 <ng-template #noRequiereDevolucionCargo>
                   <label for="accionporcargos">¿Qué desea que se haga con los cargos físicos?</label>
-                  <h6>Al finalizar la distribución, los cargos digitales serán almacenados en un CD</h6>
+                  <div *ngIf="campanaForm.get('tipoDestino') && campanaForm.get('tipoDestino').value && campanaForm.get('tipoDestino').value.id == 2" >
+                    <h6>Al finalizar la distribución, los cargos digitales serán almacenados en un CD</h6>
+                  </div>                  
                   <select class="form-control" id="accionporcargos" formControlName="accionporcargos">
                     <option *ngFor="let accionporcargos of accionesRestosProveedor" [ngValue]="accionporcargos">{{accionporcargos.nombre}}</option>
                   </select>

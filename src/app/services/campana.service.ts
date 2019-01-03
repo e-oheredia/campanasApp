@@ -90,7 +90,7 @@ export class CampanaService {
 
     exportarItemsCampanaPendienteConfirmaciónAdjunta(campana: Campana) {
         let objects = [];
-        campana.itemsCampana.forEach(ItemCampana => {
+        campana.itemsCampana.sort((a,b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
             objects.push({
                 "Numero de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                 "Codigo de Item": ItemCampana.id,
@@ -102,14 +102,13 @@ export class CampanaService {
                 "Provincia": ItemCampana.distrito.provincia.nombre,
                 "Distrito": ItemCampana.distrito.nombre,
                 "Dirección": ItemCampana.direccion,
-                "Estado": ItemCampana.enviable ? "Normalizado" : "No Distribuible"
+                "Estado": ItemCampana.enviable ? "NORMALIZADO" : "NO DISTRIBUIBLE"
             })
         });
-        if(objects.length>0){
-            this.writeExcelService.jsonToExcel(objects, "Campaña: " +campana.id);
+        if (objects.length > 0) {
+            this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
         }
     }
-
 
     georeferenciarBase(campana: Campana): Observable<Campana> {
         return this.requester.put<Campana>(this.REQUEST_URL + "subirbaseproveedor", campana, {});
@@ -141,17 +140,16 @@ export class CampanaService {
         return this.requester.put<Campana>(this.REQUEST_URL + "/modificarbasegeo", campana, {});
     }
 
-    adjuntarConformidadsssss(campana: Campana): Observable<Campana> {
-        return this.requester.put<Campana>(this.REQUEST_URL + campana.id + "/adjuntarconformidad", campana, {});
-    }
-
     adjuntarConformidad(campana: Campana, file: File): Observable<Campana> {
         let form: FormData = new FormData;
-        if (file !== null && file != undefined){
+        if (file !== null && file != undefined) {
             form.append("file", file);
         }
         return this.requester.post<Campana>(this.REQUEST_URL + campana.id + "/adjuntarconformidad", form, {});
     }
 
+    solicitarImpresion(campanaId: number): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/solicitarimpresion", null, {});
+    }
 
 }   
