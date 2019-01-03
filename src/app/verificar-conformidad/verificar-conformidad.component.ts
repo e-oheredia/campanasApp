@@ -71,11 +71,11 @@ export class VerificarConformidadComponent implements OnInit {
         title: 'Cotización'
       },
       btnDescargarConformidad: {
-        title: 'Descargar Conformidad',
+        title: 'Visualizar Conformidad',
         type: 'custom',
         renderComponent: ButtonViewComponent,        
         onComponentInitFunction: (instance: any) => {
-          instance.claseIcono = "fas fa-download";
+          instance.claseIcono = "fa fa-eye";
           instance.pressed.subscribe(row => {
             this.descargarConformidad(row);
           });

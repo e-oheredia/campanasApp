@@ -9,6 +9,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CampanaService } from './../services/campana.service';
 import { Campana } from './../model/campana.model';
 import { Component, OnInit } from '@angular/core';
+import { TipoDocumento } from '../model/tipodocumento.model';
 
 @Component({
   selector: 'app-solicitud-impresion',
@@ -50,7 +51,7 @@ export class SolicitudImpresionComponent implements OnInit {
         }
       },
       id: {
-        title: 'Número de Campaña'
+        title: 'Código de Campaña'
       },     
       nombre: {
         title: 'Nombre de Campaña'
@@ -58,8 +59,8 @@ export class SolicitudImpresionComponent implements OnInit {
       tipoCampana: {
         title: 'Tipo de Campaña'
       },
-      solicitante: {
-        title: 'Solicitante'
+      TipoDocumento: {
+        title: 'Tipo de Documento'
       },
       cantidadLima: {
         title: 'Cantidad Lima'
@@ -67,17 +68,17 @@ export class SolicitudImpresionComponent implements OnInit {
       cantidadProvincia: {
         title: 'Cantidad Provincia'
       },
-      estado : {
-        title: 'Estado'
+      fechaCreacion: {
+        title: 'Fecha de Creación'
       },
       cotizacion: {
         title: 'Cotización'
       },
-      fechaCreacion: {
-        title: 'Fecha de Creación'
+      conformidadUTD: {
+        title: 'Conformidad por UTD'
       },
-      button: {
-        title: 'Descargar Base',
+      buttonDescargarBaseImpresion: {
+        title: 'Descargar Base Impresión',
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {
@@ -112,11 +113,12 @@ export class SolicitudImpresionComponent implements OnInit {
             id: this.campanaService.codigoAutogenerado(campana.id,this.prefijo.DOCUMENTO),
             nombre: campana.nombre,
             tipoCampana: campana.tipoCampana.nombre,
-            solicitante: campana.buzon.nombre,
+            tipoDocumento: campana.tipoDocumento.nombre,
             cantidadLima: campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
-            cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length, 
+            cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
+            fechaCreacion: this.campanaService.getFechaCreacion(campana),
             cotizacion: campana.costoCampana,
-            fechaCreacion: this.campanaService.getFechaCreacion(campana)
+            conformidadUTD: 'HOLA'
           });
         });
         this.dataCampanas.load(dataCampanas);
@@ -148,6 +150,7 @@ export class SolicitudImpresionComponent implements OnInit {
           mensaje: "Se ha solicitado la impresión a Logística Correctamente"
         }
       });  
+      this.listarCampanasParaSolicitudImpresion();
     })
   }
 

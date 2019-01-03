@@ -57,7 +57,7 @@ export class ConfirmacionCotizacionComponent implements OnInit {
                 }
             },
             id: {
-                title: 'Número de campaña'
+                title: 'Código de Campaña'
             },
             nombre: {
                 title: 'Nombre de Campaña'
@@ -87,7 +87,7 @@ export class ConfirmacionCotizacionComponent implements OnInit {
                 title: 'Cotizacion'
             },
             buttonDescargar: {
-                title: 'Descargar Base Impresión',
+                title: 'Descargar Base Completa',
                 type: 'custom',
                 renderComponent: ButtonViewComponent,
                 onComponentInitFunction: (instance: any) => {
@@ -112,7 +112,7 @@ export class ConfirmacionCotizacionComponent implements OnInit {
     }
 
     descargarBase(row) {
-        this.campanaService.exportarItemsCampanaPendienteConfirmaciónAdjunta(this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)));
+        this.campanaService.exportarItemsCampanaPendientesPorAdjuntarConfirmacion(this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)));
     }
 
     adjuntarPermiso(row){//ts padre
@@ -125,7 +125,7 @@ export class ConfirmacionCotizacionComponent implements OnInit {
             },
             class: 'modal-lg',
             keyboard: false,
-            // backdrop: "static"
+            backdrop: "static"
         });
                             
         bsModalRef.content.confirmarEvent.subscribe((archivoHijo) => {
@@ -139,6 +139,7 @@ export class ConfirmacionCotizacionComponent implements OnInit {
                       }
                     });
                     this.listarCampanasPendientesPorAdjuntarConfirmacion();
+                    console.log("nuevo error");
                   },
                   error => {
                       console.log("hola")

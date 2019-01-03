@@ -143,7 +143,8 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
           initialState : {
             mensaje: "La base fue georeferenciada y enviada al usuario "
           }
-        });       
+        });  
+        this.bsModalRef.hide();      
       }
     )    
   }
