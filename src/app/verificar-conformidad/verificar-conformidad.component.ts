@@ -47,7 +47,7 @@ export class VerificarConformidadComponent implements OnInit {
         }
       },
       id: {
-        title: 'Número de Campaña'
+        title: 'Código de Campaña'
       },      
       nombre: {
         title: 'Nombre'
@@ -131,8 +131,8 @@ export class VerificarConformidadComponent implements OnInit {
             tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,
             tipoDestino: campana.tipoDestino.nombre,
-            cantidadLima: this.contarDocumentos(campana.itemsCampana,true),
-            cantidadProvincia:this.contarDocumentos(campana.itemsCampana, false),
+            cantidadLima: this.contarDocumentos(campana.itemsCampana.filter(x=> x.enviable==true),true),
+            cantidadProvincia:this.contarDocumentos(campana.itemsCampana.filter(x=> x.enviable==true), false),
             fechaIngreso: this.campanaService.getFechaCreacion(campana),
             cotizacion: campana.costoCampana,
             rutaAutorizacion: campana.rutaAutorizacion

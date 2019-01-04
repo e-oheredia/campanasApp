@@ -49,7 +49,7 @@ export class SeleccionProveedorComponent implements OnInit {
         title: 'Nombre de Campaña'
       },
       areaSolicitante: {
-        title: 'Area solicitante'
+        title: 'Area Solicitante'
       },
       solicitante: {
         title: 'Solicitante'
@@ -70,7 +70,7 @@ export class SeleccionProveedorComponent implements OnInit {
         title: 'Cantidad Provincia'
       },
       fechaCreacion: {
-        title: 'Fecha de Creación'
+        title: 'Fecha de Ingreso de Campaña'
       },
       button: {
         title: 'Asignar Proveedor',

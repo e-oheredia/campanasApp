@@ -44,7 +44,7 @@ export class RecotizacionCampanaComponent implements OnInit {
         }
       },
       id: {
-        title: 'Número de Campaña'
+        title: 'Código de Campaña'
       },      
       nombre: {
         title: 'Nombre de Campaña'

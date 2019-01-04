@@ -170,7 +170,7 @@ export class ConfirmacionCotizacionComponent implements OnInit {
                   nombre: campana.nombre,
                   tipoCampana: campana.tipoCampana.nombre,
                   tipoDocumento: campana.tipoDocumento.nombre,
-                  requiereGeo: campana.requiereGeorreferencia ? "si" : "no",
+                  requiereGeo: campana.requiereGeorreferencia ? "SI" : "NO",
                   cantidadInicial:campana.itemsCampana.length,
                   cantidadFinal:campana.itemsCampana.filter(documento => documento.enviable === true).length,
                   fechaIngresoCampana:this.campanaService.getFechaCreacion(campana),

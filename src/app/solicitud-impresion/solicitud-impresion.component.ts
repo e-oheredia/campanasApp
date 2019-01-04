@@ -10,6 +10,8 @@ import { CampanaService } from './../services/campana.service';
 import { Campana } from './../model/campana.model';
 import { Component, OnInit } from '@angular/core';
 import { TipoDocumento } from '../model/tipodocumento.model';
+import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
+import { ItemCampana } from './../model/itemcampana.model';
 
 @Component({
   selector: 'app-solicitud-impresion',
@@ -59,7 +61,7 @@ export class SolicitudImpresionComponent implements OnInit {
       tipoCampana: {
         title: 'Tipo de Campaña'
       },
-      TipoDocumento: {
+      tipoDocumento: {
         title: 'Tipo de Documento'
       },
       cantidadLima: {
@@ -73,9 +75,6 @@ export class SolicitudImpresionComponent implements OnInit {
       },
       cotizacion: {
         title: 'Cotización'
-      },
-      conformidadUTD: {
-        title: 'Conformidad por UTD'
       },
       buttonDescargarBaseImpresion: {
         title: 'Descargar Base Impresión',
@@ -114,11 +113,10 @@ export class SolicitudImpresionComponent implements OnInit {
             nombre: campana.nombre,
             tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,
-            cantidadLima: campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
-            cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
+            cantidadLima: this.contarDocumentos(campana.itemsCampana.filter(x=> x.enviable==true),true),
+            cantidadProvincia: this.contarDocumentos(campana.itemsCampana.filter(x=> x.enviable==true), false),
             fechaCreacion: this.campanaService.getFechaCreacion(campana),
             cotizacion: campana.costoCampana,
-            conformidadUTD: 'HOLA'
           });
         });
         this.dataCampanas.load(dataCampanas);
@@ -142,6 +140,11 @@ export class SolicitudImpresionComponent implements OnInit {
     });
   }
 
+  contarDocumentos(documentos: ItemCampana[], lima: boolean = true, normalizado: boolean = false): number {
+    return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;    
+  }
+
+/*
   solicitarImpresion(row) {
     let idCampana = this.campanaService.extraerIdAutogenerado(row.id);
     this.campanaService.solicitarImpresion(idCampana).subscribe( () => {
@@ -152,6 +155,37 @@ export class SolicitudImpresionComponent implements OnInit {
       });  
       this.listarCampanasParaSolicitudImpresion();
     })
+  }
+*/
+  solicitarImpresion(row: any){
+
+    let c = new Campana();
+    c.id = this.campanaService.extraerIdAutogenerado(row.id);
+
+    let bsModalRef: BsModalRef = this.modalService.show(ConfirmModalComponent, {
+      initialState: {
+        titulo: "Campaña : " + row.nombre,
+        mensaje: "¿Está seguro de enviar la solicitud a impresión?",
+      },
+      keyboard: false,
+      backdrop: "static",
+    });
+    bsModalRef.content.confirmarEvent.subscribe(() => {      
+      this.campanaService.solicitarImpresion(c.id).subscribe(
+        () => {
+         
+          let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
+            initialState : {              
+              mensaje: "Se ha solicitado la impresión a Logística Correctamente"
+            },
+          });
+          this.listarCampanasParaSolicitudImpresion();
+        },
+        error => {
+          console.log('holitas')
+        }
+      )
+    });
   }
 
 }
