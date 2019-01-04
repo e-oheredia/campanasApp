@@ -122,6 +122,7 @@ export class CampanaService {
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,
                 "Nombres": ItemCampana.nombres,
+                "Ámbito" : ItemCampana.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" ? "LIMA" : "PROVINCIA",
                 "Departamento": ItemCampana.distrito.provincia.departamento.nombre,
                 "Provincia": ItemCampana.distrito.provincia.nombre,
                 "Distrito": ItemCampana.distrito.nombre,
@@ -161,7 +162,7 @@ export class CampanaService {
     }
 
     modificarBase(campana: Campana): Observable<Campana> {
-        return this.requester.put<Campana>(this.REQUEST_URL + "/modificarbasegeo", campana, {});
+        return this.requester.put<Campana>(this.REQUEST_URL + "modificarbasegeo", campana, {});
     }
 
     adjuntarConformidad(campana: Campana, file: File): Observable<Campana> {
