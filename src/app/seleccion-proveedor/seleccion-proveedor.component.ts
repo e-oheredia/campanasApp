@@ -112,7 +112,7 @@ export class SeleccionProveedorComponent implements OnInit {
   listarCampanasCreadas() {
     this.dataCampanasCreadas = new LocalDataSource();
     this.campanas = []; 
-    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.CREADO).subscribe(
+    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.CREADA).subscribe(
       campanas => {
         this.campanas = campanas;
         let dataCampanasCreadas = [];
