@@ -30,7 +30,7 @@ export class SolicitudImpresionComponent implements OnInit {
   settings = AppSettings.tableSettings;
   dataCampanas: LocalDataSource = new LocalDataSource();
   prefijo = AppSettings.PREFIJO;
-  estadosCampana : number[] = [EstadoCampanaEnum.CONFORMIDAD_VERIFICADA];
+  estadosCampana : number[] = [EstadoCampanaEnum.CONFORMIDAD_ACEPTADA];
 
 
   ngOnInit() {

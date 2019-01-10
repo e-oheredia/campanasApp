@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+
+  <div class="card">
+
+    <form [formGroup]="datosRecojoForm" (ngSubmit)=onSubmit(datosRecojoForm.value)>
+
+      <div class="modal-header">
+        <h6>{{titulo}}</h6>
+        <button type="button" class="close pull-right" aria-black="close" (click)="bsModalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="card-body">
+
+        <div class="form-row">
+          <div class="col">
+            <div class="form-group">
+              <label for="datoFecha">{{datoFecha}}</label>
+              <input type="date" class="form-control-date" id="datoFecha" formControlName="datoFecha">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            <div class="form-group">
+              <label for="datoHora">{{datoHora}}</label>
+              <input type="time" class="form-control-time" id="datoHora" formControlName="datoHora">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            <div class="form-group">
+              <label for="datoImprenta">{{datoImprenta}}</label>
+              <input type="text" class="form-control-text" id="datoImprenta" formControlName="datoImprenta">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            <div class="form-group">
+              <label for="datoDireccion">{{datoDireccion}}</label>
+              <input type="text" class="form-control-text" id="datoDireccion" formControlName="datoDireccion">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            <div class="form-group">
+              <label for="datoContacto">{{datoContacto}}</label>
+              <input type="text" class="form-control-text" id="datoContacto" formControlName="datoContacto">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" [disabled]="!datosRecojoForm.valid">Enviar</button>
+        <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">Cancelar</button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
