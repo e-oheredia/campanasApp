@@ -1,3 +1,5 @@
+import { SolicitudMuestraModule } from './solicitud-muestra/solicitud-muestra.module';
+import { RecotizacionCampanaModule } from './recotizacion-campana/recotizacion-campana.module';
 import { NotifierModule } from 'angular-notifier';
 import { LayoutModule } from './layout/layout.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,9 +16,11 @@ import { ConfirmacionGeoModule } from './confirmacion-geo/confirmacion-geo.modul
 import { ConfirmacionCotizacionModule } from './confirmacion-cotizacion/confirmacion-cotizacion.module';
 import { VerificarConformidadModule } from './verificar-conformidad/verificar-conformidad.module';
 import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.module';
-import { SolicitudImpresionModule } from './solicitud-impresion/solicitud-impresion.module';
-import { RecotizacionCampanaModule } from './recotizacion-campana/recotizacion-campana.module';
+
 import { ImpresionCampanaModule } from './impresion-campana/impresion-campana.module';
+
+import { SubirMuestraModule } from './subir-muestra/subir-muestra.module';
+
 
 
 @NgModule({
@@ -37,8 +41,9 @@ import { ImpresionCampanaModule } from './impresion-campana/impresion-campana.mo
     RecotizacionCampanaModule,
     VerificarConformidadModule,
     ConfirmacionCotizacionModule,
-    SolicitudImpresionModule,
-    ImpresionCampanaModule
+    ImpresionCampanaModule,
+    SolicitudMuestraModule,
+    SubirMuestraModule
   ],
   providers: [],
   bootstrap: [AppComponent]

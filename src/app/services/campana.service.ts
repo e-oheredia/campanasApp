@@ -181,8 +181,8 @@ export class CampanaService {
         return this.requester.post<Campana>(this.REQUEST_URL + campana.id + "/adjuntarconformidad", form, {});
     }
 
-    solicitarImpresion(campanaId: number): Observable<Campana> {
-        return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/solicitarimpresion", null, {});
+    solicitarMuestra(campanaId: number): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/solicitarmuestra", null, {});
     }
 
     aceptarConformidad(campana: Campana): Observable<Campana> {
@@ -198,8 +198,23 @@ export class CampanaService {
     }
 
     enviarDatosRecojo(campana: Campana): Observable<Campana> {
-        return this.requester.post<Campana>(this.REQUEST_URL + campana.id + "/datosimpresion", campana, {});
+        return this.requester.put<Campana>(this.REQUEST_URL + "datosimpresion", campana, {});
     }
 
+    adjuntarMuestra(campana: Campana, file: File): Observable<Campana> {
+        let form: FormData = new FormData;
+        if (file !== null && file != undefined) {
+            form.append("file", file);
+        }
+        return this.requester.post<Campana>(this.REQUEST_URL + campana.id + "/adjuntarmuestra", form, {});
+    }
+
+    aprobarMuestra(campanaId: number): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/aprobarmuestra", null, {});
+    }
+
+    denegarMuestra(campanaId: number): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/denegarmuestra", null, {});
+    }
 
 }   

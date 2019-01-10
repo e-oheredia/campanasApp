@@ -8,7 +8,7 @@ import { ConfirmacionCotizacionComponent } from './confirmacion-cotizacion.compo
 import { ButtonViewComponent } from '../table-management/button-view/button-view.component';
 import { TableManagementModule } from '../table-management/table-management.module';
 import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
-import { AdjuntarCorreoComponent } from './adjuntar-correo/adjuntar-correo.component';
+import { AdjuntarArchivoComponent } from '../modals/adjuntar-archivo/adjuntar-archivo.component';
 
 @NgModule({
     imports: [
@@ -20,12 +20,12 @@ import { AdjuntarCorreoComponent } from './adjuntar-correo/adjuntar-correo.compo
     ],
     declarations: [
       ConfirmacionCotizacionComponent,
-      AdjuntarCorreoComponent
+      AdjuntarArchivoComponent
     ],
     entryComponents: [
       ButtonViewComponent,
       ConfirmacionCotizacionComponent,
-      AdjuntarCorreoComponent,
+      AdjuntarArchivoComponent,
       ConfirmModalComponent
     ]
   })

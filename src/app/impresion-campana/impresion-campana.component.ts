@@ -12,6 +12,7 @@ import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.com
 import { MensajeExitoComponent } from '../modals/mensaje-exito/mensaje-exito.component';
 import { DatosRecojoComponent } from './datos-recojo/datos-recojo.component';
 import { ProveedorImpresion } from '../model/proveedorimpresion.model';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-impresion-campana',
@@ -154,7 +155,7 @@ export class ImpresionCampanaComponent implements OnInit {
             //cantidad Lima / Provincia : Servicio se debe crear en el service
             cantidadLima: campanasis.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
             cantidadProvincia: campanasis.itemsCampana.length - campanasis.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
-            fechaSolicitudImpresion: 'l',//this.campanaService.getFechaMuestraAceptada(campanasis),
+            fechaSolicitudImpresion: this.campanaService.getFechaMuestraAceptada(campanasis),
             fechaInicioImpresion: fecha_inicio_impresion,
             estado: this.campanaService.getUltimoSeguimientoCampana(campanasis).estadoCampana.nombre
           });
@@ -219,12 +220,15 @@ export class ImpresionCampanaComponent implements OnInit {
     });
 
     bsModalRef.content.confirmarEvent.subscribe((formularioDatosRecojo) => {
-      console.log(formularioDatosRecojo);
+     
       let proveedorImpresion: ProveedorImpresion = new ProveedorImpresion();
-      proveedorImpresion.fechaRecojo,
-      proveedorImpresion.nombre,
-      proveedorImpresion.direccion,
-      proveedorImpresion.contacto
+      
+      proveedorImpresion.fechaRecojo = moment(new Date(formularioDatosRecojo.datoFecha + ' ' + formularioDatosRecojo.datoHora)).format('DD-MM-YYYY HH:mm:ss');
+      proveedorImpresion.nombre = formularioDatosRecojo.datoImprenta,
+      proveedorImpresion.direccion = formularioDatosRecojo.datoDireccion,
+      proveedorImpresion.contacto = formularioDatosRecojo.datoContacto,
+      console.log(proveedorImpresion);
+
       this.campana.proveedorImpresion = proveedorImpresion;
       this.campanaService.enviarDatosRecojo(this.campana).subscribe(//cambiar metodo
         () => {

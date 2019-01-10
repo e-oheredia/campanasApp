@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LocalDataSource } from 'ng2-smart-table';
+import { MensajeExitoComponent } from './../../modals/mensaje-exito/mensaje-exito.component';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Campana } from '../../model/campana.model';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ItemCampana } from './../../model/itemcampana.model';
-import { AppSettings } from './../../settings/app.settings';
+import { CampanaService } from '../../services/campana.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
 import { UtilsService } from '../../services/utils.service';
-import { ItemCampanaService } from './../../services/itemcampana.service';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { CampanaService } from '../../services/campana.service';
+
 
 @Component({
   selector: 'app-adjuntar-archivo',
@@ -20,32 +19,53 @@ export class AdjuntarArchivoComponent implements OnInit {
   constructor(
     public bsModalRef: BsModalRef,
     public utilsService: UtilsService,
-    private notifier: NotifierService,
-    private itemCampanaService: ItemCampanaService,
-    private modalService: BsModalService,
-    private campanaService: CampanaService, 
+    private notifier: NotifierService
     ) { }
 
 
-  campana: Campana;
-  dataItemsCampanaCargados: LocalDataSource = new LocalDataSource();
-  itemsCampanaCargados: ItemCampana[] = [];
-  excelFile: File;
-  tableSettings = AppSettings.tableSettings;
-  prefijo = AppSettings.PREFIJO;
-  campanaForm: FormGroup;
+    @Output() confirmarEvent = new EventEmitter<File>();
 
+    campana: Campana;
+    itemsCampanaCargados: ItemCampana[] = [];
+    campanaForm: FormGroup;
+    archivoAdjunto: File;
+    archivosPermitidos: string;
   
-  ngOnInit() {
-    // this.tableSettings.columns = this.columnsItemsCampanaCargados;
-    this.campanaForm = new FormGroup({
-      'archivoExcel': new FormControl(null)
-    })
+    mensaje: string;
+    titulo: string;
+    textoAceptar: string = "Aceptar";
+    textoCancelar: string ="Cancelar";
+    tipoArchivo: string = ".msg";
+  
+    ngOnInit() {
+      this.campanaForm = new FormGroup({
+        'archivo': new FormControl(null, Validators.required)
+      })
+    }
+  
+  
+    onSubmit(form: any){  //al enviar - ts hijo
+      if(this.campanaForm.get('archivo') === null || 
+        this.campanaForm.get('archivo').value === "" ||
+        this.campanaForm.get('archivo').value === null){
+          this.notifier.notify('error', "Debe seleccionar un archivo");
+          return;
+        }
+      this.bsModalRef.hide();
+      this.confirmarEvent.emit(this.archivoAdjunto);
+    }
+  
+  
+  
+  
+    onChangeExcelFile(file: File) {
+      if (file == undefined || file == null) {
+        this.archivoAdjunto = null;
+        return;
+      }
+      this.archivoAdjunto = file;
+    }
+  
+  
+  
   }
-
-  archivo: File;
-  archivosPermitidos: string;
-
-  mensaje: string;
-  titulo: string;
-}

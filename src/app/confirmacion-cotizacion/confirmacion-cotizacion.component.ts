@@ -11,7 +11,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { ButtonViewComponent } from '../table-management/button-view/button-view.component';
 import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
 import { NotifierService } from 'angular-notifier';
-import { AdjuntarCorreoComponent } from './adjuntar-correo/adjuntar-correo.component';
+import { AdjuntarArchivoComponent } from '../modals/adjuntar-archivo/adjuntar-archivo.component';
 
 
 @Component({
@@ -117,7 +117,7 @@ export class ConfirmacionCotizacionComponent implements OnInit {
 
     adjuntarPermiso(row){//ts padre
         this.campana = this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id));
-        let bsModalRef: BsModalRef = this.modalService.show(AdjuntarCorreoComponent, {
+        let bsModalRef: BsModalRef = this.modalService.show(AdjuntarArchivoComponent, {
             initialState: {
                 campana: this.campana,
                 mensaje: 'Adjunte la conformidad por la cotización de su Campaña',
