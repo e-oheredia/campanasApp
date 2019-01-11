@@ -104,10 +104,11 @@ export class CampanaService {
 
     exportarItemsCampanaConfirmacionCotizacion(campana: Campana) {
         let objects = [];
-        campana.itemsCampana.sort((a,b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
+        campana.itemsCampana.sort((a, b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
             objects.push({
                 "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                 "Código de Item": ItemCampana.id,
+<<<<<<< HEAD
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,
@@ -130,6 +131,8 @@ export class CampanaService {
             objects.push({
                 "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                 "Código de Item": ItemCampana.id,
+=======
+>>>>>>> 80f55b593b3beeb04f0e493b78a694203f5bf1e8
                 "Correlativo": ItemCampana.correlativo,
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
