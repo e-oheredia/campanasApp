@@ -1,4 +1,4 @@
-import { SolicitudImpresionComponent } from './solicitud-impresion/solicitud-impresion.component';
+import { SolicitudMuestraComponent } from './solicitud-muestra/solicitud-muestra.component';
 import { RecotizacionCampanaComponent } from './recotizacion-campana/recotizacion-campana.component';
 import { SeleccionProveedorComponent } from './seleccion-proveedor/seleccion-proveedor.component';
 import { NgModule } from '@angular/core';
@@ -8,6 +8,8 @@ import { ConfirmacionGeoComponent } from './confirmacion-geo/confirmacion-geo.co
 import { VisualizarPedidosGeoreferenciaComponent } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.component';
 import { VerificarConformidadComponent } from './verificar-conformidad/verificar-conformidad.component';
 import { ConfirmacionCotizacionComponent } from './confirmacion-cotizacion/confirmacion-cotizacion.component';
+import { ImpresionCampanaComponent } from './impresion-campana/impresion-campana.component';
+import { SubirMuestraComponent } from './subir-muestra/subir-muestra.component';
 
 const routes: Routes = [
   {
@@ -39,8 +41,16 @@ const routes: Routes = [
     component: VerificarConformidadComponent
   },
   {
-    path: 'solicitud-impresion',
-    component: SolicitudImpresionComponent
+    path: 'solicitud-muestra',
+    component: SolicitudMuestraComponent
+  },
+  {
+    path: 'subir-muestra',
+    component: SubirMuestraComponent
+  },
+  {
+    path: 'impresion-campana',
+    component: ImpresionCampanaComponent
   }
 ];
 

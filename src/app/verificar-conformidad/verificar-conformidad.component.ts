@@ -157,7 +157,7 @@ export class VerificarConformidadComponent implements OnInit {
 
   descargarConformidad(row: any) {
     //window.open("http://localhost/img/" + row.rutaAutorizacion, "_blank");
-    window.open(AppSettings.URL_IMG + row.rutaAutorizacion, "_blank");
+    window.open(AppSettings.URL_AUTORIZACIONES + row.rutaAutorizacion, "_blank");
   }
 
   aceptarConformidad(row: any) {

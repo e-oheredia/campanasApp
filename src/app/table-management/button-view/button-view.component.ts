@@ -9,14 +9,18 @@ import { ViewCell } from 'ng2-smart-table';
 export class ButtonViewComponent implements ViewCell, OnInit {
   claseIcono: string = "";
   nombreBoton: string = "";
+  ruta: string = "";
+  
   constructor() { }
 
   @Input() value: string;
   @Input() rowData: any;
 
   @Output() pressed: EventEmitter<any> = new EventEmitter<any>();
+  @Output() mostrarData: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit() {
+    this.mostrarData.emit(this.rowData);
   }
 
   onClick() {
