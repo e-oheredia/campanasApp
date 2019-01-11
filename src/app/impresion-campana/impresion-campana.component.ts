@@ -12,6 +12,7 @@ import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.com
 import { MensajeExitoComponent } from '../modals/mensaje-exito/mensaje-exito.component';
 import { DatosRecojoComponent } from './datos-recojo/datos-recojo.component';
 import { ProveedorImpresion } from '../model/proveedorimpresion.model';
+import { ItemCampana } from './../model/itemcampana.model';
 import * as moment from 'moment-timezone';
 
 @Component({
@@ -153,8 +154,8 @@ export class ImpresionCampanaComponent implements OnInit {
             tipoDestino: campanasis.tipoDestino.nombre,
             tipoDocumento: campanasis.tipoDocumento.nombre,
             //cantidad Lima / Provincia : Servicio se debe crear en el service
-            cantidadLima: campanasis.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
-            cantidadProvincia: campanasis.itemsCampana.length - campanasis.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
+            cantidadLima: this.contarDocumentos(campanasis.itemsCampana.filter(x=> x.enviable==true),true),
+            cantidadProvincia: this.contarDocumentos(campanasis.itemsCampana.filter(x=> x.enviable==true), false),
             fechaSolicitudImpresion: this.campanaService.getFechaMuestraAceptada(campanasis),
             fechaInicioImpresion: fecha_inicio_impresion,
             estado: this.campanaService.getUltimoSeguimientoCampana(campanasis).estadoCampana.nombre
@@ -163,6 +164,10 @@ export class ImpresionCampanaComponent implements OnInit {
         this.dataCampanasConMuestraAceptada.load(dataCampanasConMuestraAceptada);
       }
     )
+  }
+
+  contarDocumentos(documentos: ItemCampana[], lima: boolean = true, normalizado: boolean = false): number {
+    return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;    
   }
 
   visualizarSeguimiento(row) {
@@ -222,27 +227,43 @@ export class ImpresionCampanaComponent implements OnInit {
     bsModalRef.content.confirmarEvent.subscribe((formularioDatosRecojo) => {
      
       let proveedorImpresion: ProveedorImpresion = new ProveedorImpresion();
-      
-      proveedorImpresion.fechaRecojo = moment(new Date(formularioDatosRecojo.datoFecha + ' ' + formularioDatosRecojo.datoHora)).format('DD-MM-YYYY HH:mm:ss');
-      proveedorImpresion.nombre = formularioDatosRecojo.datoImprenta,
-      proveedorImpresion.direccion = formularioDatosRecojo.datoDireccion,
-      proveedorImpresion.contacto = formularioDatosRecojo.datoContacto,
-      console.log(proveedorImpresion);
+      let fechaActual = moment(new Date()).format('YYYY-MM-DD');
 
-      this.campana.proveedorImpresion = proveedorImpresion;
-      this.campanaService.enviarDatosRecojo(this.campana).subscribe(//cambiar metodo
-        () => {
-          let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
-            initialState: {
-              mensaje: "Los datos de recojo se enviaron correctamente"
-            }
-          });
-          this.listarCampanasConMuestrasAceptadas();
-        },
-        error => {
-          console.log("error al enviar datos de recojo");
-        }
-      )
+      console.log("fecha actual : " + fechaActual);
+      console.log("fecha formulario : " + formularioDatosRecojo.datoFecha);
+
+      if(fechaActual < formularioDatosRecojo.datoFecha){ //LA FECHA DE RECOJO DEBE SER MAYOR A LA FECHA ACTUAL
+
+        proveedorImpresion.fechaRecojo = moment(new Date(formularioDatosRecojo.datoFecha + ' ' + formularioDatosRecojo.datoHora)).format('DD-MM-YYYY HH:mm:ss');
+        proveedorImpresion.nombre = formularioDatosRecojo.datoImprenta,
+        proveedorImpresion.direccion = formularioDatosRecojo.datoDireccion,
+        proveedorImpresion.contacto = formularioDatosRecojo.datoContacto,
+        console.log(proveedorImpresion);
+  
+        this.campana.proveedorImpresion = proveedorImpresion;
+        this.campanaService.enviarDatosRecojo(this.campana).subscribe(//cambiar metodo
+          () => {
+            let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
+              initialState: {
+                mensaje: "Los datos de recojo se enviaron correctamente"
+              }
+            });
+            this.listarCampanasConMuestrasAceptadas();
+          },
+          error => {
+            console.log("error al enviar datos de recojo");
+          }
+        )
+      }
+      else{
+        let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
+          initialState: {
+            mensaje: "Fecha inválida : La fecha de recojo debe ser mayor a la actual."
+          }
+        });
+      }
+      
+
     })
   }
 
