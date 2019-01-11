@@ -35,6 +35,7 @@ import { ReadExcelService } from '../services/readexcel.service';
 import { TrackingCampanaComponent } from '../modals/tracking-campana/tracking-campana.component';
 import { WriteExcelService } from '../services/write-excel.service';
 import { MensajeExitoComponent } from '../modals/mensaje-exito/mensaje-exito.component';
+import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { MensajeExitoComponent } from '../modals/mensaje-exito/mensaje-exito.com
     HttpClientModule,
     ModalModule.forRoot(),
     NotifierModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    BsDropdownModule.forRoot()
   ],
   exports: [
     HeaderComponent,

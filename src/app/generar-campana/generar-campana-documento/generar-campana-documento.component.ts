@@ -66,8 +66,12 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   centroCostosList: CentroCostos[] = [];
   grupoCentroCostos: GrupoCentroCostos;
   tiposAgrupadoElegidos: TipoAgrupado[] = [];
+  rutaPlantilla: string = AppSettings.RUTA_PLANTILLA;
 
   columnsItemsCampanaCargados = {
+    correlativo: {
+      title: 'Correlativo'
+    },
     razonSocial: {
       title: 'Razón Social'
     },
@@ -229,6 +233,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
         let dataItemsCampanaCargados = [];
         data.forEach(element => {
           dataItemsCampanaCargados.push({
+            correlativo: element.correlativo,
             departamento: element.distrito.provincia.departamento.nombre,
             provincia: element.distrito.provincia.nombre,
             distrito: element.distrito.nombre,

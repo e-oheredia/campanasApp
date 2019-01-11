@@ -115,7 +115,7 @@ export class ItemCampanaService {
 
                 itemCampanaCargado.distrito = distrito;
                 itemCampanaCargado.direccion = data[i][7] || "";
-
+                itemCampanaCargado.correlativoBase = i + 1;
 
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;

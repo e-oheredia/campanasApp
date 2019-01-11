@@ -30,6 +30,7 @@ export class AppSettings {
     public static PAQUETE_HABILITADO_URL = "paquetes/";
     public static ACCION_RESTOS_PROVEEDOR_URL = "accionesrestosproveedor/";
     public static URL_IMG = "http://localhost/campana-static/autorizaciones/"
+    public static RUTA_PLANTILLA = "http://www.google.com"
 
     public static PREFIJO = {
         DOCUMENTO : "DOC",
