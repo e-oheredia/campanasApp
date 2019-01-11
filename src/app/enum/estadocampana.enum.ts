@@ -14,6 +14,7 @@ export enum EstadoCampanaEnum {
     MUESTRA_DENEGADA = 13,
     IMPRESION_INICIADA = 14,
     IMPRESION_POR_RECOGER = 15,
+
     GUIA_ADJUNTADA = 16,
     GUIA_ACEPTADA = 17,
     GUIA_DENEGADA = 18,

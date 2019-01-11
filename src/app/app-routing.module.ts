@@ -8,6 +8,7 @@ import { ConfirmacionGeoComponent } from './confirmacion-geo/confirmacion-geo.co
 import { VisualizarPedidosGeoreferenciaComponent } from './visualizar-pedidos-georeferencia/visualizar-pedidos-georeferencia.component';
 import { VerificarConformidadComponent } from './verificar-conformidad/verificar-conformidad.component';
 import { ConfirmacionCotizacionComponent } from './confirmacion-cotizacion/confirmacion-cotizacion.component';
+import { ImpresionCampanaComponent } from './impresion-campana/impresion-campana.component';
 import { SubirMuestraComponent } from './subir-muestra/subir-muestra.component';
 
 const routes: Routes = [
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'subir-muestra',
     component: SubirMuestraComponent
+  },
+  {
+    path: 'impresion-campana',
+    component: ImpresionCampanaComponent
   }
 ];
 

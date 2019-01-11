@@ -139,7 +139,6 @@ export class ConfirmacionCotizacionComponent implements OnInit {
                       }
                     });
                     this.listarCampanasPendientesPorAdjuntarConfirmacion();
-                    console.log("nuevo error");
                   },
                   error => {
                       console.log("hola")

@@ -9,6 +9,8 @@ import { WriteExcelService } from './write-excel.service';
 import * as moment from 'moment-timezone';
 import { UtilsService } from './utils.service';
 import { ItemCampana } from '../model/itemcampana.model';
+import { SeguimientoCampana } from '../model/seguimientocampana.model';
+import { Form } from '@angular/forms';
 
 
 @Injectable()
@@ -30,7 +32,13 @@ export class CampanaService {
             seguimientoCampana.estadoCampana.id === 1
         ).fecha;
     }
-
+    
+    getFechaMuestraAceptada(campana: Campana): Date | string {
+        return campana.seguimientosCampana.find(seguimientoCampana =>
+            seguimientoCampana.estadoCampana.id === 12
+        ).fecha;
+    }
+ 
     listarCampanasPorEstado(estadoCampana: number): Observable<Campana[]> {
         return this.requester.get<Campana[]>(this.REQUEST_URL, {
             params: new HttpParams().append('estadoId', estadoCampana.toString())
@@ -90,11 +98,11 @@ export class CampanaService {
 
     exportarItemsCampanaPendientesPorAdjuntarConfirmacion(campana: Campana) {
         let objects = [];
-        campana.itemsCampana.sort((a,b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
+        campana.itemsCampana.sort((a, b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
             objects.push({
                 "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                 "Código de Item": ItemCampana.id,
-                "Correlativo" : ItemCampana.correlativo,
+                "Correlativo": ItemCampana.correlativo,
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,
@@ -113,16 +121,16 @@ export class CampanaService {
 
     exportarItemsCampanaPendienteConfirmaciónAdjunta(campana: Campana) {
         let objects = [];
-        campana.itemsCampana.filter(x => x.correlativo > 0).sort((a,b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
+        campana.itemsCampana.filter(x => x.correlativo > 0).sort((a, b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
             objects.push({
                 "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                 "Código de Item": ItemCampana.id,
-                "Correlativo" : ItemCampana.correlativo,
+                "Correlativo": ItemCampana.correlativo,
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,
                 "Nombres": ItemCampana.nombres,
-                "Ámbito" : ItemCampana.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" ? "LIMA" : "PROVINCIA",
+                "Ámbito": ItemCampana.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" ? "LIMA" : "PROVINCIA",
                 "Departamento": ItemCampana.distrito.provincia.departamento.nombre,
                 "Provincia": ItemCampana.distrito.provincia.nombre,
                 "Distrito": ItemCampana.distrito.nombre,
@@ -177,12 +185,20 @@ export class CampanaService {
         return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/solicitarmuestra", null, {});
     }
 
-    aceptarConformidad(campana: Campana): Observable<Campana>{
+    aceptarConformidad(campana: Campana): Observable<Campana> {
         return this.requester.put<Campana>(this.REQUEST_URL + campana.id + "/aceptarconformidad", campana, {});
     }
 
-    denegarConformidad(campana: Campana): Observable<Campana>{
+    denegarConformidad(campana: Campana): Observable<Campana> {
         return this.requester.put<Campana>(this.REQUEST_URL + campana.id + "/denegarconformidad", campana, {});
+    }
+
+    iniciarImpresión(campana: Campana): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + campana.id + "/iniciarimpresion", campana, {});
+    }
+
+    enviarDatosRecojo(campana: Campana): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + "datosimpresion", campana, {});
     }
 
     adjuntarMuestra(campana: Campana, file: File): Observable<Campana> {
