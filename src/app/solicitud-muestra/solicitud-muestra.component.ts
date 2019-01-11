@@ -13,6 +13,7 @@ import { TipoDocumento } from '../model/tipodocumento.model';
 import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
 import { ItemCampana } from '../model/itemcampana.model';
 import { Row } from 'ng2-smart-table/lib/data-set/row';
+import { UtilsService } from '../services/utils.service';
 
 @Component({
   selector: 'app-solicitud-impresion',
@@ -25,6 +26,7 @@ export class SolicitudMuestraComponent implements OnInit {
     private tituloService: TituloService,
     private campanaService: CampanaService,
     private modalService: BsModalService,
+    private utilsService: UtilsService
   ) { }
 
   campanas: Campana[] = [];
@@ -198,10 +200,14 @@ export class SolicitudMuestraComponent implements OnInit {
         campanas.forEach(campana => {
 
           let campana_u = this.campanaService.getUltimoSeguimientoCampana(campana);
-          let fecha_solicitud = campana_u.fecha;
-
-          if (campana_u.estadoCampana.id === 8){
+          
+          let fecha_solicitud: any;
+          
+          if (campana_u.estadoCampana.id === EstadoCampanaEnum.CONFORMIDAD_ACEPTADA){
             fecha_solicitud = "";
+          }
+          else{
+            fecha_solicitud = this.campanaService.getFechaMuestraSolicitada(campana);
           }
 
           dataCampanas.push({

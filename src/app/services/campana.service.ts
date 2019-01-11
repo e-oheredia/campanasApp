@@ -11,7 +11,7 @@ import { UtilsService } from './utils.service';
 import { ItemCampana } from '../model/itemcampana.model';
 import { SeguimientoCampana } from '../model/seguimientocampana.model';
 import { Form } from '@angular/forms';
-
+import { EstadoCampanaEnum } from '../enum/estadocampana.enum';
 
 @Injectable()
 export class CampanaService {
@@ -36,6 +36,12 @@ export class CampanaService {
     getFechaMuestraAceptada(campana: Campana): Date | string {
         return campana.seguimientosCampana.find(seguimientoCampana =>
             seguimientoCampana.estadoCampana.id === 12
+        ).fecha;
+    }
+
+    getFechaMuestraSolicitada(campana: Campana){
+        return campana.seguimientosCampana.find(seguimientoCampana =>
+            seguimientoCampana.estadoCampana.id === EstadoCampanaEnum.MUESTRA_SOLICITADA
         ).fecha;
     }
  
