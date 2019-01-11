@@ -128,10 +128,13 @@ export class SubirMuestraComponent implements OnInit {
         campanas.forEach(campana => {
 
           let campana_u = this.campanaService.getUltimoSeguimientoCampana(campana);
-          let fecha_solicitud = campana_u.fecha;
+          let fecha_solicitud: any;
 
-          if (campana_u.estadoCampana.id === 8){
+          if (campana_u.estadoCampana.id === EstadoCampanaEnum.CONFORMIDAD_ACEPTADA){
             fecha_solicitud = "";
+          }
+          else{
+            fecha_solicitud = this.campanaService.getFechaMuestraSolicitada(campana);
           }
 
           dataCampanas.push({
