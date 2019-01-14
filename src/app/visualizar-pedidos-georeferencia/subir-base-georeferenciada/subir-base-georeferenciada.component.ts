@@ -39,8 +39,8 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
 
 
   columnsItemsCampanaCargados = {    
-    id: {
-      title: 'Id documento'
+    correlativo: {
+      title: 'Correlativo'
     },    
     direccion: {
       title: 'Dirección'
@@ -113,7 +113,7 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
               distrito: element.distrito.nombre,           
               direccion: element.direccion,            
               estado: element.enviable == true ? "Normalizado" : "No distribuible",
-              id: element.id
+              correlativo: element.correlativoBase
             })
          
             this.campana.itemsCampana.find(x=> x.id == element.id).enviable = element.enviable;

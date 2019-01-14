@@ -6,6 +6,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { TableManagementModule } from '../table-management/table-management.module';
 import { SeleccionarProveedorComponent } from './seleccionar-proveedor/seleccionar-proveedor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CurrencyMaskModule } from "ng2-currency-mask";
 
 @NgModule({
   declarations: [SeleccionProveedorComponent, SeleccionarProveedorComponent],
@@ -15,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TableManagementModule,
     ReactiveFormsModule,
     FormsModule,
+    CurrencyMaskModule
   ], 
   entryComponents:[
     ButtonViewComponent, 

@@ -61,6 +61,9 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
       tipoCampana: {
         title: 'Tipo de Campaña'
       },
+      tipoDestino: {
+        title: 'Tipo de Destino'
+      },  
       tipoDocumento: {
         title: 'Tipo de Documento'
       },      
@@ -151,11 +154,12 @@ export class VisualizarPedidosGeoreferenciaComponent implements OnInit {
             id: this.campanaService.codigoAutogenerado(campana.id,this.prefijo.DOCUMENTO),
             nombre: campana.nombre,
             tipoCampana: campana.tipoCampana.nombre,
+            tipoDestino: campana.tipoDestino.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,            
             cantidadLima: campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
             cantidadProvincia: campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
             contadorGeo: campana.seguimientosCampana.filter(seguimientocampana => seguimientocampana.estadoCampana.id === EstadoCampanaEnum.GEOREFERENCIADA).length,
-            estado: this.campanaService.getUltimoSeguimientoCampana(campana).estadoCampana.nombre
+            estado: this.campanaService.getUltimoSeguimientoCampana(campana).estadoCampana.nombre           
           });
         });
         this.generarColumnas();

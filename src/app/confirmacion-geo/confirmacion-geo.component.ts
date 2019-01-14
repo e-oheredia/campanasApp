@@ -65,18 +65,21 @@ export class ConfirmacionGeoComponent implements OnInit {
       tipoCampana: {
         title: 'Tipo de Campaña'
       },
+      tipoDestino: {
+        title: 'Tipo de Destino'
+      },  
       tipoDocumento: {
         title: 'Tipo de Documento'
       },
       noDistribuibleLima: {
         title: 'ND Lima'
       },
-      noDistribuibleProvincia: {
-        title: 'ND Provincia'
-      },
       normalizadoLima: {
         title: 'N Lima'
       },
+      noDistribuibleProvincia: {
+        title: 'ND Provincia'
+      },      
       normalizadoProvincia: {
         title: 'N Provincia'
       },
@@ -125,10 +128,22 @@ export class ConfirmacionGeoComponent implements OnInit {
   }
 
   descargarBase(row) {
-    this.campanaService.exportarItemsCampanaPorGeoReferenciar(this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)));
+    let campana = this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id));
+    if (campana.itemsCampana.filter(itemCampana => !itemCampana.enviable).length === 0) {
+      this.notifier.notify("info", "No se encontraron NO DISTRIBUIBLES");
+      return;
+    }
+    this.campanaService.exportarItemsCampanaPorGeoReferenciar(campana);
   }
 
   modificarBase(row) {
+
+    let campana = this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id));
+    if (campana.itemsCampana.filter(itemCampana => !itemCampana.enviable).length === 0) {
+      this.notifier.notify("info", "No se encontraron NO DISTRIBUIBLES");
+      return;
+    }
+
     let bsModalRef: BsModalRef = this.modalService.show(ModificarBaseComponent, {
       initialState: {
         campana: this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)),
@@ -200,9 +215,10 @@ export class ConfirmacionGeoComponent implements OnInit {
               id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
               nombre: campana.nombre,
               tipoCampana: campana.tipoCampana.nombre,
+              tipoDestino: campana.tipoDestino.nombre,
               tipoDocumento: campana.tipoDocumento.nombre,
-              noDistribuibleLima: this.contarDocumentos(campana.itemsCampana),
-              noDistribuibleProvincia: this.contarDocumentos(campana.itemsCampana,false),
+              noDistribuibleLima: this.contarDocumentos(campana.itemsCampana) - this.contarDocumentos(campana.itemsCampana, true, true),
+              noDistribuibleProvincia: this.contarDocumentos(campana.itemsCampana, false) - this.contarDocumentos(campana.itemsCampana, false, true),
               normalizadoLima: this.contarDocumentos(campana.itemsCampana, true, true),
               normalizadoProvincia: this.contarDocumentos(campana.itemsCampana, false, true),
               contador: campana.seguimientosCampana.filter(seguimientocampana => seguimientocampana.estadoCampana.id === EstadoCampanaEnum.GEOREFERENCIADA).length,

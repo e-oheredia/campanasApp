@@ -142,7 +142,8 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       'rucEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
       'direccionEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
       'contactoEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
-      'archivoExcel': new FormControl(null)
+      'archivoExcel': new FormControl(null), 
+      'observacion': new FormControl("")
     }, [this.noDocumentsLoaded.bind(this), this.porcentajeCompletoSiRequiereCentroCostosBCP.bind(this)]);
     this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
 
@@ -386,6 +387,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     campana.tipoDestino = values.tipoDestino;
     campana.requiereGeorreferencia = values.requiereGeorreferenciacion;
     campana.tiposAgrupado = this.tiposAgrupadoElegidos;
+    campana.observacion = values.observacion;
     if (values.imprenta !== null && values.imprenta !== "") {
       let proveedorImpresion = {
         nombre: values.imprenta,

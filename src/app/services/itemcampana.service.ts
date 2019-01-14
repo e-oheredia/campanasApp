@@ -115,7 +115,7 @@ export class ItemCampanaService {
 
                 itemCampanaCargado.distrito = distrito;
                 itemCampanaCargado.direccion = data[i][7] || "";
-                itemCampanaCargado.correlativoBase = i + 1;
+                itemCampanaCargado.correlativoBase = i;
 
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;
@@ -131,7 +131,7 @@ export class ItemCampanaService {
 
             if (campana.itemsCampana.filter(x=> x.enviable == false).length != data.length - 1) {
                 callback({
-                    mensaje: "Error, la base cuenta con mas registros "
+                    mensaje: "Error, la base cuenta con más registros "
                 });
                 return;
             }
@@ -154,16 +154,16 @@ export class ItemCampanaService {
                     break;
                 }
 
-                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][1])) {
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][0])) {
                     callback({
-                        mensaje: "Ingrese el codigo de documento en la fila " + (i + 1)
+                        mensaje: "Ingrese el código de documento en la fila " + (i + 1)
                     });
                     return;
                 }
 
                 //let item : ItemCampana = campana.itemsCampana.find(x=> x.id === this.campanaService.extraerIdAutogenerado(data[i][1]));
 
-                let item: ItemCampana = campana.itemsCampana.find(x => x.id === data[i][1]);
+                let item: ItemCampana = campana.itemsCampana.find(x => x.id === data[i][0]);
 
                 if (this.utilsService.isUndefinedOrNullOrEmpty(item)) {
                     callback({
@@ -182,26 +182,27 @@ export class ItemCampanaService {
 
 
                 let itemCampanaCargado: ItemCampana = new ItemCampana();
-                itemCampanaCargado.id = data[i][1];
-                let distrito = this.distritoService.listarDistritoByNombreDistritoAndNombreProvincia(data[i][8], data[i][7])
+                itemCampanaCargado.id = data[i][0];
+                let distrito = this.distritoService.listarDistritoByNombreDistritoAndNombreProvincia(data[i][9], data[i][8])
                 itemCampanaCargado.distrito = distrito;
-                itemCampanaCargado.direccion = data[i][9] || "";
+                itemCampanaCargado.direccion = data[i][10] || "";
 
-                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][10])) {
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][11])) {
                     callback({
                         mensaje: "Ingrese el estado del documento en la fila " + (i + 1)
                     });
                     return;
                 }
 
-                if (data[i][10].toUpperCase() != "Normalizado".toUpperCase() && data[i][10].toUpperCase() != "No distribuible".toUpperCase()) {
+                if (data[i][11].toUpperCase() != "Normalizado".toUpperCase() && data[i][11].toUpperCase() != "No distribuible".toUpperCase()) {
                     callback({
                         mensaje: "Ingrese correctamente el estado del documento en la fila " + (i + 1)
                     });
                     return;
                 }
 
-                itemCampanaCargado.enviable = data[i][10].toUpperCase() === "Normalizado".toUpperCase() ? true : false;
+                itemCampanaCargado.enviable = data[i][11].toUpperCase() === "Normalizado".toUpperCase() ? true : false;
+                itemCampanaCargado.correlativoBase = data[i][2];
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;
             }
@@ -222,9 +223,9 @@ export class ItemCampanaService {
                 return;
             }
 
-            if (this.utilsService.isUndefinedOrNullOrEmpty(data[0][1]) || this.utilsService.isUndefinedOrNullOrEmpty(data[0][6])
-            || this.utilsService.isUndefinedOrNullOrEmpty(data[0][7])|| this.utilsService.isUndefinedOrNullOrEmpty(data[0][8])|| 
-            this.utilsService.isUndefinedOrNullOrEmpty(data[0][9])) {
+            if (this.utilsService.isUndefinedOrNullOrEmpty(data[0][0]) || this.utilsService.isUndefinedOrNullOrEmpty(data[0][7])
+            || this.utilsService.isUndefinedOrNullOrEmpty(data[0][8])|| this.utilsService.isUndefinedOrNullOrEmpty(data[0][9])|| 
+            this.utilsService.isUndefinedOrNullOrEmpty(data[0][10])) {
                 callback({
                     mensaje: "Error, el formato de la base es incorrecto "
                 });
@@ -242,14 +243,14 @@ export class ItemCampanaService {
                     break;
                 }
 
-                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][1])) {
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][0])) {
                     callback({
                         mensaje: "Ingrese el codigo de documento en la fila " + (i + 1)
                     });
                     return;
                 }
                 
-                let item: ItemCampana = campana.itemsCampana.find(x => x.id === data[i][1]);
+                let item: ItemCampana = campana.itemsCampana.find(x => x.id === data[i][0]);
 
                 if (this.utilsService.isUndefinedOrNullOrEmpty(item)) {
                     callback({
@@ -265,28 +266,28 @@ export class ItemCampanaService {
                     return;
                 }
 
-                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][9])) {
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][10])) {
                     callback({
                         mensaje: "Ingrese una dirección en la fila " + (i + 1) 
                     });
                     return;
                 }
 
-                if (this.departamentoService.listarDepartamentoByNombre(data[i][6]) === null) {
+                if (this.departamentoService.listarDepartamentoByNombre(data[i][7]) === null) {
                     callback({
                         mensaje: "Ingrese Departamento válido en la fila " + (i + 1)
                     });
                     return;
                 }
 
-                if (this.provinciaService.listarProvinciaByNombreProvinciaAndNombreDepartamento(data[i][7], data[i][6]) === null) {
+                if (this.provinciaService.listarProvinciaByNombreProvinciaAndNombreDepartamento(data[i][8], data[i][7]) === null) {
                     callback({
                         mensaje: "Ingrese Provincia válida en la fila " + (i + 1)
                     });
                     return;
                 }
 
-                let distrito = this.distritoService.listarDistritoByNombreDistritoAndNombreProvincia(data[i][8], data[i][7])
+                let distrito = this.distritoService.listarDistritoByNombreDistritoAndNombreProvincia(data[i][9], data[i][8])
 
                 if (distrito === null) {
                     callback({
@@ -296,10 +297,11 @@ export class ItemCampanaService {
                 }
 
                 let itemCampanaCargado: ItemCampana = new ItemCampana();
-                itemCampanaCargado.id = data[i][1];                
+                itemCampanaCargado.id = data[i][0];              
+                itemCampanaCargado.correlativoBase = data[i][2];  
                 itemCampanaCargado.distrito = distrito;
-                itemCampanaCargado.direccion = data[i][9] || "";
-                itemCampanaCargado.enviable = data[i][10] == "Normalizado" ? true : false;
+                itemCampanaCargado.direccion = data[i][10] || "";
+                itemCampanaCargado.enviable = data[i][11] == "Normalizado" ? true : false;
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;
             }

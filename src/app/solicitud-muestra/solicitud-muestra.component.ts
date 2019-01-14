@@ -9,10 +9,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CampanaService } from '../services/campana.service';
 import { Campana } from '../model/campana.model';
 import { Component, OnInit } from '@angular/core';
-import { TipoDocumento } from '../model/tipodocumento.model';
 import { ConfirmModalComponent } from '../modals/confirm-modal/confirm-modal.component';
 import { ItemCampana } from '../model/itemcampana.model';
-import { Row } from 'ng2-smart-table/lib/data-set/row';
 import { UtilsService } from '../services/utils.service';
 
 @Component({
@@ -41,7 +39,7 @@ export class SolicitudMuestraComponent implements OnInit {
 
 
   ngOnInit() {
-    this.tituloService.setTitulo("Solicitud de Muestra");
+    this.tituloService.setTitulo("Gestionar Muestra de Impresión");
     this.generarColumnas();
     this.listarCampanasParaSolicitudImpresion();
   }

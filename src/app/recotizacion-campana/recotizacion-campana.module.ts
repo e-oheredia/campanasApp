@@ -1,3 +1,4 @@
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgModule } from '@angular/core';
@@ -10,7 +11,8 @@ import { RecotizarCampanaComponent } from './recotizar-campana/recotizar-campana
   imports: [
     CommonModule, 
     Ng2SmartTableModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CurrencyMaskModule
   ], 
   entryComponents: [
     RecotizarCampanaComponent

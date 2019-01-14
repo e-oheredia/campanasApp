@@ -55,6 +55,9 @@ export class VerificarConformidadComponent implements OnInit {
       tipoCampana: {
         title: 'Tipo de Campaña'
       },
+      tipoDestino: {
+        title: 'Tipo de Destino'
+      },
       tipoDocumento: {
         title: 'Tipo de Documento'
       },
@@ -81,11 +84,12 @@ export class VerificarConformidadComponent implements OnInit {
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {
-          instance.claseIcono = "fa fa-eye";
-          instance.pressed.subscribe(row => {
-            this.descargarConformidad(row);
-          });
+          instance.mostrarData.subscribe(row => {
+            instance.claseIcono = "fa fa-eye";
+            let campana = this.campanas.find(x => x.id === this.campanaService.extraerIdAutogenerado(row.id));
+            instance.ruta = AppSettings.URL_AUTORIZACIONES + campana.rutaAutorizacion;
 
+          })
         }
 
       },
@@ -137,8 +141,8 @@ export class VerificarConformidadComponent implements OnInit {
             tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,
             tipoDestino: campana.tipoDestino.nombre,
-            cantidadInicialLima: this.contarDocumentos(campana.itemsCampana) ,
-            cantidadInicialProvincia: this.contarDocumentos(campana.itemsCampana,false),
+            cantidadInicialLima: this.contarDocumentos(campana.itemsCampana),
+            cantidadInicialProvincia: this.contarDocumentos(campana.itemsCampana, false),
             cantidadFinalLima: this.contarDocumentos(campana.itemsCampana, true, true),
             cantidadFinalProvincia: this.contarDocumentos(campana.itemsCampana, false, true),
             fechaIngreso: this.campanaService.getFechaCreacion(campana),

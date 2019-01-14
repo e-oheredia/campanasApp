@@ -1,3 +1,4 @@
+import { ItemCampana } from './../model/itemcampana.model';
 import { MensajeExitoComponent } from './../modals/mensaje-exito/mensaje-exito.component';
 import { TrackingCampanaComponent } from './../modals/tracking-campana/tracking-campana.component';
 import { Campana } from '../model/campana.model';
@@ -33,13 +34,13 @@ export class ConfirmacionCotizacionComponent implements OnInit {
     campanas: Campana[] = [];
     prefijo = AppSettings.PREFIJO;
     campana: Campana;
-    estadosCampana : number[] = [EstadoCampanaEnum.COTIZADA,EstadoCampanaEnum.CONFORMIDAD_DENEGADA];
+    estadosCampana: number[] = [EstadoCampanaEnum.COTIZADA, EstadoCampanaEnum.CONFORMIDAD_DENEGADA];
 
 
     ngOnInit() {
         this.tituloService.setTitulo("Confirmación de Cotizaciones de Campañas");
-          this.generarColumnas();
-          this.listarCampanasPendientesPorAdjuntarConfirmacion();
+        this.generarColumnas();
+        this.listarCampanasPendientesPorAdjuntarConfirmacion();
     }
 
     generarColumnas() {
@@ -65,17 +66,26 @@ export class ConfirmacionCotizacionComponent implements OnInit {
             tipoCampana: {
                 title: 'Tipo de Campaña'
             },
+            tipoDestino: {
+                title: 'Tipo de Destino'
+            },
             tipoDocumento: {
                 title: 'Tipo de Documento'
             },
             requiereGeo: {
                 title: 'Requiere Georeferencia'
             },
-            cantidadInicial: {
-                title: 'Cantidad Inicial Lima/Provincia'
+            cantidadInicialLima: {
+                title: 'Cantidad Inicial Lima'
             },
-            cantidadFinal: {
-                title: 'Cantidad Normalizada Lima/Provincia'
+            cantidadFinalLima: {
+                title: 'Cantidad Normalizada Lima'
+            },
+            cantidadInicialProvincia: {
+                title: 'Cantidad Inicial Provincia'
+            },
+            cantidadFinalProvincia: {
+                title: 'Cantidad Normalizada Provincia'
             },
             fechaIngresoCampana: {
                 title: 'Fecha de Ingreso de Campaña'
@@ -115,34 +125,33 @@ export class ConfirmacionCotizacionComponent implements OnInit {
         this.campanaService.exportarItemsCampanaPendientesPorAdjuntarConfirmacion(this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)));
     }
 
-    adjuntarPermiso(row){//ts padre
+    adjuntarPermiso(row) {//ts padre
         this.campana = this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id));
         let bsModalRef: BsModalRef = this.modalService.show(AdjuntarArchivoComponent, {
             initialState: {
                 campana: this.campana,
-                mensaje: 'Adjunte la conformidad por la cotización de su Campaña',
-                titulo: 'ADJUNTAR CONFORMIDAD DE GERENCIA'
+                titulo: 'Adjuntar conformidad de gerencia'
             },
             class: 'modal-lg',
             keyboard: false,
             backdrop: "static"
         });
-                            
+
         bsModalRef.content.confirmarEvent.subscribe((archivoHijo) => {
             console.log(archivoHijo);
             this.campanaService.adjuntarConformidad(this.campana, archivoHijo).subscribe(
                 () => {
-              
+
                     let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
-                      initialState : {
-                        mensaje: "Su conformidad se ha adjuntado correctamente"
-                      }
+                        initialState: {
+                            mensaje: "Su conformidad se ha adjuntado correctamente"
+                        }
                     });
                     this.listarCampanasPendientesPorAdjuntarConfirmacion();
-                  },
-                  error => {
-                      console.log("hola")
-                  }
+                },
+                error => {
+                    console.log("hola")
+                }
             )
         });
     }
@@ -159,29 +168,36 @@ export class ConfirmacionCotizacionComponent implements OnInit {
     listarCampanasPendientesPorAdjuntarConfirmacion() {
         this.dataCampanasPendientesPorAdjuntarConfirmacion.reset();
         this.campanaService.listarCampanasPorEstados(this.estadosCampana).subscribe(
-          campanas => {
-            this.campanas = campanas;
-            let dataCampanasPendientesPorAdjuntarConfirmacion = [];
-            campanas.forEach(
-              campana => {
-                dataCampanasPendientesPorAdjuntarConfirmacion.push({
-                  id: this.campanaService.codigoAutogenerado(campana.id,this.prefijo.DOCUMENTO),
-                  nombre: campana.nombre,
-                  tipoCampana: campana.tipoCampana.nombre,
-                  tipoDocumento: campana.tipoDocumento.nombre,
-                  requiereGeo: campana.requiereGeorreferencia ? "SI" : "NO",
-                  cantidadInicial:campana.itemsCampana.length,
-                  cantidadFinal:campana.itemsCampana.filter(documento => documento.enviable === true).length,
-                  fechaIngresoCampana:this.campanaService.getFechaCreacion(campana),
-                  estado:this.campanaService.getUltimoSeguimientoCampana(campana).estadoCampana.nombre,
-                  cotizacion: 'S/. ' + campana.costoCampana
-                });
-              });
-            this.dataCampanasPendientesPorAdjuntarConfirmacion.load(dataCampanasPendientesPorAdjuntarConfirmacion);
-          }
-    
+            campanas => {
+                this.campanas = campanas;
+                let dataCampanasPendientesPorAdjuntarConfirmacion = [];
+                campanas.forEach(
+                    campana => {
+                        dataCampanasPendientesPorAdjuntarConfirmacion.push({
+                            id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
+                            nombre: campana.nombre,
+                            tipoCampana: campana.tipoCampana.nombre,
+                            tipoDestino: campana.tipoDestino.nombre,
+                            tipoDocumento: campana.tipoDocumento.nombre,
+                            requiereGeo: campana.requiereGeorreferencia ? "SI" : "NO",
+                            cantidadInicialLima: this.contarDocumentos(campana.itemsCampana),
+                            cantidadInicialProvincia: this.contarDocumentos(campana.itemsCampana, false),
+                            cantidadFinalLima: this.contarDocumentos(campana.itemsCampana, true, true),
+                            cantidadFinalProvincia: this.contarDocumentos(campana.itemsCampana, false, true),
+                            fechaIngresoCampana: this.campanaService.getFechaCreacion(campana),
+                            estado: this.campanaService.getUltimoSeguimientoCampana(campana).estadoCampana.nombre,
+                            cotizacion: 'S/. ' + campana.costoCampana
+                        });
+                    });
+                this.dataCampanasPendientesPorAdjuntarConfirmacion.load(dataCampanasPendientesPorAdjuntarConfirmacion);
+            }
+
         )
-      }
+    }
+
+    contarDocumentos(documentos: ItemCampana[], lima: boolean = true, normalizado: boolean = false): number {
+        return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;
+    }
 
 }
 
