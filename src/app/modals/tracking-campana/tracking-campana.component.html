@@ -43,6 +43,17 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-5">
+                 Regulatorio
+                </div>
+                <div class="col-7">
+                  {{campana.regulatorio ? 'Sí':'No'}}
+                </div>
+              </div>
+            </li>
+            
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
                   Tipo de Documento
                 </div>
                 <div class="col-7">
@@ -53,20 +64,20 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-5">
+                  Tipo Destino
+                </div>
+                <div class="col-7">
+                  {{campana.tipoDestino.nombre}}
+                </div>
+              </div>
+            </li>           
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
                   Tipo de Campaña
                 </div>
                 <div class="col-7">
                   {{campana.tipoCampana ? campana.tipoCampana.nombre : 'No asignado'}}
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-5">
-                 Regulatorio
-                </div>
-                <div class="col-7">
-                  {{campana.regulatorio ? 'Sí':'No'}}
                 </div>
               </div>
             </li>
@@ -116,7 +127,7 @@
                   Paquete Habilitado
                 </div>
                 <div class="col-7" *ngIf="campana.paqueteHabilitado; else sinPaquete">
-                  {{campana.paqueteHabilitado.descripcion}}: <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.descripcion}}</span>
+                  {{campana.paqueteHabilitado.descripcion}}: <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.descripcion}}, </span>
                 </div>
                 <ng-template #sinPaquete>
                     <div class="col-7">
