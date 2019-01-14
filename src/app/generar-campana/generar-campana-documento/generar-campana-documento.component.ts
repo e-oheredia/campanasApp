@@ -450,6 +450,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
         this.campanaForm.reset();
         this.itemsCampanaCargados = [];
         this.tiposAgrupadoElegidos = [];
+        this.grupoCentroCostos.centrosCostos = [];
         let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
           initialState : {
             mensaje: "Se ha creado correctamente la campaña con código " + this.campanaService.codigoAutogenerado(campanaCreada.id, AppSettings.PREFIJO.DOCUMENTO) }
