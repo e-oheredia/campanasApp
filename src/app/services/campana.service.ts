@@ -154,7 +154,7 @@ export class CampanaService {
             objects.push({
                 "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                 "Código de Item": ItemCampana.id,
-                "Correlativo": ItemCampana.correlativo,
+                "Correlativo de Impresión": ItemCampana.correlativo,
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,
