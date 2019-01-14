@@ -160,8 +160,7 @@ export class SubirMuestraComponent implements OnInit {
     this.campana = this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id));
     let bsModalRef: BsModalRef = this.modalService.show(AdjuntarArchivoComponent, {
         initialState: {
-            campana: this.campana,
-            mensaje: 'Subir',
+            campana: this.campana,            
             titulo: "Adjuntar Muestra - Campaña " + row.nombre,
             textoAceptar: "Enviar",
             textoCancelar: "Cancelar",

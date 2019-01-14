@@ -126,7 +126,7 @@
         <form [formGroup]="cotizacionCampanaForm" (ngSubmit)="onSubmit(cotizacionCampanaForm.value)">          
           <div class="form-group">
             <label for="costoCampana">Costo de la Campaña</label>
-            <input class="form-control" type="number" id="costoCampana" formControlName="costoCampana">
+            <input class="form-control"  currencyMask [options]="{ prefix: 'S/. ', thousands: ',', decimal: '.' }" autocomplete="off" id="costoCampana" formControlName="costoCampana">
             <span *ngIf="!cotizacionCampanaForm.get('costoCampana').valid && cotizacionCampanaForm.get('costoCampana').touched" class="text-danger small">
               Es necesario ingresar el costo de la campaña
             </span>

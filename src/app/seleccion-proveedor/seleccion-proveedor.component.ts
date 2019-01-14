@@ -56,12 +56,12 @@ export class SeleccionProveedorComponent implements OnInit {
       },
       regulatorio: {
         title: 'Regulatorio'
+      },      
+      tipoDestino: {
+        title: 'Tipo de Destino'
       },
       tipoDocumento: {
         title: 'Tipo de Documento'
-      },
-      tipoDestino: {
-        title: 'Tipo de Destino'
       },
       cantidadLima: {
         title: 'Cantidad Lima'

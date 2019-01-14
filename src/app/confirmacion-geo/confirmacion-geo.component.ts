@@ -1,3 +1,4 @@
+import { ItemCampana } from './../model/itemcampana.model';
 import { MensajeExitoComponent } from './../modals/mensaje-exito/mensaje-exito.component';
 import { TrackingCampanaComponent } from './../modals/tracking-campana/tracking-campana.component';
 import { Campana } from '../model/campana.model';
@@ -41,7 +42,7 @@ export class ConfirmacionGeoComponent implements OnInit {
     this.listarCampanasGeoreferenciadas();
   }
 
-  generarColumnas(){
+  generarColumnas() {
     this.settings.columns = {
 
       linkTracking: {
@@ -64,14 +65,23 @@ export class ConfirmacionGeoComponent implements OnInit {
       tipoCampana: {
         title: 'Tipo de Campaña'
       },
+      tipoDestino: {
+        title: 'Tipo de Destino'
+      },  
       tipoDocumento: {
         title: 'Tipo de Documento'
       },
-      noDistribuible: {
-        title: 'No Distribuibles'
+      noDistribuibleLima: {
+        title: 'ND Lima'
       },
-      normalizado: {
-        title: 'Normalizados'
+      normalizadoLima: {
+        title: 'N Lima'
+      },
+      noDistribuibleProvincia: {
+        title: 'ND Provincia'
+      },      
+      normalizadoProvincia: {
+        title: 'N Provincia'
       },
       contador: {
         title: 'Contador Geo'
@@ -87,7 +97,7 @@ export class ConfirmacionGeoComponent implements OnInit {
           instance.claseIcono = "fas fa-download";
           instance.pressed.subscribe(row => {
             this.descargarBase(row);
-            
+
           });
         }
       },
@@ -117,11 +127,23 @@ export class ConfirmacionGeoComponent implements OnInit {
     };
   }
 
-  descargarBase(row) {    
-    this.campanaService.exportarItemsCampanaPorGeoReferenciar(this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)));
+  descargarBase(row) {
+    let campana = this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id));
+    if (campana.itemsCampana.filter(itemCampana => !itemCampana.enviable).length === 0) {
+      this.notifier.notify("info", "No se encontraron NO DISTRIBUIBLES");
+      return;
+    }
+    this.campanaService.exportarItemsCampanaPorGeoReferenciar(campana);
   }
 
   modificarBase(row) {
+
+    let campana = this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id));
+    if (campana.itemsCampana.filter(itemCampana => !itemCampana.enviable).length === 0) {
+      this.notifier.notify("info", "No se encontraron NO DISTRIBUIBLES");
+      return;
+    }
+
     let bsModalRef: BsModalRef = this.modalService.show(ModificarBaseComponent, {
       initialState: {
         campana: this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)),
@@ -151,12 +173,12 @@ export class ConfirmacionGeoComponent implements OnInit {
         textoAceptar: "Confirmar",
       }
     });
-    bsModalRef.content.confirmarEvent.subscribe(() => {      
+    bsModalRef.content.confirmarEvent.subscribe(() => {
       this.campanaService.confirmarBaseGeo(c).subscribe(
         () => {
-         
+
           let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
-            initialState : {
+            initialState: {
               mensaje: "Se ha autorizado correctamente el envío "
             }
           });
@@ -190,20 +212,26 @@ export class ConfirmacionGeoComponent implements OnInit {
         campanas.forEach(
           campana => {
             dataCampanasGeoreferenciadas.push({
-              id: this.campanaService.codigoAutogenerado(campana.id,this.prefijo.DOCUMENTO),
+              id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
               nombre: campana.nombre,
               tipoCampana: campana.tipoCampana.nombre,
+              tipoDestino: campana.tipoDestino.nombre,
               tipoDocumento: campana.tipoDocumento.nombre,
-              noDistribuible: campana.itemsCampana.filter(documento => documento.enviable === false).length,
-              normalizado: campana.itemsCampana.filter(documento => documento.enviable === true).length,
+              noDistribuibleLima: this.contarDocumentos(campana.itemsCampana) - this.contarDocumentos(campana.itemsCampana, true, true),
+              noDistribuibleProvincia: this.contarDocumentos(campana.itemsCampana, false) - this.contarDocumentos(campana.itemsCampana, false, true),
+              normalizadoLima: this.contarDocumentos(campana.itemsCampana, true, true),
+              normalizadoProvincia: this.contarDocumentos(campana.itemsCampana, false, true),
               contador: campana.seguimientosCampana.filter(seguimientocampana => seguimientocampana.estadoCampana.id === EstadoCampanaEnum.GEOREFERENCIADA).length,
               fechaIngresoCampana: this.campanaService.getFechaCreacion(campana)
             });
           });
         this.dataCampanasGeoreferenciadas.load(dataCampanasGeoreferenciadas);
       }
-
     )
+  }
+
+  contarDocumentos(documentos: ItemCampana[], lima: boolean = true, normalizado: boolean = false): number {
+    return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;
   }
 
 

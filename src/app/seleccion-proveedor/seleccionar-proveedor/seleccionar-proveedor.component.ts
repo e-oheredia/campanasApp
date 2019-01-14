@@ -59,7 +59,7 @@ export class SeleccionarProveedorComponent implements OnInit {
   onSubmit(form: any){
     this.campana.proveedor = form.proveedor;
     this.campana.tipoCampana = form.tipoCampana;
-    this.campana.costoCampana = form.costoCampana;
+    this.campana.costoCampana = parseFloat(form.costoCampana);
     this.campanaService.seleccionarProveedor(this.campana).subscribe(
       () => {
         let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {

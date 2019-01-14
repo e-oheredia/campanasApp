@@ -37,8 +37,8 @@ export class ModificarBaseComponent implements OnInit {
   campanaForm: FormGroup;
 
   columnsItemsCampanaCargados = {    
-    id: {
-      title: 'Id documento'
+    correlativo: {
+      title: 'Correlativo'
     },    
     direccion: {
       title: 'Dirección'
@@ -105,7 +105,7 @@ export class ModificarBaseComponent implements OnInit {
               provincia: element.distrito.provincia.nombre,
               distrito: element.distrito.nombre,           
               direccion: element.direccion,
-              id: element.id
+              correlativo: element.correlativoBase
             })
 
             this.campana.itemsCampana.find(x=> x.id == element.id).enviable = false;

@@ -43,10 +43,30 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-5">
+                  Regulatorio
+                </div>
+                <div class="col-7">
+                  {{campana.regulatorio ? 'Sí':'No'}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
                   Tipo de Documento
                 </div>
                 <div class="col-7">
                   {{campana.tipoDocumento.nombre}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Tipo Destino
+                </div>
+                <div class="col-7">
+                  {{campana.tipoDestino.nombre}}
                 </div>
               </div>
             </li>
@@ -99,13 +119,23 @@
                   Paquete Habilitado
                 </div>
                 <div class="col-7" *ngIf="campana.paqueteHabilitado; else sinPaquete">
-                  {{campana.paqueteHabilitado.descripcion}}: <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.descripcion}}</span>
+                  {{campana.paqueteHabilitado.descripcion}}: <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.descripcion}}, </span>
                 </div>
                 <ng-template #sinPaquete>
                     <div class="col-7">
                         No necesita habilitado
                       </div>
                 </ng-template>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Fecha de Ingreso de Campaña
+                </div>
+                <div class="col-7">
+                  {{this.campanaService.getFechaCreacion(campana)}}
+                </div>
               </div>
             </li>
           </ul>
@@ -137,14 +167,14 @@
           </div>
           <div class="form-group">
             <label for="costoCampana">Costo de la Campaña</label>
-            <input class="form-control" type="number" id="costoCampana" formControlName="costoCampana">
+            <input class="form-control" currencyMask [options]="{ prefix: 'S/. ', thousands: ',', decimal: '.' }" autocomplete="off" id="costoCampana" formControlName="costoCampana">
             <span *ngIf="!proveedorCampanaForm.get('costoCampana').valid && proveedorCampanaForm.get('costoCampana').touched" class="text-danger small">
               Es necesario ingresar el costo de la campaña
             </span>
           </div>
           <div class="row">
             <div class="col text-right">
-              <button type="submit" class="btn btn-success" [disabled]="!proveedorCampanaForm.valid">Asignar</button>
+              <button type="submit" class="btn btn-success mr-2" [disabled]="!proveedorCampanaForm.valid">Asignar</button>
               <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">Cancelar</button>
             </div>
           </div>

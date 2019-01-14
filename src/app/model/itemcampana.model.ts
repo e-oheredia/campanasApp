@@ -3,7 +3,7 @@ export class ItemCampana {
     constructor(){
     }
 
-    public id : number;
+    public id: number;
     public distrito: Distrito;
     public nombres: string;
     public apellidoPaterno: string;
@@ -11,5 +11,6 @@ export class ItemCampana {
     public direccion: string;
     public razonSocial: string;
     public correlativo: number;
-    public enviable: boolean;
+    public enviable: boolean;    
+    public correlativoBase: number;
 }

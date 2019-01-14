@@ -21,8 +21,8 @@ import { MensajeExitoComponent } from './../modals/mensaje-exito/mensaje-exito.c
 export class VerificarConformidadComponent implements OnInit {
 
   constructor(
-    private tituloService: TituloService, 
-    private campanaService: CampanaService, 
+    private tituloService: TituloService,
+    private campanaService: CampanaService,
     private modalService: BsModalService
   ) { }
 
@@ -48,21 +48,30 @@ export class VerificarConformidadComponent implements OnInit {
       },
       id: {
         title: 'Código de Campaña'
-      },      
+      },
       nombre: {
         title: 'Nombre'
       },
       tipoCampana: {
         title: 'Tipo de Campaña'
-      },      
+      },
+      tipoDestino: {
+        title: 'Tipo de Destino'
+      },
       tipoDocumento: {
         title: 'Tipo de Documento'
       },
-      cantidadLima: {
-        title: 'Cantidad Lima'
+      cantidadInicialLima: {
+        title: 'Cantidad Inicial Lima'
       },
-      cantidadProvincia: {
-        title: 'Cantidad Provincia'
+      cantidadFinalLima: {
+        title: 'Cantidad Normalizada Lima'
+      },
+      cantidadInicialProvincia: {
+        title: 'Cantidad Inicial Provincia'
+      },
+      cantidadFinalProvincia: {
+        title: 'Cantidad Normalizada Provincia'
       },
       fechaIngreso: {
         title: 'Fecha de Ingreso de Campaña'
@@ -73,15 +82,16 @@ export class VerificarConformidadComponent implements OnInit {
       btnDescargarConformidad: {
         title: 'Visualizar Conformidad',
         type: 'custom',
-        renderComponent: ButtonViewComponent,        
+        renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {
-          instance.claseIcono = "fa fa-eye";
-          instance.pressed.subscribe(row => {
-            this.descargarConformidad(row);
-          });
-          
+          instance.mostrarData.subscribe(row => {
+            instance.claseIcono = "fa fa-eye";
+            let campana = this.campanas.find(x => x.id === this.campanaService.extraerIdAutogenerado(row.id));
+            instance.ruta = AppSettings.URL_AUTORIZACIONES + campana.rutaAutorizacion;
+
+          })
         }
-        
+
       },
       btnConfirmar: {
         title: 'Confirmar',
@@ -93,7 +103,7 @@ export class VerificarConformidadComponent implements OnInit {
             this.aceptarConformidad(row);
           });
         }
-      },      
+      },
       btnDenegar: {
         title: 'Denegar',
         type: 'custom',
@@ -126,13 +136,15 @@ export class VerificarConformidadComponent implements OnInit {
         let dataCampanaVerficarConformidad = [];
         campanas.forEach(campana => {
           dataCampanaVerficarConformidad.push({
-            id: this.campanaService.codigoAutogenerado(campana.id,this.prefijo.DOCUMENTO),
+            id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
             nombre: campana.nombre,
             tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,
             tipoDestino: campana.tipoDestino.nombre,
-            cantidadLima: this.contarDocumentos(campana.itemsCampana.filter(x=> x.enviable==true),true),
-            cantidadProvincia:this.contarDocumentos(campana.itemsCampana.filter(x=> x.enviable==true), false),
+            cantidadInicialLima: this.contarDocumentos(campana.itemsCampana),
+            cantidadInicialProvincia: this.contarDocumentos(campana.itemsCampana, false),
+            cantidadFinalLima: this.contarDocumentos(campana.itemsCampana, true, true),
+            cantidadFinalProvincia: this.contarDocumentos(campana.itemsCampana, false, true),
             fechaIngreso: this.campanaService.getFechaCreacion(campana),
             cotizacion: campana.costoCampana,
             rutaAutorizacion: campana.rutaAutorizacion
@@ -144,15 +156,15 @@ export class VerificarConformidadComponent implements OnInit {
   }
 
   contarDocumentos(documentos: ItemCampana[], lima: boolean = true, normalizado: boolean = false): number {
-    return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;    
+    return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;
   }
 
-  descargarConformidad(row: any){    
+  descargarConformidad(row: any) {
     //window.open("http://localhost/img/" + row.rutaAutorizacion, "_blank");
     window.open(AppSettings.URL_AUTORIZACIONES + row.rutaAutorizacion, "_blank");
   }
 
-  aceptarConformidad(row: any){
+  aceptarConformidad(row: any) {
 
     let c = new Campana();
     c.id = this.campanaService.extraerIdAutogenerado(row.id);
@@ -165,12 +177,12 @@ export class VerificarConformidadComponent implements OnInit {
       keyboard: false,
       backdrop: "static",
     });
-    bsModalRef.content.confirmarEvent.subscribe(() => {      
+    bsModalRef.content.confirmarEvent.subscribe(() => {
       this.campanaService.aceptarConformidad(c).subscribe(
         () => {
-         
+
           let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
-            initialState : {              
+            initialState: {
               mensaje: "La conformidad fue aceptada"
             },
           });
@@ -183,7 +195,7 @@ export class VerificarConformidadComponent implements OnInit {
     });
   }
 
-  denegarConformidad(row: any){
+  denegarConformidad(row: any) {
     let c = new Campana();
     c.id = this.campanaService.extraerIdAutogenerado(row.id);
 
@@ -195,12 +207,12 @@ export class VerificarConformidadComponent implements OnInit {
       keyboard: false,
       backdrop: "static",
     });
-    bsModalRef.content.confirmarEvent.subscribe(() => {      
+    bsModalRef.content.confirmarEvent.subscribe(() => {
       this.campanaService.denegarConformidad(c).subscribe(
         () => {
-         
+
           let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
-            initialState : {
+            initialState: {
               mensaje: "La conformidad fue denegada"
             }
           });

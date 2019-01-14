@@ -53,6 +53,36 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-5">
+                  Tipo de Campaña
+                </div>
+                <div class="col-7">
+                  {{campana.tipoCampana ? campana.tipoCampana.nombre : 'No asignado'}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                 Regulatorio
+                </div>
+                <div class="col-7">
+                  {{campana.regulatorio ? 'Sí':'No'}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Requiere georreferenciación
+                </div>
+                <div class="col-7">
+                  {{campana.requiereGeorreferencia ? 'Sí' : 'No'}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
                   Plazo
                 </div>
                 <div class="col-7">

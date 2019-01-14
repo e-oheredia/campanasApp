@@ -80,11 +80,12 @@ export class CampanaService {
 
     exportarItemsCampanaPorGeoReferenciar(campana: Campana) {
         let objects = [];
-        campana.itemsCampana.forEach(ItemCampana => {
+        campana.itemsCampana.sort((a,b)=>a.correlativoBase - b.correlativoBase).forEach(ItemCampana => {
             if (ItemCampana.enviable === false) {
                 objects.push({
-                    "Numero de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                     "Codigo de Item": ItemCampana.id,
+                    "Numero de Campaña": this.codigoAutogenerado(campana.id, "DOC"),                    
+                    "Correlativo": ItemCampana.correlativoBase,
                     "Razon Social": ItemCampana.razonSocial,
                     "Apellido Paterno": ItemCampana.apellidoPaterno,
                     "Apellido Materno": ItemCampana.apellidoMaterno,
@@ -102,13 +103,35 @@ export class CampanaService {
         }
     }
 
-    exportarItemsCampanaPendientesPorAdjuntarConfirmacion(campana: Campana) {
+    exportarItemsCampanaConfirmacionCotizacion(campana: Campana) {
         let objects = [];
         campana.itemsCampana.sort((a, b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
             objects.push({
                 "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                 "Código de Item": ItemCampana.id,
-                "Correlativo": ItemCampana.correlativo,
+                "Razon Social": ItemCampana.razonSocial,
+                "Apellido Paterno": ItemCampana.apellidoPaterno,
+                "Apellido Materno": ItemCampana.apellidoMaterno,
+                "Nombres": ItemCampana.nombres,
+                "Departamento": ItemCampana.distrito.provincia.departamento.nombre,
+                "Provincia": ItemCampana.distrito.provincia.nombre,
+                "Distrito": ItemCampana.distrito.nombre,
+                "Dirección": ItemCampana.direccion,
+                "Estado": ItemCampana.enviable ? "NORMALIZADO" : "NO DISTRIBUIBLE"
+            })
+        });
+        if (objects.length > 0) {
+            this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
+        }
+    }
+
+    exportarItemsCampanaPendientesPorAdjuntarConfirmacion(campana: Campana) {
+        let objects = [];
+        campana.itemsCampana.sort((a, b) => a.correlativoBase - b.correlativoBase).forEach(ItemCampana => {
+            objects.push({
+                "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
+                "Código de Item": ItemCampana.id,
+                "Correlativo": ItemCampana.correlativoBase,
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,

@@ -58,12 +58,16 @@ export class RecotizacionCampanaComponent implements OnInit {
       regulatorio: {
         title: 'Regulatorio'
       },
-      tipoDocumento: {
-        title: 'Tipo de Documento'
+      tipoCampana: {
+        title: 'Tipo de Campaña'
       },
       tipoDestino: {
         title: 'Tipo de Destino'
       },
+      tipoDocumento: {
+        title: 'Tipo de Documento'
+      },
+      
       cantidadLima: {
         title: 'Cantidad Lima / Normalizados'
       },
@@ -119,6 +123,7 @@ export class RecotizacionCampanaComponent implements OnInit {
             solicitante: campana.buzon.nombre,
             areaSolicitante: campana.buzon.area.nombre,
             regulatorio: campana.regulatorio ? 'Sí':'No',
+            tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,
             tipoDestino: campana.tipoDestino.nombre,
             cantidadLima: this.contarDocumentos(campana.itemsCampana) + " / " + this.contarDocumentos(campana.itemsCampana, true, true),
