@@ -66,7 +66,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   centroCostosList: CentroCostos[] = [];
   grupoCentroCostos: GrupoCentroCostos;
   tiposAgrupadoElegidos: TipoAgrupado[] = [];
-  rutaPlantilla: string = AppSettings.RUTA_PLANTILLA;
+  rutaPlantilla: string = AppSettings.RUTA_PLANTILLA + "c-externa.xlsx";
 
   columnsItemsCampanaCargados = {
     correlativo: {
@@ -515,8 +515,10 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   onChangeTipoDestino(value: TipoDestino) {
     if (value.nombre.toUpperCase() === "EXTERNA") {
       this.tiposAgrupadoElegidos = [];      
+      this.rutaPlantilla = AppSettings.RUTA_PLANTILLA + "c-externa.xlsx";
     }else{
       this.campanaForm.controls['requiereGeorreferenciacion'].setValue(false);
+      this.rutaPlantilla = AppSettings.RUTA_PLANTILLA + "c-interna.xlsx";
     }
   }
 

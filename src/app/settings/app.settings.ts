@@ -31,7 +31,7 @@ export class AppSettings {
     public static ACCION_RESTOS_PROVEEDOR_URL = "accionesrestosproveedor/";
     public static URL_AUTORIZACIONES = "http://localhost:8080/campana-static/autorizaciones/"
     public static URL_MUESTRAS = "http://localhost:8080/campana-static/muestras/"
-    public static RUTA_PLANTILLA = "http://www.google.com"
+    public static RUTA_PLANTILLA = "http://localhost:8080/campana-static/plantillas/"
 
     public static PREFIJO = {
         DOCUMENTO : "DOC",
