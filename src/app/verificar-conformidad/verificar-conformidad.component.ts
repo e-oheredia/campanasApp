@@ -80,7 +80,7 @@ export class VerificarConformidadComponent implements OnInit {
         title: 'Cotización'
       },
       btnDescargarConformidad: {
-        title: 'Visualizar Conformidad',
+        title: 'Descargar Conformidad',
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {

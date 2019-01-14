@@ -29,8 +29,8 @@ export class AppSettings {
     public static TIPO_CAMPANA_URL = "tiposcampana/";
     public static PAQUETE_HABILITADO_URL = "paquetes/";
     public static ACCION_RESTOS_PROVEEDOR_URL = "accionesrestosproveedor/";
-    public static URL_AUTORIZACIONES = "http://localhost:8080/campana-static/autorizaciones/"
-    public static URL_MUESTRAS = "http://localhost:8080/campana-static/muestras/"
+    public static URL_AUTORIZACIONES = "http://localhost/campana-static/autorizaciones/"
+    public static URL_MUESTRAS = "http://localhost/campana-static/muestras/"
     public static RUTA_PLANTILLA = "http://www.google.com"
 
     public static PREFIJO = {
