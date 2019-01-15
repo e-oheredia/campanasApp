@@ -43,20 +43,20 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-5">
-                 Regulatorio
+                  Regulatorio
                 </div>
                 <div class="col-7">
                   {{campana.regulatorio ? 'Sí':'No'}}
                 </div>
               </div>
-            </li>            
+            </li>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-5">
-                  Tipo de Documento
+                  Tipo de Campaña
                 </div>
                 <div class="col-7">
-                  {{campana.tipoDocumento.nombre}}
+                  {{campana.tipoCampana ? campana.tipoCampana.nombre : 'Aún no asignado'}}
                 </div>
               </div>
             </li>
@@ -69,27 +69,18 @@
                   {{campana.tipoDestino.nombre}}
                 </div>
               </div>
-            </li>           
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-5">
-                  Tipo de Campaña
-                </div>
-                <div class="col-7">
-                  {{campana.tipoCampana ? campana.tipoCampana.nombre : 'No asignado'}}
-                </div>
-              </div>
             </li>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-5">
-                  Requiere georreferenciación
+                  Tipo de Documento
                 </div>
                 <div class="col-7">
-                  {{campana.requiereGeorreferencia ? 'Sí' : 'No'}}
+                  {{campana.tipoDocumento.nombre}}
                 </div>
               </div>
             </li>
+            
             <li class="list-group-item">
               <div class="row">
                 <div class="col-5">
@@ -123,15 +114,29 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-5">
+                  Requiere Georeferenciación
+                </div>
+                <div class="col-7" *ngIf="campana.requiereGeorreferencia">
+                  <span>Si</span>
+                </div>
+                <div class="col-7" *ngIf="!campana.requiereGeorreferencia">
+                  <span>No</span>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
                   Paquete Habilitado
                 </div>
                 <div class="col-7" *ngIf="campana.paqueteHabilitado; else sinPaquete">
-                  {{campana.paqueteHabilitado.descripcion}}: <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.descripcion}}, </span>
+                  {{campana.paqueteHabilitado.descripcion}}:
+                  <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.descripcion}}, </span>
                 </div>
                 <ng-template #sinPaquete>
-                    <div class="col-7">
-                        No necesita habilitado
-                      </div>
+                  <div class="col-7">
+                    No necesita habilitado
+                  </div>
                 </ng-template>
               </div>
             </li>

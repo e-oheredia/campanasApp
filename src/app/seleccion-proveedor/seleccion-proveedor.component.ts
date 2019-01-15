@@ -69,6 +69,9 @@ export class SeleccionProveedorComponent implements OnInit {
       cantidadProvincia: {
         title: 'Cantidad Provincia'
       },
+      fechaCreacion: {
+        title: 'Fecha de Ingreso de Campaña'
+      },
       button: {
         title: 'Asignar Proveedor',
         type: 'custom',

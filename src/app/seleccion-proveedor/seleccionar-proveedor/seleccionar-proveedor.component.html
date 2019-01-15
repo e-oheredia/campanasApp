@@ -53,16 +53,6 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-5">
-                  Tipo de Documento
-                </div>
-                <div class="col-7">
-                  {{campana.tipoDocumento.nombre}}
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-5">
                   Tipo Destino
                 </div>
                 <div class="col-7">
@@ -70,6 +60,16 @@
                 </div>
               </div>
             </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-5">
+                  Tipo de Documento
+                </div>
+                <div class="col-7">
+                  {{campana.tipoDocumento.nombre}}
+                </div>
+              </div>
+            </li>            
             <li class="list-group-item">
               <div class="row">
                 <div class="col-5">
@@ -106,11 +106,11 @@
                   Requiere Georeferenciación
                 </div>
                 <div class="col-7" *ngIf="campana.requiereGeorreferencia">
-                  <span>Si</span>                  
-                </div>      
+                  <span>Si</span>
+                </div>
                 <div class="col-7" *ngIf="!campana.requiereGeorreferencia">
-                  <span>No</span>                  
-                </div>            
+                  <span>No</span>
+                </div>
               </div>
             </li>
             <li class="list-group-item">
@@ -119,23 +119,14 @@
                   Paquete Habilitado
                 </div>
                 <div class="col-7" *ngIf="campana.paqueteHabilitado; else sinPaquete">
-                  {{campana.paqueteHabilitado.descripcion}}: <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.descripcion}}, </span>
+                  {{campana.paqueteHabilitado.descripcion}}:
+                  <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.descripcion}}, </span>
                 </div>
                 <ng-template #sinPaquete>
-                    <div class="col-7">
-                        No necesita habilitado
-                      </div>
+                  <div class="col-7">
+                    No necesita habilitado
+                  </div>
                 </ng-template>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-5">
-                  Fecha de Ingreso de Campaña
-                </div>
-                <div class="col-7">
-                  {{this.campanaService.getFechaCreacion(campana)}}
-                </div>
               </div>
             </li>
           </ul>
@@ -167,7 +158,8 @@
           </div>
           <div class="form-group">
             <label for="costoCampana">Costo de la Campaña</label>
-            <input class="form-control" currencyMask [options]="{ prefix: 'S/. ', thousands: ',', decimal: '.' }" autocomplete="off" id="costoCampana" formControlName="costoCampana">
+            <input class="form-control" currencyMask [options]="{ prefix: 'S/. ', thousands: ',', decimal: '.' }" autocomplete="off"
+              id="costoCampana" formControlName="costoCampana">
             <span *ngIf="!proveedorCampanaForm.get('costoCampana').valid && proveedorCampanaForm.get('costoCampana').touched" class="text-danger small">
               Es necesario ingresar el costo de la campaña
             </span>
