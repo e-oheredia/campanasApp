@@ -10,6 +10,7 @@ import { VerificarConformidadComponent } from './verificar-conformidad/verificar
 import { ConfirmacionCotizacionComponent } from './confirmacion-cotizacion/confirmacion-cotizacion.component';
 import { ImpresionCampanaComponent } from './impresion-campana/impresion-campana.component';
 import { SubirMuestraComponent } from './subir-muestra/subir-muestra.component';
+import {RecojoCampanaComponent} from './recojo-campana/recojo-campana.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'impresion-campana',
     component: ImpresionCampanaComponent
+  },
+  {
+    path: 'recojo-campana',
+    component: RecojoCampanaComponent
   }
 ];
 

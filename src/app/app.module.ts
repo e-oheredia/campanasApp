@@ -20,6 +20,7 @@ import { VisualizarPedidosGeoreferenciaModule } from './visualizar-pedidos-geore
 import { ImpresionCampanaModule } from './impresion-campana/impresion-campana.module';
 
 import { SubirMuestraModule } from './subir-muestra/subir-muestra.module';
+import {RecojoCampanaModule} from './recojo-campana/recojo-campana.module';
 
 
 
@@ -43,7 +44,8 @@ import { SubirMuestraModule } from './subir-muestra/subir-muestra.module';
     ConfirmacionCotizacionModule,
     ImpresionCampanaModule,
     SolicitudMuestraModule,
-    SubirMuestraModule
+    SubirMuestraModule,
+    RecojoCampanaModule    
   ],
   providers: [],
   bootstrap: [AppComponent]
