@@ -246,4 +246,11 @@ export class CampanaService {
         return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/denegarmuestra", null, {});
     }
 
+    adjuntarGuiaRecojo(campana: Campana, file: File): Observable<Campana> {
+        let form: FormData = new FormData;
+        if (file !== null && file != undefined) {
+            form.append("file", file);
+        }
+        return this.requester.post<Campana>(this.REQUEST_URL + campana.id + "/adjuntarguia", form, {});
+    }
 }   
