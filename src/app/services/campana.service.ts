@@ -253,4 +253,12 @@ export class CampanaService {
         }
         return this.requester.post<Campana>(this.REQUEST_URL + campana.id + "/adjuntarguia", form, {});
     }
+
+    aceptarGuia() {
+
+    }
+
+    denegarGuiar() {
+        
+    }
 }   
