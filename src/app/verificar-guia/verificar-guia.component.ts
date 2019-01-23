@@ -1,3 +1,4 @@
+import { ItemCampana } from './../model/itemcampana.model';
 import { MensajeExitoComponent } from './../modals/mensaje-exito/mensaje-exito.component';
 import { ConfirmModalComponent } from './../modals/confirm-modal/confirm-modal.component';
 import { TrackingCampanaComponent } from './../modals/tracking-campana/tracking-campana.component';
@@ -9,6 +10,7 @@ import { TituloService } from './../services/titulo.service';
 import { CampanaService } from './../services/campana.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Component, OnInit } from '@angular/core';
+import { EstadoCampanaEnum } from '../enum/estadocampana.enum';
 
 @Component({
   selector: 'app-verificar-guia',
@@ -19,17 +21,17 @@ export class VerificarGuiaComponent implements OnInit {
 
   constructor(
     private tituloService: TituloService,
-    private campanaService: CampanaService, 
+    private campanaService: CampanaService,
     private modalService: BsModalService
   ) { }
 
   settings = Object.assign({}, AppSettings.tableSettings);
-  dataCampanaVerficarConformidad: LocalDataSource = new LocalDataSource();
+  dataCampanaVerificarGuia: LocalDataSource = new LocalDataSource();
   campanas: Campana[] = [];
   prefijo = AppSettings.PREFIJO;
 
   ngOnInit() {
-    this.tituloService.setTitulo("Verificación de Conformidad");
+    this.tituloService.setTitulo("Verificación de Guía");
     this.settings.columns = {
       linkTracking: {
         title: 'Tracking',
@@ -76,14 +78,14 @@ export class VerificarGuiaComponent implements OnInit {
         title: 'Cotización'
       },
       btnDescargarConformidad: {
-        title: 'Descargar Conformidad',
+        title: 'Guía',
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {
           instance.mostrarData.subscribe(row => {
             instance.claseIcono = "fa fa-eye";
             let campana = this.campanas.find(x => x.id === this.campanaService.extraerIdAutogenerado(row.id));
-            instance.ruta = AppSettings.URL_AUTORIZACIONES + campana.rutaAutorizacion;
+            instance.ruta = AppSettings.URL_GUIAS + campana.rutaGuia;
 
           })
         }
@@ -112,6 +114,7 @@ export class VerificarGuiaComponent implements OnInit {
         }
       },
     };
+    this.listarCampanasVerificarGuia();
   }
 
   visualizarSeguimiento(row) {
@@ -136,7 +139,7 @@ export class VerificarGuiaComponent implements OnInit {
       backdrop: "static",
     });
     bsModalRef.content.confirmarEvent.subscribe(() => {
-      this.campanaService.aceptarGuia(c).subscribe(
+      this.campanaService.aceptarGuia(c.id).subscribe(
         () => {
 
           let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
@@ -147,7 +150,7 @@ export class VerificarGuiaComponent implements OnInit {
           this.listarCampanasVerificarGuia();
         },
         error => {
-          console.log('holitas')
+          console.log(error);
         }
       )
     });
@@ -166,7 +169,7 @@ export class VerificarGuiaComponent implements OnInit {
       backdrop: "static",
     });
     bsModalRef.content.confirmarEvent.subscribe(() => {
-      this.campanaService.denegarGuia(c).subscribe(
+      this.campanaService.denegarGuia(c.id).subscribe(
         () => {
 
           let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
@@ -177,14 +180,40 @@ export class VerificarGuiaComponent implements OnInit {
           this.listarCampanasVerificarGuia();
         },
         error => {
-          console.log('holitas')
+          console.log(error);
         }
       )
     });
   }
 
   listarCampanasVerificarGuia() {
-    
+    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.GUIA_ADJUNTADA).subscribe(
+      campanas => {
+        this.campanas = campanas;
+        let dataCampanaVerificarGuia = [];
+        campanas.forEach(campana => {
+          dataCampanaVerificarGuia.push({
+            id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
+            nombre: campana.nombre,
+            tipoCampana: campana.tipoCampana.nombre,
+            tipoDocumento: campana.tipoDocumento.nombre,
+            tipoDestino: campana.tipoDestino.nombre,
+            cantidadInicialLima: this.contarDocumentos(campana.itemsCampana),
+            cantidadInicialProvincia: this.contarDocumentos(campana.itemsCampana, false),
+            cantidadFinalLima: this.contarDocumentos(campana.itemsCampana, true, true),
+            cantidadFinalProvincia: this.contarDocumentos(campana.itemsCampana, false, true),
+            fechaIngreso: this.campanaService.getFechaCreacion(campana),
+            cotizacion: "S/. " + campana.costoCampana.toString(),
+            rutaAutorizacion: campana.rutaAutorizacion
+          });
+        });
+        this.dataCampanaVerificarGuia.load(dataCampanaVerificarGuia);
+      }
+    )
+  }
+
+  contarDocumentos(documentos: ItemCampana[], lima: boolean = true, normalizado: boolean = false): number {
+    return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;
   }
 
 }

@@ -5,10 +5,22 @@
     </div>
   </div>
   <div class="col-2 text-right">
-    <div class="pb-2 mt-4 mb-2">
-      <a class="btn btn-primary" [href]="rutaPlantilla" target="_blank">
-        Plantilla de Base
-      </a>
+    <div class="pb-2 mt-4 mb-2">      
+      <div class="btn-group" dropdown placement="bottom right">
+        <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+          Plantillas
+          <span class="caret"></span>
+        </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic">
+          <li role="menuitem">
+            <a class="dropdown-item" [href]="rutaPlantillaInterna" target="_blank">Plantilla Interna</a>
+          </li>
+          <li role="menuitem">
+            <a class="dropdown-item"[href]="rutaPlantillaExterna">Plantilla Externa</a>
+          </li>
+         
+        </ul>
+      </div>
     </div>
   </div>
 </div>
@@ -122,8 +134,8 @@
               <div class="form-row align-items-center">
                 <div class="col-sm-8">
                   <label for="excel">Excel de Registros</label>
-                  <input type="file" class="form-control-file " accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="excel"
-                    (change)="onChangeExcelFile($event.srcElement.files[0])" formControlName="archivoExcel">
+                  <input type="file" class="form-control-file " accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    id="excel" (change)="onChangeExcelFile($event.srcElement.files[0])" formControlName="archivoExcel">
                 </div>
               </div>
             </div>
@@ -179,7 +191,7 @@
         <div class="card-body">
 
 
-          <div class="form-row" *ngIf="campanaForm.get('tipoDestino') && campanaForm.get('tipoDestino').value && campanaForm.get('tipoDestino').value.id == 2" >
+          <div class="form-row" *ngIf="campanaForm.get('tipoDestino') && campanaForm.get('tipoDestino').value && campanaForm.get('tipoDestino').value.id == 2">
             <div class="col-10">
               <div class="form-group">
                 <label for="geo">Requiere Georreferenciación *</label>
@@ -373,13 +385,13 @@
                 <br>
                 <br>
                 <div *ngIf="campanaForm.get('requiereDevolucionRezago').value; else noRequiereDevolucionRezago">
-                  <label for="contactoRezago">Contacto *</label>
+                  <label for="contactoRezago">Devolver al usuario *</label>
                   <input class="form-control" type="text" name="contactoRezago" id="contactoRezago" formControlName="contactoRezago">
                   <span *ngIf="!campanaForm.get('contactoRezago').valid && campanaForm.get('contactoRezago').touched" class="text-danger small">
                     Es necesario ingresar el contacto.
                   </span>
                   <br>
-                  <label for="direccionRezago">Dirección *</label>
+                  <label for="direccionRezago">Ubicación *</label>
                   <input class="form-control" type="text" name="direccionRezago" id="direccionRezago" formControlName="direccionRezago">
                   <span *ngIf="!campanaForm.get('direccionRezago').valid && campanaForm.get('direccionRezago').touched" class="text-danger small">
                     Es necesario ingresar la dirección.
@@ -432,7 +444,7 @@
                 <br>
                 <br>
                 <div *ngIf="campanaForm.get('requiereDevolucionCargo').value; else noRequiereDevolucionCargo">
-                  <label for="contactoCargo">Contacto *</label>
+                  <label for="contactoCargo">Devolver al usuario *</label>
                   <input class="form-control" type="text" name="contactoCargo" id="contactoCargo" formControlName="contactoCargo">
                   <span *ngIf="!campanaForm.get('contactoCargo').valid && campanaForm.get('contactoCargo').touched" class="text-danger small">
                     Es necesario ingresar el contacto.
@@ -456,9 +468,9 @@
                 <br>
                 <ng-template #noRequiereDevolucionCargo>
                   <label for="accionporcargos">¿Qué desea que se haga con los cargos físicos?</label>
-                  <div *ngIf="campanaForm.get('tipoDestino') && campanaForm.get('tipoDestino').value && campanaForm.get('tipoDestino').value.id == 2" >
+                  <div *ngIf="campanaForm.get('tipoDestino') && campanaForm.get('tipoDestino').value && campanaForm.get('tipoDestino').value.id == 2">
                     <h6>Al finalizar la distribución, los cargos digitales serán almacenados en un CD</h6>
-                  </div>                  
+                  </div>
                   <select class="form-control" id="accionporcargos" formControlName="accionporcargos">
                     <option *ngFor="let accionporcargos of accionesRestosProveedor" [ngValue]="accionporcargos">{{accionporcargos.nombre}}</option>
                   </select>
@@ -540,7 +552,8 @@
                     </span>
                     <br>
                     <label for="porcentajePago">Porcentaje de pago *</label>
-                    <input class="form-control" type="number" name="porcentajePago" formControlName="porcentajePago" min="1" max="100" />
+                    <input class="form-control" currencyMask [options]="{ prefix: '', suffix: '%', precision: 0}" name="porcentajePago" formControlName="porcentajePago"
+                    />
                     <span *ngIf="!campanaForm.get('porcentajePago').valid && campanaForm.get('porcentajePago').touched" class="text-danger small">
                       Es necesario ingresar el porcentaje de pago.
                     </span>
@@ -665,7 +678,7 @@
   <div class="row justify-content-center">
     <div class="col-11 mt-4 mb-4">
       <div class="form-group">
-        <button class="btn btn-success form-control mt-2" type="submit" [disabled]="!campanaForm.valid">
+        <button class="btn btn-success form-control mt-2" type="submit" >
           CREAR CAMPAÑA
         </button>
       </div>

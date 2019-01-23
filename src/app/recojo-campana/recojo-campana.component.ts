@@ -41,7 +41,7 @@ export class RecojoCampanaComponent implements OnInit {
 
 
   ngOnInit() {
-    this.tituloService.setTitulo("Gestionar Muestra de Impresión");
+    this.tituloService.setTitulo("Recojo de Campaña");
     this.generarColumnas();
     this.listarCampanasPorRecojer();
   }

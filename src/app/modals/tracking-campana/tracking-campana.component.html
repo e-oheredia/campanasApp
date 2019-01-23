@@ -131,7 +131,16 @@
                 </div>
                 <div class="col-7" *ngIf="campana.paqueteHabilitado; else sinPaquete">
                   {{campana.paqueteHabilitado.descripcion}}:
-                  <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado">{{tipoHabilitado.descripcion}}, </span>
+                  <span *ngFor="let tipoHabilitado of campana.paqueteHabilitado.tiposHabilitado; let i = index">
+                      <span *ngIf="i === 0; else conComa">
+                        {{tipoHabilitado.descripcion}}
+                      </span>
+                      <ng-template #conComa>
+                        <span>
+                          , {{tipoHabilitado.descripcion}}
+                        </span>
+                      </ng-template>
+                    </span>
                 </div>
                 <ng-template #sinPaquete>
                   <div class="col-7">

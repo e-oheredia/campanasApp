@@ -66,12 +66,10 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   centroCostosList: CentroCostos[] = [];
   grupoCentroCostos: GrupoCentroCostos;
   tiposAgrupadoElegidos: TipoAgrupado[] = [];
-  rutaPlantilla: string = AppSettings.RUTA_PLANTILLA + "c-externa.xlsx";
+  rutaPlantillaExterna: string = AppSettings.RUTA_PLANTILLA + "c-externa.xlsx";
+  rutaPlantillaInterna: string = AppSettings.RUTA_PLANTILLA + "c-interna.xlsx";
 
   columnsItemsCampanaCargados = {
-    correlativo: {
-      title: 'Correlativo'
-    },
     razonSocial: {
       title: 'Razón Social'
     },
@@ -95,6 +93,9 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     },
     direccion: {
       title: 'Dirección'
+    }, 
+    idc: {
+      title: 'IDC'
     }
   };
 
@@ -144,7 +145,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
       'contactoEmpresaAuspiciadora': new FormControl("", [this.requiredIfEmpresaAuspiciadora.bind(this)]),
       'archivoExcel': new FormControl(null), 
       'observacion': new FormControl("")
-    }, [this.noDocumentsLoaded.bind(this), this.porcentajeCompletoSiRequiereCentroCostosBCP.bind(this)]);
+    }, [this.porcentajeCompletoSiRequiereCentroCostosBCP.bind(this)]);
     this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
 
   }
@@ -196,15 +197,6 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   }
 
 
-
-
-  noDocumentsLoaded(form: FormGroup): { [key: string]: boolean } | null {
-    if (this.itemsCampanaCargados.length == 0) {
-      return { 'noDocumentsLoaded': true }
-    }
-    return null;
-  }
-
   onChangeExcelFile(file: File) {
     if (file == null) {
       this.excelFile = null;
@@ -234,7 +226,6 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
         let dataItemsCampanaCargados = [];
         data.forEach(element => {
           dataItemsCampanaCargados.push({
-            correlativo: element.correlativo,
             departamento: element.distrito.provincia.departamento.nombre,
             provincia: element.distrito.provincia.nombre,
             distrito: element.distrito.nombre,
@@ -242,7 +233,8 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
             apellidoPaterno: element.apellidoPaterno,
             apellidoMaterno: element.apellidoMaterno,
             direccion: element.direccion,
-            razonSocial: element.razonSocial
+            razonSocial: element.razonSocial, 
+            idc: element.idc
           })
         });
         this.dataItemsCampanaCargados.load(dataItemsCampanaCargados);
@@ -276,6 +268,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     p += cc.porcentaje;
 
     if (p > 100) {
+      this.notifier.notify("warning", "El porcentaje total tiene que ser menor a 100%");
       return;
     }
 
@@ -376,7 +369,11 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   }
 
   registrarCampana(values: any) {
-    console.log(this.campanaForm);
+    console.log(this.campanaForm)
+    if (this.itemsCampanaCargados.length === 0) {
+      this.notifier.notify('warning', 'Adjunte la base de la campaña');
+      return;
+    }
     let campana: Campana = new Campana();
     campana.itemsCampana = this.itemsCampanaCargados;
     campana.nombre = values.nombreCampana;
@@ -515,10 +512,8 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   onChangeTipoDestino(value: TipoDestino) {
     if (value.nombre.toUpperCase() === "EXTERNA") {
       this.tiposAgrupadoElegidos = [];      
-      this.rutaPlantilla = AppSettings.RUTA_PLANTILLA + "c-externa.xlsx";
     }else{
-      this.campanaForm.controls['requiereGeorreferenciacion'].setValue(false);
-      this.rutaPlantilla = AppSettings.RUTA_PLANTILLA + "c-interna.xlsx";
+      this.campanaForm.controls['requiereGeorreferenciacion'].setValue(false);  
     }
   }
 

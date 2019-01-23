@@ -159,11 +159,6 @@ export class VerificarConformidadComponent implements OnInit {
     return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;
   }
 
-  descargarConformidad(row: any) {
-    //window.open("http://localhost/img/" + row.rutaAutorizacion, "_blank");
-    window.open(AppSettings.URL_AUTORIZACIONES + row.rutaAutorizacion, "_blank");
-  }
-
   aceptarConformidad(row: any) {
 
     let c = new Campana();

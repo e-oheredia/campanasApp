@@ -16,8 +16,7 @@ import { VerificarConformidadComponent } from './verificar-conformidad.component
     FormsModule,
   ],
   entryComponents:[
-    ButtonViewComponent
-    
+    ButtonViewComponent    
   ]
 })
 export class VerificarConformidadModule { }
