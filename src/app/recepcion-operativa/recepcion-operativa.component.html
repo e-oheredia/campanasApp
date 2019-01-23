@@ -1,0 +1,12 @@
+<div *ngIf="campanas.length !== 0; else mensaje">
+  <ng2-smart-table [settings]="settings" [source]="dataCampanas"></ng2-smart-table>
+</div>
+<ng-template #mensaje>
+  <div class="row">
+      <div class="col">
+          <div class="alert alert-info" role="alert">
+            No tiene campañas pendientes de inicio de distribución
+          </div>
+      </div>
+  </div>
+</ng-template>

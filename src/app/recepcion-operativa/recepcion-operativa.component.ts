@@ -18,11 +18,11 @@ import * as moment from 'moment-timezone';
 import { AdjuntarArchivoComponent } from '../modals/adjuntar-archivo/adjuntar-archivo.component';
 
 @Component({
-  selector: 'app-recojo-campana',
-  templateUrl: './recojo-campana.component.html',
-  styleUrls: ['./recojo-campana.component.css']
+  selector: 'app-recepcion-operativa',
+  templateUrl: './recepcion-operativa.component.html',
+  styleUrls: ['./recepcion-operativa.component.css']
 })
-export class RecojoCampanaComponent implements OnInit {
+export class RecepcionOperativaComponent implements OnInit {
 
   constructor(
     private tituloService: TituloService,
@@ -40,10 +40,11 @@ export class RecojoCampanaComponent implements OnInit {
     EstadoCampanaEnum.GUIA_DENEGADA];
 
 
+
   ngOnInit() {
     this.tituloService.setTitulo("Recojo de Campañas");
     this.generarColumnas();
-    this.listarCampanasPorRecojer();
+    this.listarCampanasOperativasParaDistribucion();
   }
 
   generarColumnas() {
@@ -58,9 +59,6 @@ export class RecojoCampanaComponent implements OnInit {
             this.visualizarSeguimiento(row);
           });
         }
-      },
-      id: {
-        title: 'Código de campaña'
       },
       nombre: {
         title: 'Nombre de campaña'
@@ -80,32 +78,44 @@ export class RecojoCampanaComponent implements OnInit {
       cantidadProvincia: {
         title: 'Cantidad Provincia'
       },
-      fechaRecojo: {
-        title: 'Fecha de recojo'
+      fechaHoraOperativa: {
+        title: 'Fecha y hora de Operativa'
       },
-      horaRecojo: {
-        title: 'Hora de recojo'
+      inicioDistribucion: {
+        title: 'Inicio de Distribución'
       },
-      imprentaSede: {
-        title: 'Imprenta / Sede'
+      finLima: {
+        title: 'Fin Lima'
       },
-      direccion: {
-        title: 'Dirección'
+      finProvincia: {
+        title: 'Fin Provincia'
       },
-      contacto: {
-        title: 'Contacto'
+      tipoHabilitado: {
+        title: 'Tipo de Habilitado'
       },
-      estado: {
-        title: 'Estado'
+      tipoEntrega: {
+        title: 'Tipo de Entrega'
       },
-      buttonAdjuntarGuiaRecojo: {
-        title: 'Adjuntar guía de recojo',
+      buttonDescargarBasesOperativas: {
+        title: 'Bases Operativas',
         type: 'custom',
         renderComponent: ButtonViewComponent,
         onComponentInitFunction: (instance: any) => {
           instance.claseIcono = "fas fa-paperclip";
           instance.pressed.subscribe(row => {
-            this.adjuntarGuiaRecojo(row);
+            this.descargarBasesOperativas(row);
+          });
+        }
+      },
+
+      buttonIniciarDistribucion: {
+        title: 'Distribucion',
+        type: 'custom',
+        renderComponent: ButtonViewComponent,
+        onComponentInitFunction: (instance: any) => {
+          instance.claseIcono = "fas fa-paperclip";
+          instance.pressed.subscribe(row => {
+            this.iniciarDistribucion(row);
           });
         }
       }
@@ -113,7 +123,7 @@ export class RecojoCampanaComponent implements OnInit {
     };
   }
 
-  listarCampanasPorRecojer() {
+  listarCampanasOperativasParaDistribucion() {
     this.campanaService.listarCampanasPorEstados(this.estadosCampana).subscribe(
       campanas => {
         this.campanas = campanas;
@@ -122,23 +132,22 @@ export class RecojoCampanaComponent implements OnInit {
 
           let campana_u = this.campanaService.getUltimoSeguimientoCampana(campana);           
 
-          let proveedorImpresion : ProveedorImpresion;
-          proveedorImpresion = campana.proveedorImpresion;
+          //let proveedorImpresion : ProveedorImpresion;
+          //proveedorImpresion = campana.proveedorImpresion;
           
           dataCampanas.push({
-            id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
+            //id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
             nombre: campana.nombre,
             tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,
             tipoDestino: campana.tipoDestino.nombre,
             cantidadLima: this.contarDocumentos(campana.itemsCampana.filter(x => x.enviable == true), true),
             cantidadProvincia: this.contarDocumentos(campana.itemsCampana.filter(x => x.enviable == true), false),
-            fechaRecojo: moment(proveedorImpresion.fechaRecojo, 'DD-MM-YYYY').format('DD-MM-YYYY'),
-            horaRecojo: moment(proveedorImpresion.fechaRecojo, ' HH:mm:ss').format(' HH:mm:ss'),
-            imprentaSede: proveedorImpresion.nombre,
-            direccion: proveedorImpresion.direccion,
-            contacto: proveedorImpresion.contacto,            
-            estado: campana_u.estadoCampana.nombre,
+            fechaHoraOperativa: campana_u.fecha,
+            inicioDistribucion: '',
+            finLima: '',
+            finProvincia: '',            
+            tipoEntrega: '',
           });
         });
         this.dataCampanas.load(dataCampanas);
@@ -157,44 +166,15 @@ export class RecojoCampanaComponent implements OnInit {
     });
   }
 
-  adjuntarGuiaRecojo(row: any) {
+  descargarBasesOperativas(row: any){
 
-    this.campana = this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id));
-    let bsModalRef: BsModalRef = this.modalService.show(AdjuntarArchivoComponent, {
-        initialState: {
-            campana: this.campana,            
-            titulo: "Adjuntar guía de recojo - Campaña " + row.nombre,
-            textoAceptar: "Enviar",
-            textoCancelar: "Cancelar",
-            tipoArchivo: ".png"
-        },
-        class: 'modal-md',
-        keyboard: false,
-        backdrop: "static"
-    });
-                        
-    bsModalRef.content.confirmarEvent.subscribe((archivoHijo) => {
-        console.log(archivoHijo);
-        this.campanaService.adjuntarGuiaRecojo(this.campana, archivoHijo).subscribe(
-            () => {
-          
-                let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
-                  initialState : {
-                    mensaje: "La guía de recojo de la campaña se adjuntó correctamente"
-                  }
-                });
-                this.listarCampanasPorRecojer();
-              },
-              error => {
-                  console.log("hola")
-              }
-        )
-    });
+  }
 
+  iniciarDistribucion(row: any){
+    
   }
 
   contarDocumentos(documentos: ItemCampana[], lima: boolean = true, normalizado: boolean = false): number {
     return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;
   }
-
 }
