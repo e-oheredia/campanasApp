@@ -21,6 +21,7 @@ import { ImpresionCampanaModule } from './impresion-campana/impresion-campana.mo
 
 import { SubirMuestraModule } from './subir-muestra/subir-muestra.module';
 import {RecojoCampanaModule} from './recojo-campana/recojo-campana.module';
+import { VerificarGuiaModule } from './verificar-guia/verificar-guia.module';
 
 
 
@@ -45,7 +46,8 @@ import {RecojoCampanaModule} from './recojo-campana/recojo-campana.module';
     ImpresionCampanaModule,
     SolicitudMuestraModule,
     SubirMuestraModule,
-    RecojoCampanaModule    
+    RecojoCampanaModule, 
+    VerificarGuiaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

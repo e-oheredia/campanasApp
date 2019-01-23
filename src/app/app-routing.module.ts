@@ -1,3 +1,4 @@
+import { VerificarGuiaComponent } from './verificar-guia/verificar-guia.component';
 import { SolicitudMuestraComponent } from './solicitud-muestra/solicitud-muestra.component';
 import { RecotizacionCampanaComponent } from './recotizacion-campana/recotizacion-campana.component';
 import { SeleccionProveedorComponent } from './seleccion-proveedor/seleccion-proveedor.component';
@@ -56,6 +57,10 @@ const routes: Routes = [
   {
     path: 'recojo-campana',
     component: RecojoCampanaComponent
+  },
+  {
+    path: 'verificar-guia',
+    component: VerificarGuiaComponent
   }
 ];
 
