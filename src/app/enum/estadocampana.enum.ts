@@ -18,5 +18,6 @@ export enum EstadoCampanaEnum {
     GUIA_ADJUNTADA = 16,
     GUIA_ACEPTADA = 17,
     GUIA_DENEGADA = 18,
-    INICIADA = 19
+    DISTRIBUCION_INICIADA = 19,
+    REPORTE_ADJUNTADO = 20
 }

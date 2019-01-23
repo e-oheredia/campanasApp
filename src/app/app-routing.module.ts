@@ -11,6 +11,7 @@ import { ConfirmacionCotizacionComponent } from './confirmacion-cotizacion/confi
 import { ImpresionCampanaComponent } from './impresion-campana/impresion-campana.component';
 import { SubirMuestraComponent } from './subir-muestra/subir-muestra.component';
 import {RecojoCampanaComponent} from './recojo-campana/recojo-campana.component';
+import { CargaResultadosComponent } from './carga-resultados/carga-resultados.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
   {
     path: 'recojo-campana',
     component: RecojoCampanaComponent
+  },
+  {
+    path: 'carga-resultados',
+    component: CargaResultadosComponent
   }
 ];
 
