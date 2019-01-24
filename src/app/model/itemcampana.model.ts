@@ -13,4 +13,5 @@ export class ItemCampana {
     public correlativo: number;
     public enviable: boolean;    
     public correlativoBase: number;
+    public idc: string;
 }

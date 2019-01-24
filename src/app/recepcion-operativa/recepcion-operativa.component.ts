@@ -36,8 +36,7 @@ export class RecepcionOperativaComponent implements OnInit {
   dataCampanas: LocalDataSource = new LocalDataSource();
   prefijo = AppSettings.PREFIJO;
   estadosCampana: number[] = [
-    EstadoCampanaEnum.CAMPANA_POR_RECOGER,    
-    EstadoCampanaEnum.GUIA_DENEGADA];
+    EstadoCampanaEnum.GUIA_ACEPTADA];
 
 
 
@@ -59,6 +58,9 @@ export class RecepcionOperativaComponent implements OnInit {
             this.visualizarSeguimiento(row);
           });
         }
+      },
+      id: {
+        title: 'Código de campaña'
       },
       nombre: {
         title: 'Nombre de campaña'
@@ -136,7 +138,7 @@ export class RecepcionOperativaComponent implements OnInit {
           //proveedorImpresion = campana.proveedorImpresion;
           
           dataCampanas.push({
-            //id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
+            id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
             nombre: campana.nombre,
             tipoCampana: campana.tipoCampana.nombre,
             tipoDocumento: campana.tipoDocumento.nombre,
@@ -144,7 +146,7 @@ export class RecepcionOperativaComponent implements OnInit {
             cantidadLima: this.contarDocumentos(campana.itemsCampana.filter(x => x.enviable == true), true),
             cantidadProvincia: this.contarDocumentos(campana.itemsCampana.filter(x => x.enviable == true), false),
             fechaHoraOperativa: campana_u.fecha,
-            inicioDistribucion: '',
+            inicioDistribucion: campana.fechaDistribucion,
             finLima: '',
             finProvincia: '',            
             tipoEntrega: '',

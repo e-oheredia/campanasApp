@@ -113,8 +113,25 @@ export class ItemCampanaService {
                     return;
                 }
 
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][7])) {
+                    callback({
+                        mensaje: "Ingrese la dirección en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
                 itemCampanaCargado.distrito = distrito;
                 itemCampanaCargado.direccion = data[i][7] || "";
+
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][8])) {
+                    callback({
+                        mensaje: "Ingrese el IDC en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                itemCampanaCargado.idc = data[i][8];
+
                 itemCampanaCargado.correlativoBase = i;
 
                 itemsCampanaCargados.push(itemCampanaCargado);
