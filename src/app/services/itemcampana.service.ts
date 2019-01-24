@@ -204,21 +204,21 @@ export class ItemCampanaService {
                 itemCampanaCargado.distrito = distrito;
                 itemCampanaCargado.direccion = data[i][10] || "";
 
-                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][11])) {
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][12])) {
                     callback({
                         mensaje: "Ingrese el estado del documento en la fila " + (i + 1)
                     });
                     return;
                 }
-
-                if (data[i][11].toUpperCase() != "Normalizado".toUpperCase() && data[i][11].toUpperCase() != "No distribuible".toUpperCase()) {
+                
+                if (data[i][12].toUpperCase() != "Normalizado".toUpperCase() && data[i][12].toUpperCase() != "No distribuible".toUpperCase()) {
                     callback({
                         mensaje: "Ingrese correctamente el estado del documento en la fila " + (i + 1)
                     });
                     return;
                 }
 
-                itemCampanaCargado.enviable = data[i][11].toUpperCase() === "Normalizado".toUpperCase() ? true : false;
+                itemCampanaCargado.enviable = data[i][12].toUpperCase() === "Normalizado".toUpperCase() ? true : false;
                 itemCampanaCargado.correlativoBase = data[i][2];
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;
