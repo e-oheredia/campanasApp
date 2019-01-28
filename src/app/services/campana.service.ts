@@ -8,9 +8,6 @@ import { HttpParams } from '@angular/common/http';
 import { WriteExcelService } from './write-excel.service';
 import * as moment from 'moment-timezone';
 import { UtilsService } from './utils.service';
-import { ItemCampana } from '../model/itemcampana.model';
-import { SeguimientoCampana } from '../model/seguimientocampana.model';
-import { Form } from '@angular/forms';
 import { EstadoCampanaEnum } from '../enum/estadocampana.enum';
 
 @Injectable()
@@ -94,6 +91,7 @@ export class CampanaService {
                     "Provincia": ItemCampana.distrito.provincia.nombre,
                     "Distrito": ItemCampana.distrito.nombre,
                     "Dirección": ItemCampana.direccion,
+                    "IDC": ItemCampana.idc,
                     "Estado": ""
                 })
             }
@@ -117,6 +115,7 @@ export class CampanaService {
                 "Provincia": ItemCampana.distrito.provincia.nombre,
                 "Distrito": ItemCampana.distrito.nombre,
                 "Dirección": ItemCampana.direccion,
+                "IDC": ItemCampana.idc,
                 "Estado": ItemCampana.enviable ? "NORMALIZADO" : "NO DISTRIBUIBLE"
             })
         });
@@ -140,6 +139,7 @@ export class CampanaService {
                 "Provincia": ItemCampana.distrito.provincia.nombre,
                 "Distrito": ItemCampana.distrito.nombre,
                 "Dirección": ItemCampana.direccion,
+                "IDC": ItemCampana.idc,
                 "Estado": ItemCampana.enviable ? "NORMALIZADO" : "NO DISTRIBUIBLE"
             })
         });
@@ -152,18 +152,19 @@ export class CampanaService {
         let objects = [];
         campana.itemsCampana.filter(x => x.correlativo > 0).sort((a, b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
             objects.push({
-                "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                 "Código de Item": ItemCampana.id,
+                "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),                
                 "Correlativo de Impresión": ItemCampana.correlativo,
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,
                 "Nombres": ItemCampana.nombres,
-                "Ámbito": ItemCampana.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" ? "LIMA" : "PROVINCIA",
-                "Departamento": ItemCampana.distrito.provincia.departamento.nombre,
-                "Provincia": ItemCampana.distrito.provincia.nombre,
-                "Distrito": ItemCampana.distrito.nombre,
                 "Dirección": ItemCampana.direccion,
+                "Distrito": ItemCampana.distrito.nombre,
+                "Provincia": ItemCampana.distrito.provincia.nombre,                
+                "Departamento": ItemCampana.distrito.provincia.departamento.nombre,
+                "Ámbito": ItemCampana.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" ? "LIMA" : "PROVINCIA",       
+                "IDC": ItemCampana.idc,
                 "Estado": ItemCampana.enviable ? "NORMALIZADO" : "NO DISTRIBUIBLE"
             })
         });
@@ -200,6 +201,10 @@ export class CampanaService {
 
     modificarBase(campana: Campana): Observable<Campana> {
         return this.requester.put<Campana>(this.REQUEST_URL + "modificarbasegeo", campana, {});
+    }
+
+    subirReporte(campana: Campana): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + "cargarreportefinal", campana, {});
     }
 
     adjuntarConformidad(campana: Campana, file: File): Observable<Campana> {
@@ -252,5 +257,13 @@ export class CampanaService {
             form.append("file", file);
         }
         return this.requester.post<Campana>(this.REQUEST_URL + campana.id + "/adjuntarguia", form, {});
+    }
+
+    aceptarGuia(campanaId: number): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/aprobarguia", null, {});
+    }
+
+    denegarGuia(campanaId: number): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/denegarguia", null, {});
     }
 }   

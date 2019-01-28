@@ -1,4 +1,5 @@
 import { Distrito } from './distrito.model';
+import { EstadoItemCampana } from './estadoItemCampana.model';
 export class ItemCampana {
     constructor(){
     }
@@ -13,4 +14,7 @@ export class ItemCampana {
     public correlativo: number;
     public enviable: boolean;    
     public correlativoBase: number;
+    public idc: string;
+    public estadoItemCampana: EstadoItemCampana;
+    public detalle : string;
 }

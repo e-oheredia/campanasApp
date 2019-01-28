@@ -72,16 +72,16 @@ export class ConfirmacionGeoComponent implements OnInit {
         title: 'Tipo de Documento'
       },
       noDistribuibleLima: {
-        title: 'ND Lima'
+        title: 'No Distribuibles Lima'
       },
       normalizadoLima: {
-        title: 'N Lima'
+        title: 'Normalizadas Lima'
       },
       noDistribuibleProvincia: {
-        title: 'ND Provincia'
+        title: 'No Distribuibles Provincia'
       },      
       normalizadoProvincia: {
-        title: 'N Provincia'
+        title: 'Normalizadas Provincia'
       },
       contador: {
         title: 'Contador Geo'

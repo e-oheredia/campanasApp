@@ -41,7 +41,7 @@ export class RecojoCampanaComponent implements OnInit {
 
 
   ngOnInit() {
-    this.tituloService.setTitulo("Gestionar Muestra de Impresión");
+    this.tituloService.setTitulo("Recojo de Campaña");
     this.generarColumnas();
     this.listarCampanasPorRecojer();
   }
@@ -172,7 +172,7 @@ export class RecojoCampanaComponent implements OnInit {
         keyboard: false,
         backdrop: "static"
     });
-                        
+           
     bsModalRef.content.confirmarEvent.subscribe((archivoHijo) => {
         console.log(archivoHijo);
         this.campanaService.adjuntarGuiaRecojo(this.campana, archivoHijo).subscribe(

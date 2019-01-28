@@ -79,7 +79,7 @@ export class CargaResultadosComponent implements OnInit {
         type: 'custom',
         renderComponent : ButtonViewComponent,
         onComponentInitFunction: (instance : any) => {
-          instance.claseIcono = "fas fa-dowload",
+          instance.claseIcono = "fas fa-download",
           instance.pressed.subscribe(row => {
             this.subirReporteFinal(row);
           });
@@ -99,7 +99,7 @@ export class CargaResultadosComponent implements OnInit {
 
   listarCampanasOperativas(){
     this.dataCampanasOperativas.reset();
-    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.DISTRIBUCION_INICIADA).subscribe(
+    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.GUIA_ACEPTADA).subscribe(
       campanasa => {
         this.campanas = campanasa;
         let dataCampanasOperativas = [];
@@ -132,7 +132,7 @@ export class CargaResultadosComponent implements OnInit {
         campana: this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)),
         title: 'Subir Reporte Final',
       },
-      class: 'modal-lg',
+      class: 'modal-md',
       keyboard: false,
       backdrop: "static",
     });

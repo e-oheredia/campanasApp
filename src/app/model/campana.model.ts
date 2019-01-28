@@ -43,4 +43,5 @@ export class Campana {
     public costoCampana: number;
     public autogenerado: String;
     public rutaMuestra: String;
+    public rutaGuia: string;
 }

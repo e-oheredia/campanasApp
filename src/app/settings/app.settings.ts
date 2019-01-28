@@ -15,6 +15,7 @@ export class AppSettings {
     public static DEPARTAMENTO_URL = "departamentos/";
     public static PROVINCIA_URL = "provincias/";
     public static DISTRITO_URL = "distritos/";
+    public static ESTADOITEMCAMPANA_URL = "estadositem/";
     public static DOCUMENTO_URL = "documentos/";
     public static AREA_URL = "areas/";
     public static ENVIO_URL = "envios/";
@@ -31,6 +32,7 @@ export class AppSettings {
     public static ACCION_RESTOS_PROVEEDOR_URL = "accionesrestosproveedor/";
     public static URL_AUTORIZACIONES = "http://localhost:8080/campana-static/autorizaciones/"
     public static URL_MUESTRAS = "http://localhost:8080/campana-static/muestras/"
+    public static URL_GUIAS = "http://localhost:8080/campana-static/guias/"
     public static RUTA_PLANTILLA = "http://localhost:8080/campana-static/plantillas/"
 
     public static PREFIJO = {
