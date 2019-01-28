@@ -154,8 +154,6 @@ export class ConfirmacionGeoComponent implements OnInit {
       backdrop: "static",
     });
 
-
-
     this.modalService.onHide.subscribe(
       () => {
         this.listarCampanasGeoreferenciadas();

@@ -12,6 +12,8 @@ import { DepartamentoService } from './departamento.service';
 import { ReadExcelService } from './readexcel.service';
 import { Campana } from '../model/campana.model';
 import { CampanaService } from '../services/campana.service';
+import { EstadoItemCampanaService } from './estadoitemcampana.service';
+import { EstadoItemCampanaEnum } from '../enum/estadoitemcampana.enum';
 
 @Injectable()
 export class ItemCampanaService {
@@ -24,6 +26,7 @@ export class ItemCampanaService {
         private utilsService: UtilsService,
         private buzonService: BuzonService,
         private campanaService: CampanaService,
+        private estadoItemCampanaService: EstadoItemCampanaService
     ) {
         this.departamentosPeruSubscription = this.departamentoService.departamentosPeruChanged.subscribe(
             departamentosPeru => {
@@ -178,8 +181,6 @@ export class ItemCampanaService {
                     return;
                 }
 
-                //let item : ItemCampana = campana.itemsCampana.find(x=> x.id === this.campanaService.extraerIdAutogenerado(data[i][1]));
-
                 let item: ItemCampana = campana.itemsCampana.find(x => x.id === data[i][0]);
 
                 if (this.utilsService.isUndefinedOrNullOrEmpty(item)) {
@@ -188,16 +189,7 @@ export class ItemCampanaService {
                     });
                     return;
                 }
-
-                if(item.enviable == true){
-                    callback({
-                        mensaje: "El código de item de la fila " + (i + 1) + " ya se encuentra Normalizada"
-                    });
-                    return;
-                }
-           
-
-
+       
                 let itemCampanaCargado: ItemCampana = new ItemCampana();
                 itemCampanaCargado.id = data[i][0];
                 let distrito = this.distritoService.listarDistritoByNombreDistritoAndNombreProvincia(data[i][9], data[i][8])
@@ -228,6 +220,93 @@ export class ItemCampanaService {
 
         });
     }
+
+    mostrarItemsReporte(file: File, sheet: number, campana: Campana, callback: Function){
+        this.readExcelService.excelToJson(file, sheet, (data: Array<any>) => {
+
+            if(campana.itemsCampana.length != data.length - 1){
+                callback({
+                    mensaje: "Error, la base cuenta con más registros"
+                });
+                return;
+            }
+
+            //VALIDAR cabezas                                //cabecera A=0
+            if(this.utilsService.isUndefinedOrNullOrEmpty(data[0][0]) || this.utilsService.isUndefinedOrNullOrEmpty(data[0][13]) || this.utilsService.isUndefinedOrNullOrEmpty(data[0][14])){
+                callback({
+                    mensaje: "Error, el formato de la base es incorrecto"
+                });
+                return;
+            }
+
+            let itemsCampanaCargados: ItemCampana[] = [];
+            let i = 1
+
+            while (true) {
+                if(data.length == 1){
+                    break;
+                }
+
+                if(this.utilsService.isUndefinedOrNullOrEmpty(data[i])){
+                    break;
+                }
+
+                if(this.utilsService.isUndefinedOrNullOrEmpty(data[i][0])){
+                    callback({
+                        mensaje: "Ingrese el código de item en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                let item: ItemCampana = campana.itemsCampana.find(x => x.id === data[i][0]);
+                if(this.utilsService.isUndefinedOrNullOrEmpty(item)){
+                    callback({
+                        mensaje: "El código de item de la fila " + (i + 1) + " no corresponde a la campaña seleccionada"
+                    });
+                    return;
+                }
+
+                let itemCampanaCargado: ItemCampana = new ItemCampana();
+                itemCampanaCargado.id = data[i][0];
+                
+                if(this.utilsService.isUndefinedOrNullOrEmpty(data[i][13])){
+                    callback({
+                        mensaje: "Ingrese el estado del documento en la fila " + (i + 1)
+                    });
+                    return;
+                }
+                
+                let estadosItemCampana = this.estadoItemCampanaService.getEstadosItemCampana();
+                console.log("estadosItemCampana : " + estadosItemCampana.length);
+
+                let estadoItemCampana = estadosItemCampana.find(estadoItemCampana => estadoItemCampana.nombre.toUpperCase().trim() === data[i][13].toUpperCase().trim());
+
+                if(estadoItemCampana === null){
+                    callback({
+                        mensaje: "Ingrese correctamente el estado del documento en la fila " + (i + 1)
+                    });
+                    return;
+                }
+
+                itemCampanaCargado.estadoItemCampana = estadoItemCampana;
+
+                
+                if((estadoItemCampana.id === EstadoItemCampanaEnum.ENTREGADO || estadoItemCampana.id === EstadoItemCampanaEnum.REZAGADO) && this.utilsService.isUndefinedOrNullOrEmpty(data[i][14])){
+                    callback({
+                        mensaje: "Ingrese el detalle del estado en la fila " + (i + 1)
+                    });
+                    return;
+                    
+                }
+                
+                itemCampanaCargado.detalle = data[i][14] || "";
+                
+                itemsCampanaCargados.push(itemCampanaCargado);
+                i++;
+            }
+            callback(itemsCampanaCargados);
+        });
+    }//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
     mostrarItemsPorModificar(file: File, sheet: number, campana: Campana, callback: Function) {

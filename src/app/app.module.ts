@@ -21,6 +21,7 @@ import { ImpresionCampanaModule } from './impresion-campana/impresion-campana.mo
 
 import { SubirMuestraModule } from './subir-muestra/subir-muestra.module';
 import {RecojoCampanaModule} from './recojo-campana/recojo-campana.module';
+import { CargaResultadosModule } from './carga-resultados/carga-resultados.module';
 import { VerificarGuiaModule } from './verificar-guia/verificar-guia.module';
 
 import {RecepcionOperativaModule} from './recepcion-operativa/recepcion-operativa.module';
@@ -47,7 +48,8 @@ import {RecepcionOperativaModule} from './recepcion-operativa/recepcion-operativ
     ImpresionCampanaModule,
     SolicitudMuestraModule,
     SubirMuestraModule,
-    RecojoCampanaModule,    
+    RecojoCampanaModule,
+    CargaResultadosModule,
     VerificarGuiaModule,
     RecepcionOperativaModule
   ],

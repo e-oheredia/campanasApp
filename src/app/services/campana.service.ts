@@ -203,6 +203,10 @@ export class CampanaService {
         return this.requester.put<Campana>(this.REQUEST_URL + "modificarbasegeo", campana, {});
     }
 
+    subirReporte(campana: Campana): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + "cargarreportefinal", campana, {});
+    }
+
     adjuntarConformidad(campana: Campana, file: File): Observable<Campana> {
         let form: FormData = new FormData;
         if (file !== null && file != undefined) {

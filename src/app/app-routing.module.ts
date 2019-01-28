@@ -12,7 +12,9 @@ import { ConfirmacionCotizacionComponent } from './confirmacion-cotizacion/confi
 import { ImpresionCampanaComponent } from './impresion-campana/impresion-campana.component';
 import { SubirMuestraComponent } from './subir-muestra/subir-muestra.component';
 import {RecojoCampanaComponent} from './recojo-campana/recojo-campana.component';
+import { CargaResultadosComponent } from './carga-resultados/carga-resultados.component';
 import {RecepcionOperativaComponent} from './recepcion-operativa/recepcion-operativa.component';
+
 
 const routes: Routes = [
   {
@@ -62,6 +64,10 @@ const routes: Routes = [
   {
     path: 'verificar-guia',
     component: VerificarGuiaComponent
+  },
+  {
+    path: 'cargar-resultados',
+    component: CargaResultadosComponent
   },
   {
     path: 'recepcion-operativa',

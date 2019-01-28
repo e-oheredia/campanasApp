@@ -15,6 +15,7 @@ export class AppSettings {
     public static DEPARTAMENTO_URL = "departamentos/";
     public static PROVINCIA_URL = "provincias/";
     public static DISTRITO_URL = "distritos/";
+    public static ESTADOITEMCAMPANA_URL = "estadositem/";
     public static DOCUMENTO_URL = "documentos/";
     public static AREA_URL = "areas/";
     public static ENVIO_URL = "envios/";
