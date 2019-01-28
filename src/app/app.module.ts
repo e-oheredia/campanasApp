@@ -23,6 +23,7 @@ import { SubirMuestraModule } from './subir-muestra/subir-muestra.module';
 import {RecojoCampanaModule} from './recojo-campana/recojo-campana.module';
 import { VerificarGuiaModule } from './verificar-guia/verificar-guia.module';
 
+import {RecepcionOperativaModule} from './recepcion-operativa/recepcion-operativa.module';
 
 
 @NgModule({
@@ -46,8 +47,9 @@ import { VerificarGuiaModule } from './verificar-guia/verificar-guia.module';
     ImpresionCampanaModule,
     SolicitudMuestraModule,
     SubirMuestraModule,
-    RecojoCampanaModule, 
-    VerificarGuiaModule
+    RecojoCampanaModule,    
+    VerificarGuiaModule,
+    RecepcionOperativaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
