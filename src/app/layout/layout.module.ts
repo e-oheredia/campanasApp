@@ -36,6 +36,7 @@ import { TrackingCampanaComponent } from '../modals/tracking-campana/tracking-ca
 import { WriteExcelService } from '../services/write-excel.service';
 import { MensajeExitoComponent } from '../modals/mensaje-exito/mensaje-exito.component';
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
+import { RegionService } from '../services/region.service';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { BsDropdownModule } from "ngx-bootstrap/dropdown";
     UtilsService,
     ReadExcelService,
     ItemCampanaService,
-    WriteExcelService
+    WriteExcelService,
+    RegionService
   ], 
   entryComponents: [
     TrackingCampanaComponent, 
