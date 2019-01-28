@@ -196,21 +196,21 @@ export class ItemCampanaService {
                 itemCampanaCargado.distrito = distrito;
                 itemCampanaCargado.direccion = data[i][10] || "";
 
-                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][11])) {
+                if (this.utilsService.isUndefinedOrNullOrEmpty(data[i][12])) {
                     callback({
                         mensaje: "Ingrese el estado del documento en la fila " + (i + 1)
                     });
                     return;
                 }
-
-                if (data[i][11].toUpperCase() != "Normalizado".toUpperCase() && data[i][11].toUpperCase() != "No distribuible".toUpperCase()) {
+                
+                if (data[i][12].toUpperCase() != "Normalizado".toUpperCase() && data[i][12].toUpperCase() != "No distribuible".toUpperCase()) {
                     callback({
                         mensaje: "Ingrese correctamente el estado del documento en la fila " + (i + 1)
                     });
                     return;
                 }
 
-                itemCampanaCargado.enviable = data[i][11].toUpperCase() === "Normalizado".toUpperCase() ? true : false;
+                itemCampanaCargado.enviable = data[i][12].toUpperCase() === "Normalizado".toUpperCase() ? true : false;
                 itemCampanaCargado.correlativoBase = data[i][2];
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;
@@ -221,7 +221,7 @@ export class ItemCampanaService {
         });
     }
 
-    mostrarItemsReporte(file: File, sheet: number, campana: Campana, callback: Function){//------------------------------------------------------------------------------------
+    mostrarItemsReporte(file: File, sheet: number, campana: Campana, callback: Function){
         this.readExcelService.excelToJson(file, sheet, (data: Array<any>) => {
 
             if(campana.itemsCampana.length != data.length - 1){
@@ -281,29 +281,26 @@ export class ItemCampanaService {
 
                 let estadoItemCampana = estadosItemCampana.find(estadoItemCampana => estadoItemCampana.nombre.toUpperCase().trim() === data[i][13].toUpperCase().trim());
 
-                if(estadoItemCampana != null){
-                    estadoItemCampana.nombre = data[i][13];
-                }
-
-                if(estadoItemCampana.id === EstadoItemCampanaEnum.ENTREGADO || estadoItemCampana.id === EstadoItemCampanaEnum.REZAGADO || 
-                   estadoItemCampana.id === EstadoItemCampanaEnum.FALTANTE || estadoItemCampana.id === EstadoItemCampanaEnum.NO_DISTRIBUIBLE){
-                    if(estadoItemCampana.id === EstadoItemCampanaEnum.ENTREGADO || estadoItemCampana.id === EstadoItemCampanaEnum.REZAGADO){
-                        if(this.utilsService.isUndefinedOrNullOrEmpty(data[i][14])){
-                            callback({
-                                mensaje: "Ingrese el detalle del estado en la fila " + (i + 1)
-                            })
-                        }
-                        return;
-                    }
-                }
-                else{
+                if(estadoItemCampana === null){
                     callback({
                         mensaje: "Ingrese correctamente el estado del documento en la fila " + (i + 1)
-                    })
+                    });
+                    return;
                 }
 
-                itemCampanaCargado.enviable = data[i][11].toUpperCase() === "Normalizado".toUpperCase() ? true : false;
-                itemCampanaCargado.correlativoBase = data[i][2];
+                itemCampanaCargado.estadoItemCampana = estadoItemCampana;
+
+                
+                if((estadoItemCampana.id === EstadoItemCampanaEnum.ENTREGADO || estadoItemCampana.id === EstadoItemCampanaEnum.REZAGADO) && this.utilsService.isUndefinedOrNullOrEmpty(data[i][14])){
+                    callback({
+                        mensaje: "Ingrese el detalle del estado en la fila " + (i + 1)
+                    });
+                    return;
+                    
+                }
+                
+                itemCampanaCargado.detalle = data[i][14] || "";
+                
                 itemsCampanaCargados.push(itemCampanaCargado);
                 i++;
             }

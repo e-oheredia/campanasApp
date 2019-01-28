@@ -44,4 +44,5 @@ export class Campana {
     public autogenerado: String;
     public rutaMuestra: String;
     public rutaGuia: string;
+    public fechaDistribucion: Date;
 }

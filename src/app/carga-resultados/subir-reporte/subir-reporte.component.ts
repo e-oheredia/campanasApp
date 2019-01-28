@@ -19,10 +19,10 @@ import { element } from '@angular/core/src/render3';
 export class SubirReporteComponent implements OnInit {
 
   constructor(
-    private bsModalRef : BsModalRef,
+    private bsModalRef: BsModalRef,
     private utilsService: UtilsService,
-    private notifier : NotifierService,
-    private itemCampanaService : ItemCampanaService,
+    private notifier: NotifierService,
+    private itemCampanaService: ItemCampanaService,
     private modalService: BsModalService,
     private campanaService: CampanaService,
   ) { }
@@ -40,14 +40,14 @@ export class SubirReporteComponent implements OnInit {
 
 
 
-  onChangeExcelFile(file: File){
-    if(file == null){
+  onChangeExcelFile(file: File) {
+    if (file == null) {
       this.excelFile = null;
       return null;
     }
-    if(file.type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+    if (file.type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
       this.excelFile = null;
-      this.notifier.notify('error','Error, el archivo debe ser un Excel');
+      this.notifier.notify('error', 'Error, el archivo debe ser un Excel');
       return null;
     }
     this.excelFile = file;
@@ -56,8 +56,8 @@ export class SubirReporteComponent implements OnInit {
 
 
 
-  importarExcel(){
-    if(this.excelFile == null){
+  importarExcel() {
+    if (this.excelFile == null) {
 
       return null;
     }
@@ -66,16 +66,16 @@ export class SubirReporteComponent implements OnInit {
 
 
 
-  mostrarItemsReporte(file: File, campana: Campana){
-    
+  mostrarItemsReporte(file: File, campana: Campana) {
+
 
     this.itemCampanaService.mostrarItemsReporte(file, 0, campana, (data) => {
-      if(this.utilsService.isUndefinedOrNullOrEmpty(data.mensaje)){
+      if (this.utilsService.isUndefinedOrNullOrEmpty(data.mensaje)) {
 
         data.forEach(element => {
-         let itemcampana = this.campana.itemsCampana.find(x => x.id == element.id);
-         itemcampana.estadoItemCampana = element.estadoItemCampana;
-         itemcampana.detalle = element.detalle;
+          let itemcampana = this.campana.itemsCampana.find(x => x.id == element.id);
+          itemcampana.estadoItemCampana = element.estadoItemCampana;
+          itemcampana.detalle = element.detalle;
         });
         this.adjuntado = true;
         return;
@@ -83,15 +83,17 @@ export class SubirReporteComponent implements OnInit {
       this.notifier.notify('error', data.mensaje);
       this.adjuntado = false;
     });
+    console.log(this.adjuntado);
   }
 
 
 
 
 
-  onSubmit(form: any){
-    if(!this.adjuntado){
-      this.notifier.notify('error','Debe seleccionar un archivoo');
+  onSubmit(form: any) {
+
+    if (!this.adjuntado) {
+      this.notifier.notify('error', 'Debe seleccionar un archivoo');
       return;
     }
 

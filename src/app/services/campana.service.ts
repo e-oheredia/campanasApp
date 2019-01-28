@@ -154,7 +154,7 @@ export class CampanaService {
             objects.push({
                 "Código de Item": ItemCampana.id,
                 "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),                
-                "Correlativo de Impresión": ItemCampana.correlativo,
+                "Correlativo de Distribución": ItemCampana.correlativo,
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,
@@ -265,5 +265,35 @@ export class CampanaService {
 
     denegarGuia(campanaId: number): Observable<Campana> {
         return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/denegarguia", null, {});
+    }
+
+    iniciarDistribucion(campanaId: number): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/iniciardistribucion", null, {});
+    }
+
+    exportarItemsCampanaDistribucion(campana: Campana) {
+        let objects = [];
+        campana.itemsCampana.filter(x => x.correlativo > 0).sort((a, b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
+            objects.push({
+                "Código de Item": ItemCampana.id,
+                "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),                
+                "Correlativo de Distribución": ItemCampana.correlativo,
+                "Razon Social": ItemCampana.razonSocial,
+                "Apellido Paterno": ItemCampana.apellidoPaterno,
+                "Apellido Materno": ItemCampana.apellidoMaterno,
+                "Nombres": ItemCampana.nombres,
+                "Dirección": ItemCampana.direccion,
+                "Distrito": ItemCampana.distrito.nombre,
+                "Provincia": ItemCampana.distrito.provincia.nombre,                
+                "Departamento": ItemCampana.distrito.provincia.departamento.nombre,
+                "Ámbito": ItemCampana.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" ? "LIMA" : "PROVINCIA",       
+                "IDC": ItemCampana.idc,
+                "Estado": "",
+                "Detalle": "",
+            })
+        });
+        if (objects.length > 0) {
+            this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
+        }
     }
 }   

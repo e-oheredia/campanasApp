@@ -99,7 +99,7 @@ export class CargaResultadosComponent implements OnInit {
 
   listarCampanasOperativas(){
     this.dataCampanasOperativas.reset();
-    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.GUIA_ACEPTADA).subscribe(
+    this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.DISTRIBUCION_INICIADA).subscribe(
       campanasa => {
         this.campanas = campanasa;
         let dataCampanasOperativas = [];
@@ -113,7 +113,7 @@ export class CargaResultadosComponent implements OnInit {
               tipoDocumento: campana.tipoDocumento.nombre,
               cantidadLima: this.contarDocumentos(campana.itemsCampana, true, true),
               cantidadProvincia: this.contarDocumentos(campana.itemsCampana, false, true),
-              ultimaFechaDistribución: this.campanaService.getFechaCreacion(campana)//falta crear el servicio real
+              ultimaFechaDistribución: "-"//falta crear el servicio real
             });
           });
           this.dataCampanasOperativas.load(dataCampanasOperativas);

@@ -24,6 +24,7 @@ import {RecojoCampanaModule} from './recojo-campana/recojo-campana.module';
 import { CargaResultadosModule } from './carga-resultados/carga-resultados.module';
 import { VerificarGuiaModule } from './verificar-guia/verificar-guia.module';
 
+import {RecepcionOperativaModule} from './recepcion-operativa/recepcion-operativa.module';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { VerificarGuiaModule } from './verificar-guia/verificar-guia.module';
     SubirMuestraModule,
     RecojoCampanaModule,
     CargaResultadosModule,
-    VerificarGuiaModule
+    VerificarGuiaModule,
+    RecepcionOperativaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

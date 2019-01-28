@@ -37,6 +37,7 @@ import { WriteExcelService } from '../services/write-excel.service';
 import { MensajeExitoComponent } from '../modals/mensaje-exito/mensaje-exito.component';
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { EstadoItemCampanaService } from '../services/estadoitemcampana.service';
+import { RegionService } from '../services/region.service';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { EstadoItemCampanaService } from '../services/estadoitemcampana.service'
     ReadExcelService,
     ItemCampanaService,
     EstadoItemCampanaService,
-    WriteExcelService
+    WriteExcelService,
+    RegionService
   ], 
   entryComponents: [
     TrackingCampanaComponent, 
