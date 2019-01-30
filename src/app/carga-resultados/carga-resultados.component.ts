@@ -79,7 +79,7 @@ export class CargaResultadosComponent implements OnInit {
         type: 'custom',
         renderComponent : ButtonViewComponent,
         onComponentInitFunction: (instance : any) => {
-          instance.claseIcono = "fas fa-download",
+          instance.claseIcono = "fas fa-file-upload",
           instance.pressed.subscribe(row => {
             this.subirReporteFinal(row);
           });
