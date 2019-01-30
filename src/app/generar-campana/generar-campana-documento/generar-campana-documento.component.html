@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="col-2 text-right">
-    <div class="pb-2 mt-4 mb-2">      
+    <div class="pb-2 mt-4 mb-2">
       <div class="btn-group" dropdown placement="bottom right">
         <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
           Plantillas
@@ -16,9 +16,9 @@
             <a class="dropdown-item" [href]="rutaPlantillaInterna" target="_blank">Plantilla Interna</a>
           </li>
           <li role="menuitem">
-            <a class="dropdown-item"[href]="rutaPlantillaExterna">Plantilla Externa</a>
+            <a class="dropdown-item" [href]="rutaPlantillaExterna">Plantilla Externa</a>
           </li>
-         
+
         </ul>
       </div>
     </div>
@@ -71,11 +71,13 @@
             </div>
             <div class="col-auto">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" formControlName="regulatorio" name="regulatorio" id="regulatorio-true" [value]="true">
+                <input class="form-check-input" type="radio" formControlName="regulatorio" name="regulatorio" id="regulatorio-true"
+                  [value]="true">
                 <label class="form-check-label" for="regulatorio-true">Sí</label>
               </div>
               <div class="form-check form-check-inline mr-5">
-                <input class="form-check-input" type="radio" name="regulatorio" formControlName="regulatorio" id="regulatorio-false" [value]="false">
+                <input class="form-check-input" type="radio" name="regulatorio" formControlName="regulatorio" id="regulatorio-false"
+                  [value]="false">
                 <label class="form-check-label" for="regulatorio-false">No</label>
               </div>
             </div>
@@ -92,11 +94,13 @@
             </div>
             <div class="col-auto">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" formControlName="requiereGps" name="requiereGps" id="requiere-gps-true" [value]="true">
+                <input class="form-check-input" type="radio" formControlName="requiereGps" name="requiereGps" id="requiere-gps-true"
+                  [value]="true">
                 <label class="form-check-label" for="requiere-gps-true">Sí</label>
               </div>
               <div class="form-check form-check-inline mr-5">
-                <input class="form-check-input" type="radio" name="requiereGps" formControlName="requiereGps" id="requiere-gps-false" [value]="false">
+                <input class="form-check-input" type="radio" name="requiereGps" formControlName="requiereGps" id="requiere-gps-false"
+                  [value]="false">
                 <label class="form-check-label" for="requiere-gps-false">No</label>
               </div>
             </div>
@@ -207,11 +211,15 @@
                   <label class="form-check-label" for="requiere-geo-false">No</label>
                 </div>
                 <br>
-                <h6>La Georreferenciación es la tarea que realiza el proveedor para ubicar las direcciones registradas en la
-                  base de la campaña. Luego de realizarse se puede detectar direcciones "Normalizadas" y "No Distribuibles".
-                  <br> NORMALIZADA: Son los registros cuyas direcciones son válidas y han sido ubicadas por el proveedor para
+                <h6>La Georreferenciación es la tarea que realiza el proveedor para ubicar las direcciones registradas
+                  en la
+                  base de la campaña. Luego de realizarse se puede detectar direcciones "Normalizadas" y "No
+                  Distribuibles".
+                  <br> NORMALIZADA: Son los registros cuyas direcciones son válidas y han sido ubicadas por el
+                  proveedor para
                   su futura visita y posterior entrega de campaña.
-                  <br> NO DISTRIBUIBLE: Son los registros con direcciones inválidas puesto que están incompletas, no existen
+                  <br> NO DISTRIBUIBLE: Son los registros con direcciones inválidas puesto que están incompletas, no
+                  existen
                   o el proveedor no ha podido ubicarlas.
                   <br> Al saber que registros son "No Distribuibles", este proceso permite las siguientes ventajas:
                   <br> *El usuario puede corregir las direcciones para que vuelvan a ser georreferenciadas.
@@ -229,19 +237,20 @@
                 <label for="impresion">Requiere Impresión *</label>
                 <br>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" formControlName="requiereImpresion" name="requiereImpresion" id="requiere-impresion-true"
-                    [value]="false" (change)="onChangeRequiereImpresion(campanaForm.get('requiereImpresion').value)">
+                  <input class="form-check-input" type="radio" formControlName="requiereImpresion" name="requiereImpresion"
+                    id="requiere-impresion-true" [value]="false" (change)="onChangeRequiereImpresion(campanaForm.get('requiereImpresion').value)">
                   <label class="form-check-label" for="requiere-impresion-true">Sí</label>
                 </div>
                 <div class="form-check form-check-inline mr-5">
-                  <input class="form-check-input" type="radio" name="requiereImpresion" formControlName="requiereImpresion" id="requiere-impresion-false"
-                    [value]="true" (change)="onChangeRequiereImpresion(campanaForm.get('requiereImpresion').value)">
+                  <input class="form-check-input" type="radio" name="requiereImpresion" formControlName="requiereImpresion"
+                    id="requiere-impresion-false" [value]="true" (change)="onChangeRequiereImpresion(campanaForm.get('requiereImpresion').value)">
                   <label class="form-check-label" for="requiere-impresion-false">No</label>
                 </div>
                 <br>
                 <h6>
                   Si: El usuario gestionará la impresión de su campaña.
-                  <br> No: La campaña ya se encuentra impresa y lista para ser recogida por el proveedor. Favor llenar los siguientes
+                  <br> No: La campaña ya se encuentra impresa y lista para ser recogida por el proveedor. Favor llenar
+                  los siguientes
                   datos.
                 </h6>
                 <div *ngIf="campanaForm.get('requiereImpresion').value === true">
@@ -264,8 +273,10 @@
                   </span>
                   <br>
                   <label for="fechaHoraRecojo">Fecha y Hora de Recojo *</label>
-                  <input class="form-control" type="datetime-local" name="fechaHoraRecojo" id="fechaHoraRecojo" formControlName="fechaHoraRecojo">
-                  <span *ngIf="!campanaForm.get('fechaHoraRecojo').valid && campanaForm.get('fechaHoraRecojo').touched" class="text-danger small">
+                  <input class="form-control" type="datetime-local" name="fechaHoraRecojo" id="fechaHoraRecojo"
+                    formControlName="fechaHoraRecojo">
+                  <span *ngIf="!campanaForm.get('fechaHoraRecojo').valid && campanaForm.get('fechaHoraRecojo').touched"
+                    class="text-danger small">
                     Es necesario ingresar la fecha y hora del recojo.
                   </span>
                 </div>
@@ -283,19 +294,21 @@
                 <label for="habilitado">Requiere Habilitado *</label>
                 <br>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" formControlName="requiereHabilitado" name="requiereHabilitado" id="inlineRadio1"
-                    [value]="true" (change)="onChangeRequiereHabilitado(campanaForm.get('requiereHabilitado').value)">
+                  <input class="form-check-input" type="radio" formControlName="requiereHabilitado" name="requiereHabilitado"
+                    id="inlineRadio1" [value]="true" (change)="onChangeRequiereHabilitado(campanaForm.get('requiereHabilitado').value)">
                   <label class="form-check-label" for="inlineRadio1">Sí</label>
                 </div>
                 <div class="form-check form-check-inline mr-5">
-                  <input class="form-check-input" type="radio" name="requiereHabilitado" formControlName="requiereHabilitado" id="inlineRadio2"
-                    [value]="false" (change)="onChangeRequiereHabilitado(campanaForm.get('requiereHabilitado').value)">
+                  <input class="form-check-input" type="radio" name="requiereHabilitado" formControlName="requiereHabilitado"
+                    id="inlineRadio2" [value]="false" (change)="onChangeRequiereHabilitado(campanaForm.get('requiereHabilitado').value)">
                   <label class="form-check-label" for="inlineRadio2">No</label>
                 </div>
                 <br>
                 <h6>
-                  No: El material de la campaña será distribuido en el mismo estado en el que estuvo cuando pasó a manos del proveedor.
-                  <br> Si: El material de la campaña requiere un habilitado antes de que se iniciesu distribución. Favor marcar
+                  No: El material de la campaña será distribuido en el mismo estado en el que estuvo cuando pasó a
+                  manos del proveedor.
+                  <br> Si: El material de la campaña requiere un habilitado antes de que se iniciesu distribución.
+                  Favor marcar
                   el tipo de habilitación requerida
                 </h6>
                 <br>
@@ -305,7 +318,8 @@
                   <select class="form-control" id="paqueteHabilitado" formControlName="paqueteHabilitado">
                     <option *ngFor="let paqueteHabilitado of paqueteHabilitados" [ngValue]="paqueteHabilitado">{{paqueteHabilitado.descripcion}}</option>
                   </select>
-                  <span *ngIf="!campanaForm.get('paqueteHabilitado').valid && campanaForm.get('paqueteHabilitado').touched" class="text-danger small">
+                  <span *ngIf="!campanaForm.get('paqueteHabilitado').valid && campanaForm.get('paqueteHabilitado').touched"
+                    class="text-danger small">
                     Es necesario ingresar el paquete de habilitado
                   </span>
                   <br>
@@ -333,7 +347,8 @@
           <div class="form-row" *ngIf="campanaForm.get('tipoDestino').value !== null && campanaForm.get('tipoDestino').value.nombre.toUpperCase() === 'INTERNA'">
             <div class="col-4">
               <h6>
-                Luego de ser habilitada, la campaña puede ser agrupada antes de iniciar con su distribución si el usuario lo requiere. Tener
+                Luego de ser habilitada, la campaña puede ser agrupada antes de iniciar con su distribución si el
+                usuario lo requiere. Tener
                 en cuenta que esta tarea aplica solo para campañas dirigidas a colaboradores del banco.
               </h6>
               <br>
@@ -373,13 +388,13 @@
                 <label for="devolverRezagos">¿Desea que devolvamos los rezagos físicos? *</label>
                 <br>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" formControlName="requiereDevolucionRezago" name="requiereDevolucionRezago" id="requiere-devolucion-rezago-true"
-                    [value]="true" (change)="onChangeRequiereDevolucionRezago(campanaForm.get('requiereDevolucionRezago').value)">
+                  <input class="form-check-input" type="radio" formControlName="requiereDevolucionRezago" name="requiereDevolucionRezago"
+                    id="requiere-devolucion-rezago-true" [value]="true" (change)="onChangeRequiereDevolucionRezago(campanaForm.get('requiereDevolucionRezago').value)">
                   <label class="form-check-label" for="requiere-devolucion-rezago-true">Sí</label>
                 </div>
                 <div class="form-check form-check-inline mr-5">
-                  <input class="form-check-input" type="radio" name="requiereDevolucionRezago" formControlName="requiereDevolucionRezago" id="requiere-devolucion-rezago-false"
-                    [value]="false" (change)="onChangeRequiereDevolucionRezago(campanaForm.get('requiereDevolucionRezago').value)">
+                  <input class="form-check-input" type="radio" name="requiereDevolucionRezago" formControlName="requiereDevolucionRezago"
+                    id="requiere-devolucion-rezago-false" [value]="false" (change)="onChangeRequiereDevolucionRezago(campanaForm.get('requiereDevolucionRezago').value)">
                   <label class="form-check-label" for="requiere-devolucion-rezago-false">No</label>
                 </div>
                 <br>
@@ -387,19 +402,23 @@
                 <div *ngIf="campanaForm.get('requiereDevolucionRezago').value; else noRequiereDevolucionRezago">
                   <label for="contactoRezago">Devolver al usuario *</label>
                   <input class="form-control" type="text" name="contactoRezago" id="contactoRezago" formControlName="contactoRezago">
-                  <span *ngIf="!campanaForm.get('contactoRezago').valid && campanaForm.get('contactoRezago').touched" class="text-danger small">
+                  <span *ngIf="!campanaForm.get('contactoRezago').valid && campanaForm.get('contactoRezago').touched"
+                    class="text-danger small">
                     Es necesario ingresar el contacto.
                   </span>
                   <br>
                   <label for="direccionRezago">Ubicación *</label>
                   <input class="form-control" type="text" name="direccionRezago" id="direccionRezago" formControlName="direccionRezago">
-                  <span *ngIf="!campanaForm.get('direccionRezago').valid && campanaForm.get('direccionRezago').touched" class="text-danger small">
+                  <span *ngIf="!campanaForm.get('direccionRezago').valid && campanaForm.get('direccionRezago').touched"
+                    class="text-danger small">
                     Es necesario ingresar la dirección.
                   </span>
                   <br>
                   <label for="observacionRezago">Observación *</label>
-                  <input class="form-control" type="text" name="observacionRezago" f id="observacionRezago" formControlName="observacionRezago">
-                  <span *ngIf="!campanaForm.get('observacionRezago').valid && campanaForm.get('observacionRezago').touched" class="text-danger small">
+                  <input class="form-control" type="text" name="observacionRezago" f id="observacionRezago"
+                    formControlName="observacionRezago">
+                  <span *ngIf="!campanaForm.get('observacionRezago').valid && campanaForm.get('observacionRezago').touched"
+                    class="text-danger small">
                     Es necesario ingresar la observación.
                   </span>
                 </div>
@@ -409,7 +428,8 @@
                   <select class="form-control" id="accionporrezagos" formControlName="accionporrezagos">
                     <option *ngFor="let accionporrezagos of accionesRestosProveedor" [ngValue]="accionporrezagos">{{accionporrezagos.nombre}}</option>
                   </select>
-                  <span *ngIf="!campanaForm.get('accionporrezagos').valid && campanaForm.get('accionporrezagos').touched" class="text-danger small">
+                  <span *ngIf="!campanaForm.get('accionporrezagos').valid && campanaForm.get('accionporrezagos').touched"
+                    class="text-danger small">
                     Es necesario ingresar la Acción del rezago.
                   </span>
                 </ng-template>
@@ -432,13 +452,13 @@
                 <label for="devolverCargos">¿Desea que devolvamos los cargos físicos? *</label>
                 <br>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" formControlName="requiereDevolucionCargo" name="requiereDevolucionCargo" id="requiere-devolucion-cargo-true"
-                    [value]="true" (change)="onChangeRequiereDevolucionCargo(campanaForm.get('requiereDevolucionCargo').value)">
+                  <input class="form-check-input" type="radio" formControlName="requiereDevolucionCargo" name="requiereDevolucionCargo"
+                    id="requiere-devolucion-cargo-true" [value]="true" (change)="onChangeRequiereDevolucionCargo(campanaForm.get('requiereDevolucionCargo').value)">
                   <label class="form-check-label" for="requiere-devolucion-cargo-true">Sí</label>
                 </div>
                 <div class="form-check form-check-inline mr-5">
-                  <input class="form-check-input" type="radio" name="requiereDevolucionCargo" formControlName="requiereDevolucionCargo" id="requiere-devolucion-cargo-false"
-                    [value]="false" (change)="onChangeRequiereDevolucionCargo(campanaForm.get('requiereDevolucionCargo').value)">
+                  <input class="form-check-input" type="radio" name="requiereDevolucionCargo" formControlName="requiereDevolucionCargo"
+                    id="requiere-devolucion-cargo-false" [value]="false" (change)="onChangeRequiereDevolucionCargo(campanaForm.get('requiereDevolucionCargo').value)">
                   <label class="form-check-label" for="requiere-devolucion-cargo-false">No</label>
                 </div>
                 <br>
@@ -446,19 +466,22 @@
                 <div *ngIf="campanaForm.get('requiereDevolucionCargo').value; else noRequiereDevolucionCargo">
                   <label for="contactoCargo">Devolver al usuario *</label>
                   <input class="form-control" type="text" name="contactoCargo" id="contactoCargo" formControlName="contactoCargo">
-                  <span *ngIf="!campanaForm.get('contactoCargo').valid && campanaForm.get('contactoCargo').touched" class="text-danger small">
+                  <span *ngIf="!campanaForm.get('contactoCargo').valid && campanaForm.get('contactoCargo').touched"
+                    class="text-danger small">
                     Es necesario ingresar el contacto.
                   </span>
                   <br>
                   <label for="direccionCargo">Dirección *</label>
                   <input class="form-control" type="text" name="direccionCargo" id="direccionCargo" formControlName="direccionCargo">
-                  <span *ngIf="!campanaForm.get('direccionCargo').valid && campanaForm.get('direccionCargo').touched" class="text-danger small">
+                  <span *ngIf="!campanaForm.get('direccionCargo').valid && campanaForm.get('direccionCargo').touched"
+                    class="text-danger small">
                     Es necesario ingresar la dirección.
                   </span>
                   <br>
                   <label for="observacionCargo">Observación *</label>
                   <input class="form-control" type="text" name="observacionCargo" id="observacionCargo" formControlName="observacionCargo">
-                  <span *ngIf="!campanaForm.get('observacionCargo').valid && campanaForm.get('observacionCargo').touched" class="text-danger small">
+                  <span *ngIf="!campanaForm.get('observacionCargo').valid && campanaForm.get('observacionCargo').touched"
+                    class="text-danger small">
                     Es necesario ingresar la observación.
                   </span>
                 </div>
@@ -474,7 +497,8 @@
                   <select class="form-control" id="accionporcargos" formControlName="accionporcargos">
                     <option *ngFor="let accionporcargos of accionesRestosProveedor" [ngValue]="accionporcargos">{{accionporcargos.nombre}}</option>
                   </select>
-                  <span *ngIf="!campanaForm.get('accionporcargos').valid && campanaForm.get('accionporcargos').touched" class="text-danger small">
+                  <span *ngIf="!campanaForm.get('accionporcargos').valid && campanaForm.get('accionporcargos').touched"
+                    class="text-danger small">
                     Es necesario ingresar la accion de los cargos.
                   </span>
                 </ng-template>
@@ -509,13 +533,13 @@
                 <label for="costoCampana">Los costos de la campaña se cargarán en: *</label>
                 <br>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" formControlName="requiereCentroCostoBCP" name="requiereCentroCostoBCP" id="requiere-centro-true"
-                    [value]="true" (change)="onChangeRequiereCentroCostoBCP(campanaForm.get('requiereCentroCostoBCP').value)">
+                  <input class="form-check-input" type="radio" formControlName="requiereCentroCostoBCP" name="requiereCentroCostoBCP"
+                    id="requiere-centro-true" [value]="true" (change)="onChangeRequiereCentroCostoBCP(campanaForm.get('requiereCentroCostoBCP').value)">
                   <label class="form-check-label" for="requiere-centro-true">BCP</label>
                 </div>
                 <div class="form-check form-check-inline mr-5">
-                  <input class="form-check-input" type="radio" name="requiereCentroCostoBCP" formControlName="requiereCentroCostoBCP" id="requiere-centro-false"
-                    [value]="false" (change)="onChangeRequiereCentroCostoBCP(campanaForm.get('requiereCentroCostoBCP').value)">
+                  <input class="form-check-input" type="radio" name="requiereCentroCostoBCP" formControlName="requiereCentroCostoBCP"
+                    id="requiere-centro-false" [value]="false" (change)="onChangeRequiereCentroCostoBCP(campanaForm.get('requiereCentroCostoBCP').value)">
                   <label class="form-check-label" for="requiere-centro-false">OTROS</label>
                 </div>
               </div>
@@ -529,32 +553,37 @@
                   <div class="col-4 mt-4">
                     <label for="cuentaContable">Cuenta Contable *</label>
                     <input class="form-control" type="text" name="cuentaContable" formControlName="cuentaContable" />
-                    <span *ngIf="!campanaForm.get('cuentaContable').valid && campanaForm.get('cuentaContable').touched" class="text-danger small">
+                    <span *ngIf="!campanaForm.get('cuentaContable').valid && campanaForm.get('cuentaContable').touched"
+                      class="text-danger small">
                       Es necesario ingresar la cuenta contable.
                     </span>
                     <br>
                     <label for="centroCostos">Centro de Costos *</label>
                     <input class="form-control" type="text" name="centroCostos" formControlName="centroCostos" />
-                    <span *ngIf="!campanaForm.get('centroCostos').valid && campanaForm.get('centroCostos').touched" class="text-danger small">
+                    <span *ngIf="!campanaForm.get('centroCostos').valid && campanaForm.get('centroCostos').touched"
+                      class="text-danger small">
                       Es necesario ingresar el centro de costos.
                     </span>
                     <br>
                     <label for="ordenEstadistica">Orden Estadística *</label>
                     <input class="form-control" type="text" name="ordenEstadistica" formControlName="ordenEstadistica" />
-                    <span *ngIf="!campanaForm.get('ordenEstadistica').valid && campanaForm.get('ordenEstadistica').touched" class="text-danger small">
+                    <span *ngIf="!campanaForm.get('ordenEstadistica').valid && campanaForm.get('ordenEstadistica').touched"
+                      class="text-danger small">
                       Es necesario ingresar la orden estadística.
                     </span>
                     <br>
                     <label for="grupoArticulo">Grupo de artículo *</label>
                     <input class="form-control" type="text" name="grupoArticulo" formControlName="grupoArticulo" />
-                    <span *ngIf="!campanaForm.get('grupoArticulo').valid && campanaForm.get('grupoArticulo').touched" class="text-danger small">
+                    <span *ngIf="!campanaForm.get('grupoArticulo').valid && campanaForm.get('grupoArticulo').touched"
+                      class="text-danger small">
                       Es necesario ingresar grupo de artículo.
                     </span>
                     <br>
                     <label for="porcentajePago">Porcentaje de pago *</label>
-                    <input class="form-control" currencyMask [options]="{ prefix: '', suffix: '%', precision: 0}" name="porcentajePago" formControlName="porcentajePago"
-                    />
-                    <span *ngIf="!campanaForm.get('porcentajePago').valid && campanaForm.get('porcentajePago').touched" class="text-danger small">
+                    <input class="form-control" name="porcentajePago"
+                      formControlName="porcentajePago"  currencyMask [options]="{ prefix: '', suffix: '%', precision: 0}" />
+                    <span *ngIf="!campanaForm.get('porcentajePago').valid && campanaForm.get('porcentajePago').touched"
+                      class="text-danger small">
                       Es necesario ingresar el porcentaje de pago.
                     </span>
                     <br>
@@ -623,7 +652,8 @@
             <div class="form-row">
               <div class="col-4">
                 <div class="form-group">
-                  <label>Si el servicio no será pagado por BCP, indicar los siguientes datos para la generación de la factura: *</label>
+                  <label>Si el servicio no será pagado por BCP, indicar los siguientes datos para la generación de la
+                    factura: *</label>
                   <br>
                   <h6>Está prohibido realizar envíos de índole personal</h6>
 
@@ -636,8 +666,10 @@
                   </span>
                   <br>
                   <label for="ruc">RUC *</label>
-                  <input class="form-control" type="text" formControlName="rucEmpresaAuspiciadora" name="rucEmpresaAuspiciadora" id="">
-                  <span *ngIf="!campanaForm.get('rucEmpresaAuspiciadora').valid && campanaForm.get('rucEmpresaAuspiciadora').touched" class="text-danger small">
+                  <input class="form-control" type="text" formControlName="rucEmpresaAuspiciadora" name="rucEmpresaAuspiciadora"
+                    id="">
+                  <span *ngIf="!campanaForm.get('rucEmpresaAuspiciadora').valid && campanaForm.get('rucEmpresaAuspiciadora').touched"
+                    class="text-danger small">
                     Es necesario ingresar el RUC de la empresa auspiciadora.
                   </span>
                   <br>
@@ -678,7 +710,7 @@
   <div class="row justify-content-center">
     <div class="col-11 mt-4 mb-4">
       <div class="form-group">
-        <button class="btn btn-success form-control mt-2" type="submit" >
+        <button class="btn btn-success form-control mt-2" type="submit">
           CREAR CAMPAÑA
         </button>
       </div>

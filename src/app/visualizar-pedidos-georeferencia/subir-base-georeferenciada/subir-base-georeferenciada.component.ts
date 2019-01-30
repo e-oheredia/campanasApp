@@ -102,11 +102,9 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
 
       if (this.utilsService.isUndefinedOrNullOrEmpty(data.mensaje)) {
         
-        
         let dataItemsCampanaCargados = [];
         data.forEach(element => {
-          
-         
+        
             dataItemsCampanaCargados.push({
               departamento: element.distrito.provincia.departamento.nombre,
               provincia: element.distrito.provincia.nombre,
@@ -116,8 +114,7 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
               correlativo: element.correlativoBase
             })
          
-            this.campana.itemsCampana.find(x=> x.id == element.id).enviable = element.enviable;
-          
+            this.campana.itemsCampana.find(x=> x.id == element.id).enviable = element.enviable;  
           
         });
 
