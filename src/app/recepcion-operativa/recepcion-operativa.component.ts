@@ -95,10 +95,10 @@ export class RecepcionOperativaComponent implements OnInit {
         title: 'Inicio de Distribución'
       },
       finLima: {
-        title: 'Fin Lima'
+        title: 'Fin de distribución Lima'
       },
       finProvincia: {
-        title: 'Fin Provincia'
+        title: 'Fin de distribución Provincia'
       },
       tipoHabilitado: {
         title: 'Tipo de Habilitado'
@@ -163,7 +163,7 @@ export class RecepcionOperativaComponent implements OnInit {
             cantidadLima: this.contarDocumentos(campana.itemsCampana.filter(x => x.enviable == true), true),
             cantidadProvincia: this.contarDocumentos(campana.itemsCampana.filter(x => x.enviable == true), false),
             fechaHoraOperativa: campana_u.fecha,
-            inicioDistribucion: campana.fechaDistribucion,
+            inicioDistribucion: campana.fechaDistribucion.toString().substring(0,10),
             finLima: fechaFinLima,
             finProvincia: fechaFinProvincia,   
             tipoHabilitado: this.verTipoHabilitado(campana.paqueteHabilitado.tiposHabilitado),         
