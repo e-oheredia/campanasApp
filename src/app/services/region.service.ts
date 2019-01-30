@@ -30,7 +30,7 @@ export class RegionService {
     fechaFinalLima(campana: Campana, region: Region[]): string {
 
         let fechaLima = "-";
-        let r = region.find(x => x.nombre.trim() === 'Lima');
+        let r = region.find(x => x.nombre.trim().toUpperCase() === 'LIMA');
 
         if (r === undefined || r === null){
             return fechaLima;
@@ -52,7 +52,7 @@ export class RegionService {
     fechaFinalProvincia(campana: Campana, region: Region[]): string {
 
         let fechaProvincia = "-";
-        let r = region.find(x => x.nombre.trim() === 'Provincia');
+        let r = region.find(x => x.nombre.trim().toUpperCase() === 'PROVINCIA');
 
         if (r === undefined || r === null){
             return fechaProvincia;
