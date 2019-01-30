@@ -5,9 +5,10 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VerificarGuiaComponent } from './verificar-guia.component';
+import { AprobarGuiaComponent } from './aprobar-guia/aprobar-guia.component';
 
 @NgModule({
-  declarations: [VerificarGuiaComponent],
+  declarations: [VerificarGuiaComponent, AprobarGuiaComponent],
   imports: [
     CommonModule,
     Ng2SmartTableModule, 
@@ -16,7 +17,9 @@ import { VerificarGuiaComponent } from './verificar-guia.component';
     FormsModule,
   ], 
   entryComponents: [
-    ButtonViewComponent
+    VerificarGuiaComponent,
+    ButtonViewComponent,
+    AprobarGuiaComponent
   ]
 
 })

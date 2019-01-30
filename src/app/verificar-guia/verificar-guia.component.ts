@@ -3,6 +3,7 @@ import { MensajeExitoComponent } from './../modals/mensaje-exito/mensaje-exito.c
 import { ConfirmModalComponent } from './../modals/confirm-modal/confirm-modal.component';
 import { TrackingCampanaComponent } from './../modals/tracking-campana/tracking-campana.component';
 import { ButtonViewComponent } from './../table-management/button-view/button-view.component';
+import { AprobarGuiaComponent } from './aprobar-guia/aprobar-guia.component';
 import { Campana } from './../model/campana.model';
 import { LocalDataSource } from 'ng2-smart-table';
 import { AppSettings } from './../settings/app.settings';
@@ -11,6 +12,8 @@ import { CampanaService } from './../services/campana.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Component, OnInit } from '@angular/core';
 import { EstadoCampanaEnum } from '../enum/estadocampana.enum';
+import * as moment from 'moment-timezone';
+
 
 @Component({
   selector: 'app-verificar-guia',
@@ -130,16 +133,22 @@ export class VerificarGuiaComponent implements OnInit {
     let c = new Campana();
     c.id = this.campanaService.extraerIdAutogenerado(row.id);
 
-    let bsModalRef: BsModalRef = this.modalService.show(ConfirmModalComponent, {
+    let bsModalRef: BsModalRef = this.modalService.show(AprobarGuiaComponent, {
       initialState: {
         titulo: "Campaña : " + row.nombre,
         mensaje: "¿Está seguro de aceptar la guía?",
+        nota: "Tener en cuenta que el Proveedor recibirá la Operativa (Datos de inicio de Distribución)"
       },
       keyboard: false,
       backdrop: "static",
     });
-    bsModalRef.content.confirmarEvent.subscribe(() => {
-      this.campanaService.aceptarGuia(c.id).subscribe(
+    bsModalRef.content.confirmarEvent.subscribe((datosAprobarGuiaForm) => {
+
+      
+      let fi = new Date(new Date(datosAprobarGuiaForm.fechaDistribucion).getTimezoneOffset() * 60 * 1000 + new Date(datosAprobarGuiaForm.fechaDistribucion).getTime());
+      c.fechaDistribucion = moment(new Date(fi)).format("DD-MM-YYYY HH:mm:ss");
+
+      this.campanaService.aceptarGuia(c).subscribe(
         () => {
 
           let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
@@ -153,6 +162,9 @@ export class VerificarGuiaComponent implements OnInit {
           console.log(error);
         }
       )
+
+
+
     });
   }
 

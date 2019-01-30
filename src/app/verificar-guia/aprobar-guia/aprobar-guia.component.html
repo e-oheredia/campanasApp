@@ -1,0 +1,32 @@
+
+    <form [formGroup]="datosAprobarGuiaForm" (ngSubmit)=onSubmit(datosAprobarGuiaForm.value)>
+
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">{{titulo}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{mensaje}}</p>
+
+        <p>{{nota}}</p>
+
+        <div class="form-row">
+          <div class="col">
+            <label for="fechaDistribucion">{{fechaDistribucion}}</label>
+          </div>
+          <div class="col">
+            <input type="date" class="form-control-date" id="fechaDistribucion" formControlName="fechaDistribucion">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="confirmar()" [disabled]="!datosAprobarGuiaForm.valid">{{textoAceptar}}</button>
+        <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">{{textoCancelar}}</button>
+      </div>
+
+    </form>
+
