@@ -24,7 +24,7 @@ export class AppSettings {
     public static DOCUMENTO_GUIA_URL = "documentosguia/";
     public static ESTADO_DOCUMENTO_URL = "estadosdocumento/";
     public static TIPO_ESTADO_DOCUMENTO_URL = "tiposestadodocumento/";
-    public static REGION_URL = "region/";
+    public static REGION_URL = "regiones/";
     public static MENU_URL = "menus/";
     public static CAMPANA_URL = "campanas/";
     public static TIPO_CAMPANA_URL = "tiposcampana/";

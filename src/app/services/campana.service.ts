@@ -255,8 +255,8 @@ export class CampanaService {
         return this.requester.post<Campana>(this.REQUEST_URL + campana.id + "/adjuntarguia", form, {});
     }
 
-    aceptarGuia(campanaId: number): Observable<Campana> {
-        return this.requester.put<Campana>(this.REQUEST_URL + campanaId.toString() + "/aprobarguia", null, {});
+    aceptarGuia(campana: Campana): Observable<Campana> {
+        return this.requester.put<Campana>(this.REQUEST_URL + "aprobarguia", campana, {});
     }
 
     denegarGuia(campanaId: number): Observable<Campana> {

@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
-import { MensajeExitoComponent } from './modals/mensaje-exito/mensaje-exito.component'
+import { MensajeExitoComponent } from './modals/mensaje-exito/mensaje-exito.component';
 
 import { GenerarCampanaModule } from './generar-campana/generar-campana.module';
 import { SeleccionProveedorModule } from './seleccion-proveedor/seleccion-proveedor.module';
@@ -31,6 +31,7 @@ import {RecepcionOperativaModule} from './recepcion-operativa/recepcion-operativ
     AppComponent,
     ConfirmModalComponent,
     MensajeExitoComponent
+    
   ],
   imports: [
     BrowserModule,

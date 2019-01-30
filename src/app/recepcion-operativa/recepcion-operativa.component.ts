@@ -148,10 +148,7 @@ export class RecepcionOperativaComponent implements OnInit {
         let dataCampanas = [];
         campanas.forEach(campana => {
 
-          let campana_u = this.campanaService.getUltimoSeguimientoCampana(campana);   
-          //moment(proveedorImpresion.fechaRecojo, 'DD-MM-YYYY').format('DD-MM-YYYY'),
-          //campana.fechaDistribucion =  new Date();//moment(new Date(), 'DD-MM-YYYY').format('DD-MM-YYYY');
-          //campana.fechaDistribucion = this.campanaService.getUltimoSeguimientoCampana(campana).fecha;
+          let campana_u = this.campanaService.getUltimoSeguimientoCampana(campana);
           let fechaFinLima = this.regionService.fechaFinalLima(campana, this.region);
           let fechaFinProvincia = this.regionService.fechaFinalProvincia(campana, this.region);
 
