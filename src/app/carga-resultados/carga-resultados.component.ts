@@ -11,6 +11,8 @@ import { TrackingCampanaComponent } from '../modals/tracking-campana/tracking-ca
 import { EstadoCampanaEnum } from '../enum/estadocampana.enum';
 import { ItemCampana } from '../model/itemcampana.model';
 import { SubirReporteComponent } from './subir-reporte/subir-reporte.component';
+import { RegionService } from '../services/region.service';
+import { Region } from '../model/region.model';
 
 @Component({
   selector: 'app-carga-resultados',
@@ -23,12 +25,14 @@ export class CargaResultadosComponent implements OnInit {
     private tituloService: TituloService,
     private campanaService: CampanaService,
     private modalService: BsModalService,
+    private regionService: RegionService,
     private notifier: NotifierService
   ) { }
 
   settings = AppSettings.tableSettings;
   dataCampanasOperativas: LocalDataSource = new LocalDataSource();
   campanas: Campana[] = [];
+  region: Region[] = [];
   prefijo = AppSettings.PREFIJO;
 
   ngOnInit() {
@@ -74,12 +78,23 @@ export class CargaResultadosComponent implements OnInit {
       ultimaFechaDistribución: {
         title: 'Última fecha de distribución'
       },
+      buttonDescargarBasesOperativas: {
+        title: 'Descargar Base Operativa',
+        type: 'custom',
+        renderComponent: ButtonViewComponent,
+        onComponentInitFunction: (instance: any) => {
+          instance.claseIcono = "fas fa-download";
+          instance.pressed.subscribe(row => {
+            this.descargarBasesOperativas(row);
+          });
+        }
+      },
       buttonSubir: {
         title: 'Subir reporte final',
         type: 'custom',
         renderComponent : ButtonViewComponent,
         onComponentInitFunction: (instance : any) => {
-          instance.claseIcono = "fas fa-download",
+          instance.claseIcono = "fas fa-file-upload",
           instance.pressed.subscribe(row => {
             this.subirReporteFinal(row);
           });
@@ -105,6 +120,13 @@ export class CargaResultadosComponent implements OnInit {
         let dataCampanasOperativas = [];
         campanasa.forEach(
           campana => {
+
+            let diasLima = 5;
+            let diasProvincia = 10;
+            let fechaLima = new Date(campana.fechaDistribucion.getDate() + diasLima);
+            // let ultimaFechaDistribucion = this.regionService.ultimaFechaDistribucion(campana, this.region);
+            // console.log(fechaLima);
+
             dataCampanasOperativas.push({
               id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
               nombre: campana.nombre,
@@ -113,7 +135,7 @@ export class CargaResultadosComponent implements OnInit {
               tipoDocumento: campana.tipoDocumento.nombre,
               cantidadLima: this.contarDocumentos(campana.itemsCampana, true, true),
               cantidadProvincia: this.contarDocumentos(campana.itemsCampana, false, true),
-              ultimaFechaDistribución: "-"//falta crear el servicio real
+              // ultimaFechaDistribución: ultimaFechaDistribucion
             });
           });
           this.dataCampanasOperativas.load(dataCampanasOperativas);
@@ -123,6 +145,10 @@ export class CargaResultadosComponent implements OnInit {
 
   contarDocumentos(documentos: ItemCampana[], lima: boolean = true, normalizado: boolean = false) : number{
     return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;
+  }
+
+  descargarBasesOperativas(row: any){
+    this.campanaService.exportarItemsCampanaDistribucion(this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id)));
   }
 
   subirReporteFinal(row){

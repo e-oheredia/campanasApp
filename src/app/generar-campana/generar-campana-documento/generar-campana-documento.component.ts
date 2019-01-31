@@ -28,6 +28,8 @@ import { NotifierService } from '../../../../node_modules/angular-notifier';
 
 import * as moment from "moment-timezone";
 import { MensajeExitoComponent } from '../../modals/mensaje-exito/mensaje-exito.component';
+import { TipoEntrega } from 'src/app/model/tipoentrega.model';
+import { TipoEntregaService } from 'src/app/services/tipoentrega.service';
 
 
 
@@ -43,6 +45,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     private tipoDestinoService: TipoDestinoService,
     private paqueteHabilitadoService: PaqueteHabilitadoService,
     private tipoAgrupadoService: TipoAgrupadoService,
+    private tipoEntregaService: TipoEntregaService,
     private accionRestosProveedorService: AccionRestosProveedorService,
     private itemCampanaService: ItemCampanaService,
     public utilsService: UtilsService,
@@ -58,6 +61,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   tiposDestino: TipoDestino[] = [];
   paqueteHabilitados: PaqueteHabilitado[] = [];
   tiposAgrupado: TipoAgrupado[] = [];
+  tiposEntrega: TipoEntrega[] = [];
   accionesRestosProveedor: AccionRestosProveedor[] = [];
   itemsCampanaCargados: ItemCampana[] = [];
   dataItemsCampanaCargados: LocalDataSource = new LocalDataSource();
@@ -66,6 +70,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   centroCostosList: CentroCostos[] = [];
   grupoCentroCostos: GrupoCentroCostos;
   tiposAgrupadoElegidos: TipoAgrupado[] = [];
+  tiposEntregaElegidos: TipoEntrega[] = [];
   rutaPlantillaExterna: string = AppSettings.RUTA_PLANTILLA + "c-externa.xlsx";
   rutaPlantillaInterna: string = AppSettings.RUTA_PLANTILLA + "c-interna.xlsx";
 
@@ -156,6 +161,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     this.listarTiposDestino();
     this.listarHabilitados();
     this.listarTiposAgrupado();
+    this.listarTiposEntregas();
     this.listarAccionRestosProveedor();
     this.grupoCentroCostos = new GrupoCentroCostos(this.centroCostosList);
   }
@@ -187,6 +193,12 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   listarTiposAgrupado() {
     this.tipoAgrupadoService.listarAll().subscribe(
       tiposagrupado => { this.tiposAgrupado = tiposagrupado }
+    )
+  }
+
+  listarTiposEntregas(){
+    this.tipoEntregaService.listarAll().subscribe(
+      tipoentrega => { this.tiposEntrega = tipoentrega}
     )
   }
 
@@ -384,6 +396,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     campana.tipoDestino = values.tipoDestino;
     campana.requiereGeorreferencia = values.requiereGeorreferenciacion;
     campana.tiposAgrupado = this.tiposAgrupadoElegidos;
+    campana.tiposEntrega = this.tiposEntregaElegidos;
     campana.observacion = values.observacion;
     if (values.imprenta !== null && values.imprenta !== "") {
       let proveedorImpresion = {
@@ -447,6 +460,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
         this.campanaForm.reset();
         this.itemsCampanaCargados = [];
         this.tiposAgrupadoElegidos = [];
+        this.tiposEntregaElegidos = [];
         this.grupoCentroCostos.centrosCostos = [];
         let bsModalRef: BsModalRef = this.modalService.show(MensajeExitoComponent, {
           initialState : {
@@ -520,6 +534,12 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
   onChangeTipoAgrupadoElegido(event: any, tipoAgrupado: TipoAgrupado) {
     
     event.srcElement.checked ? this.tiposAgrupadoElegidos.push(tipoAgrupado) : this.tiposAgrupadoElegidos.splice(this.tiposAgrupadoElegidos.indexOf(tipoAgrupado), 1);
+
+  }
+
+  onChangeTipoEntregaElegido(event: any, tipoentrega: TipoEntrega) {
+
+    event.srcElement.checked ? this.tiposEntregaElegidos.push(tipoentrega) : this.tiposEntregaElegidos.splice(this.tiposEntregaElegidos.indexOf(tipoentrega), 1);
 
   }
 

@@ -38,6 +38,7 @@ import { MensajeExitoComponent } from '../modals/mensaje-exito/mensaje-exito.com
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { EstadoItemCampanaService } from '../services/estadoitemcampana.service';
 import { RegionService } from '../services/region.service';
+import { TipoEntregaService } from '../services/tipoentrega.service';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { RegionService } from '../services/region.service';
     PlazoService,
     TipoDocumentoService,
     TipoDestinoService,
+    TipoEntregaService,
     PaqueteHabilitadoService,
     TipoAgrupadoService,
     AccionRestosProveedorService,

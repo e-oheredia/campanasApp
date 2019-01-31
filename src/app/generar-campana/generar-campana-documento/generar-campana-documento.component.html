@@ -133,6 +133,39 @@
             </div>
           </div>
           <br>
+
+
+
+          <!-- ---------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+          <div class="form-row">
+            <div class="col">
+              <div class="form-group">
+                <label for="tipoDestino">Tipo de Entrega</label>
+
+                <div class="form-check">
+
+                      <div>
+                        <div class="form-group" *ngFor="let tipoEntrega of tiposEntrega">
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" [id]="'ta-' + tipoEntrega.id" (change)="onChangeTipoEntregaElegido($event, tipoEntrega)">
+                            <label class="form-check-label" [for]="'ta-' + tipoEntrega.id">{{tipoEntrega.nombre}}</label>
+                          </div>
+                        </div>
+                      </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- ---------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+
+
+          <br>
           <div class="row">
             <div class="col-12">
               <div class="form-row align-items-center">
@@ -145,39 +178,6 @@
             </div>
           </div>
           <br>
-          <!-- <div class="row" *ngIf="itemsCampanaCargados.length !== 0">
-            <div class="col-12">
-              <div class="pb-2 mt-4 mb-2">
-                <div class="card">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-5">
-                          Cantidad Lima
-                        </div>
-                        <div class="col-7">
-                          {{contarDocumentosDeLima(itemsCampanaCargados)}}
-                        </div>
-                      </div>
-                    </li>
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="col-5">
-                          Cantidad Provincia
-                        </div>
-                        <div class="col-7">
-                          {{itemsCampanaCargados.length - contarDocumentosDeLima(itemsCampanaCargados)}}
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <ng2-smart-table [settings]="tableSettings" [source]="dataItemsCampanaCargados"></ng2-smart-table>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -289,7 +289,7 @@
           <br>
 
           <div class="form-row">
-            <div class="col-5">
+            <div class="col-4">
               <div class="form-group">
                 <label for="habilitado">Requiere Habilitado *</label>
                 <br>
@@ -580,8 +580,8 @@
                     </span>
                     <br>
                     <label for="porcentajePago">Porcentaje de pago *</label>
-                    <input class="form-control" name="porcentajePago"
-                      formControlName="porcentajePago"  currencyMask [options]="{ prefix: '', suffix: '%', precision: 0}" />
+                    <input class="form-control" name="porcentajePago" formControlName="porcentajePago" currencyMask
+                      [options]="{ prefix: '', suffix: '%', precision: 0}" />
                     <span *ngIf="!campanaForm.get('porcentajePago').valid && campanaForm.get('porcentajePago').touched"
                       class="text-danger small">
                       Es necesario ingresar el porcentaje de pago.

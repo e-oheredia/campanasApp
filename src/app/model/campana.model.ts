@@ -12,6 +12,7 @@ import { Plazo } from './plazo.model';
 import { TipoDocumento } from './tipodocumento.model';
 import { ItemCampana } from './itemcampana.model';
 import { TipoAgrupado } from './tipoagrupado.model';
+import { TipoEntrega } from './tipoentrega.model';
 
 export class Campana {
     constructor(
@@ -45,4 +46,5 @@ export class Campana {
     public rutaMuestra: String;
     public rutaGuia: string;
     public fechaDistribucion: Date;
+    public tiposEntrega: TipoEntrega[];
 }

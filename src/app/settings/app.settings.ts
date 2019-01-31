@@ -11,11 +11,12 @@ export class AppSettings {
     public static TIPO_DOCUMENTO_URL = "tiposdocumento/";
     public static TIPO_DESTINO_URL = "tiposdestino/";
     public static TIPO_AGRUPADO_URL = "tiposagrupado/";
+    public static TIPO_ENTREGA_URL = "tiposentrega/";
     public static PAIS_URL = "paises/";
     public static DEPARTAMENTO_URL = "departamentos/";
     public static PROVINCIA_URL = "provincias/";
     public static DISTRITO_URL = "distritos/";
-    public static ESTADOITEMCAMPANA_URL = "estadositem/";
+    public static ESTADOITEMCAMPANA_URL = "estadositemcampana/";
     public static DOCUMENTO_URL = "documentos/";
     public static AREA_URL = "areas/";
     public static ENVIO_URL = "envios/";
