@@ -44,7 +44,7 @@ export class RegionService {
         
         if (itemCampanaList.length > 0){
             
-            fechaLima = moment(new Date(fechaDistribucion.setDate(fechaDistribucion.getDate() + r.plazo))).format("DD-MM-YYYY");
+            fechaLima = moment(new Date(fechaDistribucion.setDate(fechaDistribucion.getDate() + r.plazo -1))).format("DD-MM-YYYY");
         }
         return fechaLima;
     }
@@ -67,9 +67,19 @@ export class RegionService {
         
         if (itemCampanaList.length > 0){
             
-            fechaProvincia = moment(new Date(fechaDistribucion.setDate(fechaDistribucion.getDate() + r.plazo))).format("DD-MM-YYYY");
+            fechaProvincia = moment(new Date(fechaDistribucion.setDate(fechaDistribucion.getDate() + r.plazo -1))).format("DD-MM-YYYY");
         }
         return fechaProvincia;
+    }
+
+    ultimaFechaDistribucion(campana: Campana, region: Region[]): string {
+
+        if(this.fechaFinalProvincia(campana, region) === "-"){
+            return this.fechaFinalLima(campana, region);
+        }else{
+            return this.fechaFinalProvincia(campana, region);
+        }
+
     }
 
 }   
