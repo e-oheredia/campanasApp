@@ -224,12 +224,24 @@ export class ItemCampanaService {
     mostrarItemsReporte(file: File, sheet: number, campana: Campana, callback: Function){
         this.readExcelService.excelToJson(file, sheet, (data: Array<any>) => {
 
-            if(campana.itemsCampana.length != data.length - 1){
+            let iCampanas : ItemCampana[] = [];
+
+            if(campana.requiereGeorreferencia == true){
+                iCampanas = campana.itemsCampana.filter(x=> x.enviable == true);
+            }
+            else{
+                iCampanas = campana.itemsCampana;
+            }
+
+            if(iCampanas.length != data.length - 1){
                 callback({
                     mensaje: "Error, la base cuenta con más registros"
                 });
                 return;
             }
+
+            console.log("campana.itemsCampana.length " + campana.itemsCampana.length);
+            console.log("data.length " + data.length);
 
             //VALIDAR cabezas                                //cabecera A=0
             if(this.utilsService.isUndefinedOrNullOrEmpty(data[0][0]) || this.utilsService.isUndefinedOrNullOrEmpty(data[0][13]) || this.utilsService.isUndefinedOrNullOrEmpty(data[0][14])){

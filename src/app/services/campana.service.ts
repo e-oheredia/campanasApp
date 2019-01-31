@@ -105,8 +105,8 @@ export class CampanaService {
         let objects = [];
         campana.itemsCampana.sort((a, b) => a.correlativo - b.correlativo).forEach(ItemCampana => {
             objects.push({
-                "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                 "Código de Item": ItemCampana.id,
+                "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
                 "Apellido Materno": ItemCampana.apellidoMaterno,

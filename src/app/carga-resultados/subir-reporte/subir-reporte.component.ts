@@ -83,7 +83,6 @@ export class SubirReporteComponent implements OnInit {
       this.notifier.notify('error', data.mensaje);
       this.adjuntado = false;
     });
-    console.log(this.adjuntado);
   }
 
 
