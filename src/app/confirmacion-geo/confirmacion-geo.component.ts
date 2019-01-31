@@ -169,7 +169,9 @@ export class ConfirmacionGeoComponent implements OnInit {
       initialState: {
         mensaje: "¿Está seguro de confirmar la base georeferenciada?",
         textoAceptar: "Confirmar",
-      }
+      },
+      keyboard: false,
+      backdrop: "static",
     });
     bsModalRef.content.confirmarEvent.subscribe(() => {
       this.campanaService.confirmarBaseGeo(c).subscribe(
@@ -196,7 +198,9 @@ export class ConfirmacionGeoComponent implements OnInit {
       initialState: {
         campana: this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id))
       },
-      class: 'modal-lg'
+      class: 'modal-lg',
+      keyboard: false,
+      backdrop: "static",
     });
   }
 

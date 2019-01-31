@@ -109,7 +109,9 @@ export class CargaResultadosComponent implements OnInit {
       initialState: {
         campana: this.campanas.find(campana => campana.id == this.campanaService.extraerIdAutogenerado(row.id))
       },
-      class: 'modal-lg'
+      class: 'modal-lg',
+      keyboard: false,
+      backdrop: "static",
     });
   }
 
