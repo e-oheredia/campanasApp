@@ -20,6 +20,7 @@ import { AdjuntarArchivoComponent } from '../modals/adjuntar-archivo/adjuntar-ar
 import { TipoHabilitado} from '../model/tipohabilitado.model';
 import { Region} from '../model/region.model';
 import { ItemCampanaService } from  '../services/itemcampana.service';
+import { TipoEntrega } from '../model/tipoentrega.model';
 
 @Component({
   selector: 'app-recepcion-operativa',
@@ -167,7 +168,7 @@ export class RecepcionOperativaComponent implements OnInit {
             finLima: fechaFinLima,
             finProvincia: fechaFinProvincia,   
             tipoHabilitado: this.verTipoHabilitado(campana.paqueteHabilitado.tiposHabilitado),         
-            tipoEntrega:  '',
+            tipoEntrega: this.verTipoEntrega(campana.tiposEntrega),
           });
         });
         this.dataCampanas.load(dataCampanas);
@@ -242,4 +243,22 @@ export class RecepcionOperativaComponent implements OnInit {
     )
     return habilitado;
   }
+
+  verTipoEntrega(tipoEntrega: TipoEntrega[]){
+    let entrega ="";
+
+    let i = 1;
+
+    tipoEntrega.forEach(e => {
+      entrega += " " + e.nombre;
+      if(tipoEntrega.length > i){
+        entrega += ",";
+      }
+      i++;
+    })
+    return entrega;
+  }
+
+
+
 }
