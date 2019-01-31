@@ -80,8 +80,8 @@ export class CampanaService {
         campana.itemsCampana.sort((a,b)=>a.correlativoBase - b.correlativoBase).forEach(ItemCampana => {
             if (ItemCampana.enviable === false) {
                 objects.push({
-                    "Codigo de Item": ItemCampana.id,
-                    "Numero de Campaña": this.codigoAutogenerado(campana.id, "DOC"),                    
+                    "Código de Item": ItemCampana.id,
+                    "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),                    
                     "Correlativo": ItemCampana.correlativoBase,
                     "Razon Social": ItemCampana.razonSocial,
                     "Apellido Paterno": ItemCampana.apellidoPaterno,
@@ -127,9 +127,9 @@ export class CampanaService {
     exportarItemsCampanaPendientesPorAdjuntarConfirmacion(campana: Campana) {
         let objects = [];
         campana.itemsCampana.sort((a, b) => a.correlativoBase - b.correlativoBase).forEach(ItemCampana => {
-            objects.push({
-                "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
+            objects.push({               
                 "Código de Item": ItemCampana.id,
+                "Código de Campaña": this.codigoAutogenerado(campana.id, "DOC"),
                 "Correlativo": ItemCampana.correlativoBase,
                 "Razon Social": ItemCampana.razonSocial,
                 "Apellido Paterno": ItemCampana.apellidoPaterno,
