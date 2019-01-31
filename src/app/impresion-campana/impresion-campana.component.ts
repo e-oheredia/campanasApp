@@ -175,7 +175,9 @@ export class ImpresionCampanaComponent implements OnInit {
       initialState: {
         campana: this.campanas.find(campanax => campanax.id == this.campanaService.extraerIdAutogenerado(row.id))
       },
-      class: 'modal-lg'
+      class: 'modal-lg',
+      keyboard: false,
+      backdrop: "static",
     })
   }
 
