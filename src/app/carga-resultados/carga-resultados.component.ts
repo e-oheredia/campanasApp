@@ -39,6 +39,7 @@ export class CargaResultadosComponent implements OnInit {
     this.tituloService.setTitulo("Carga de Resultados");
     this.generarColumnas();
     this.listarCampanasOperativas();
+    this.listarRegiones();
   }
 
   generarColumnas(){
@@ -112,6 +113,14 @@ export class CargaResultadosComponent implements OnInit {
     });
   }
 
+  listarRegiones(){
+    this.regionService.listarAll().subscribe(
+      regiones => {
+        this.region = regiones;
+      }
+    );
+  }
+
   listarCampanasOperativas(){
     this.dataCampanasOperativas.reset();
     this.campanaService.listarCampanasPorEstado(EstadoCampanaEnum.DISTRIBUCION_INICIADA).subscribe(
@@ -121,12 +130,8 @@ export class CargaResultadosComponent implements OnInit {
         campanasa.forEach(
           campana => {
 
-            let diasLima = 5;
-            let diasProvincia = 10;
-            let fechaLima = new Date(campana.fechaDistribucion.getDate() + diasLima);
-            // let ultimaFechaDistribucion = this.regionService.ultimaFechaDistribucion(campana, this.region);
-            // console.log(fechaLima);
-
+            let ultimaFechaDistribucion = this.regionService.ultimaFechaDistribucion(campana, this.region);
+            
             dataCampanasOperativas.push({
               id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
               nombre: campana.nombre,
@@ -135,12 +140,14 @@ export class CargaResultadosComponent implements OnInit {
               tipoDocumento: campana.tipoDocumento.nombre,
               cantidadLima: this.contarDocumentos(campana.itemsCampana, true, true),
               cantidadProvincia: this.contarDocumentos(campana.itemsCampana, false, true),
-              // ultimaFechaDistribución: ultimaFechaDistribucion
+              ultimaFechaDistribución: ultimaFechaDistribucion
+              
             });
           });
           this.dataCampanasOperativas.load(dataCampanasOperativas);
       }
     )
+
   }
 
   contarDocumentos(documentos: ItemCampana[], lima: boolean = true, normalizado: boolean = false) : number{
