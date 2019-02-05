@@ -82,4 +82,18 @@ export class RegionService {
 
     }
 
+    ultimaFechaReporte(campana: Campana, region: Region[]): string {
+        let fechaReporte = "-";
+
+        if(this.ultimaFechaDistribucion(campana,region) === "-"){
+            return;
+        }        
+
+        let fecha = campana.fechaDistribucion.toString().substring(0,10);
+        let dateParts = fecha.split("-");
+        let fechaDistribucion =  new Date(moment(new Date(parseInt(dateParts[2]), parseInt(dateParts[1])-1, parseInt(dateParts[0])), "DD-MM-YYYY HH:mm:ss"));
+
+        return fechaReporte = moment(new Date(fechaDistribucion.setDate(fechaDistribucion.getDate()+10))).format("DD-MM-YYYY");
+    }
+
 }   
