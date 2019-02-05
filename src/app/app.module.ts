@@ -25,6 +25,7 @@ import { CargaResultadosModule } from './carga-resultados/carga-resultados.modul
 import { VerificarGuiaModule } from './verificar-guia/verificar-guia.module';
 
 import {RecepcionOperativaModule} from './recepcion-operativa/recepcion-operativa.module';
+import { ReporteUtdModule } from './reporte-utd/reporte-utd.module';
 
 
 @NgModule({
@@ -52,7 +53,9 @@ import {RecepcionOperativaModule} from './recepcion-operativa/recepcion-operativ
     RecojoCampanaModule,
     CargaResultadosModule,
     VerificarGuiaModule,
-    RecepcionOperativaModule
+    RecepcionOperativaModule,
+    ReporteUtdModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

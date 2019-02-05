@@ -296,4 +296,8 @@ export class CampanaService {
             this.writeExcelService.jsonToExcel(objects, "Campaña: " + campana.id);
         }
     }
+
+    generarReporteUTD(fechaini: Date, fechafin: Date, idestado: number): Observable<Campana[]> {
+        return this.requester.get<Campana[]>(this.REQUEST_URL + "reporte", {params: new HttpParams().append('fechaini', fechaini.toString()).append('fechafin', fechafin.toString()).append('estadoCampanaId', idestado.toString()) });
+    }
 }   
