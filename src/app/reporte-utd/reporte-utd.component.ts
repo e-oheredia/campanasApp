@@ -13,7 +13,7 @@ import { TituloService } from '../services/titulo.service';
 import { UtilsService } from '../services/utils.service';
 import * as moment from 'moment-timezone';
 import { NotifierService } from 'angular-notifier';
-import { Region} from '../model/region.model';
+import { Region } from '../model/region.model';
 import { RegionService } from '../services/region.service';
 
 @Component({
@@ -56,16 +56,16 @@ export class ReporteUtdComponent implements OnInit {
     this.generarColumnas();
   }
 
-  listarRegiones(){
+  listarRegiones() {
     this.regionService.listarAll().subscribe(
-      regiones =>{
+      regiones => {
         this.region = regiones;
       }
     );
   }
   generarColumnas() {
     this.settings.columns = {
-      
+
       id: {
         title: 'Código de campaña'
       },
@@ -130,6 +130,11 @@ export class ReporteUtdComponent implements OnInit {
             let tipoCampana_nombre = '';
             let ultimaFechaProgramadaReporte = this.regionService.ultimaFechaProgramadaReporte(campana, this.region);
             let fechaRealReporte = this.campanaService.getFechaPorEstado(campana, 20);
+            let total = this.campanaService.contarDocumentosGeo(campana.itemsCampana, true, true) + this.campanaService.contarDocumentosGeo(campana.itemsCampana, false, true);
+
+            if (total == 0) {
+              total = campana.itemsCampana.length;
+            }
 
             if (!this.utilsService.isUndefinedOrNullOrEmpty(campana.proveedor)) {
               proveedor_nombre = campana.proveedor.nombre;
@@ -150,7 +155,7 @@ export class ReporteUtdComponent implements OnInit {
               tipoCampana: tipoCampana_nombre,
               devolucionRezago: campana.accionRestosRezagosCampana ? "SI" : "NO",
               devolucionCargo: campana.accionRestosCargosCampana ? "SI" : "NO",
-              cantidadTotal: this.cantidadTotal(campana.itemsCampana),
+              cantidadTotal: total,
               estadoActualCampana: campana_u.estadoCampana.nombre,
               fechaUltimoEstado: campana_u.fecha,
               fechaReporteProgramado: ultimaFechaProgramadaReporte,
@@ -167,12 +172,10 @@ export class ReporteUtdComponent implements OnInit {
   }
 
 
-  exportar(campana: Campana){
-    this.campanaService.exportarReporte(this.campanas,this.region);
+  exportar(campana: Campana) {
+    this.campanaService.exportarReporte(this.campanas, this.region);
   }
 
-  cantidadTotal(documentos: ItemCampana[], normalizado: boolean = false): number {
-    return documentos.filter(documento => (documento.enviable || !normalizado)).length;
-  }
+
 
 }
