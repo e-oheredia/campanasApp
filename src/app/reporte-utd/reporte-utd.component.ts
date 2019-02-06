@@ -13,6 +13,8 @@ import { TituloService } from '../services/titulo.service';
 import { UtilsService } from '../services/utils.service';
 import * as moment from 'moment-timezone';
 import { NotifierService } from 'angular-notifier';
+import { Region} from '../model/region.model';
+import { RegionService } from '../services/region.service';
 
 @Component({
   selector: 'app-reporte-utd',
@@ -23,6 +25,7 @@ export class ReporteUtdComponent implements OnInit {
 
   reporteForm: FormGroup;
   campanas: Campana[] = [];
+  region: Region[] = [];
   campana: Campana;
   settings = AppSettings.tableSettings;
   dataCampanas: LocalDataSource = new LocalDataSource();
@@ -38,12 +41,14 @@ export class ReporteUtdComponent implements OnInit {
     private campanaService: CampanaService,
     private tituloService: TituloService,
     public utilsService: UtilsService,
-    private notifier: NotifierService
+    private notifier: NotifierService,
+    private regionService: RegionService,
 
   ) { }
 
   ngOnInit() {
     this.tituloService.setTitulo("Seguimiento de campaña");
+    this.listarRegiones();
     this.reporteForm = new FormGroup({
       "fechaIni": new FormControl(null, Validators.required),
       "fechaFin": new FormControl(null, Validators.required)
@@ -51,7 +56,13 @@ export class ReporteUtdComponent implements OnInit {
     this.generarColumnas();
   }
 
-
+  listarRegiones(){
+    this.regionService.listarAll().subscribe(
+      regiones =>{
+        this.region = regiones;
+      }
+    );
+  }
   generarColumnas() {
     this.settings.columns = {
       
@@ -152,6 +163,9 @@ export class ReporteUtdComponent implements OnInit {
   }
 
 
+  exportar(campana: Campana){
+    this.campanaService.exportarReporte(this.campanas,this.region);
+  }
 
   cantidadTotal(documentos: ItemCampana[], normalizado: boolean = false): number {
     return documentos.filter(documento => (documento.enviable || !normalizado)).length;
