@@ -1,0 +1,63 @@
+<div class="row justify-content-center">
+  <div class="col">
+    <div class="card mb-5">
+      <div class="card-body">
+        <form [formGroup]="reporteForm" (ngSubmit)="MostrarReportes(reporteForm.get('fechaIni').value, reporteForm.get('fechaFin').value)">
+
+          <div class="form-row">
+
+            <div class="col-3">
+              <div class="form-group">
+                <label for="fechaIni">Fecha Inicial</label>
+                <input class="form-control" type="date" formControlName="fechaIni"/>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class="form-group">
+                <label for="fechaFin">Fecha Final</label>
+                <input class="form-control" type="date" formControlName="fechaFin"/>
+              </div>
+            </div>
+
+            <div class="col-2 mt-2">
+
+              <button type="submit" class="btn btn-primary form-control mt-4">
+                <i class="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Buscar
+              </button>
+
+            </div>
+            <div class="col-2 mt-2">
+
+              <label for=""></label>
+
+            </div>
+            <div class="col-2 mt-2">
+
+              <button type="button" class="btn btn-success form-control mt-4" (click)="exportar(dataCampanas)">
+                <i class="fa fa-file-excel" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Exportar
+              </button>
+
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div *ngIf="campanas.length !== 0; else mensaje">
+  <ng2-smart-table [settings]="settings" [source]="dataCampanas"></ng2-smart-table>
+</div>
+<ng-template #mensaje>
+  <div class="row">
+      <div class="col">
+          <div class="alert alert-info" role="alert">
+              No se encontraron resultados
+          </div>
+      </div>
+  </div>
+</ng-template>

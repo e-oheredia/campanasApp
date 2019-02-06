@@ -11,9 +11,10 @@ import { VerificarConformidadComponent } from './verificar-conformidad/verificar
 import { ConfirmacionCotizacionComponent } from './confirmacion-cotizacion/confirmacion-cotizacion.component';
 import { ImpresionCampanaComponent } from './impresion-campana/impresion-campana.component';
 import { SubirMuestraComponent } from './subir-muestra/subir-muestra.component';
-import {RecojoCampanaComponent} from './recojo-campana/recojo-campana.component';
+import { RecojoCampanaComponent } from './recojo-campana/recojo-campana.component';
 import { CargaResultadosComponent } from './carga-resultados/carga-resultados.component';
-import {RecepcionOperativaComponent} from './recepcion-operativa/recepcion-operativa.component';
+import { RecepcionOperativaComponent } from './recepcion-operativa/recepcion-operativa.component';
+import { ReporteUtdComponent } from './reporte-utd/reporte-utd.component';
 
 
 const routes: Routes = [
@@ -36,7 +37,7 @@ const routes: Routes = [
   {
     path: 'recotizacion-campana',
     component: RecotizacionCampanaComponent
-  },  
+  },
   {
     path: 'confirmacion-cotizacion',
     component: ConfirmacionCotizacionComponent
@@ -71,7 +72,11 @@ const routes: Routes = [
   },
   {
     path: 'recepcion-operativa',
-    component : RecepcionOperativaComponent
+    component: RecepcionOperativaComponent
+  },
+  {
+    path: 'reporte-utd',
+    component: ReporteUtdComponent
   }
 
 ];

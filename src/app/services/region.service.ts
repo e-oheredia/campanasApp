@@ -1,14 +1,11 @@
 import { Region } from '../model/region.model';
 import { Campana } from '../model/campana.model';
-
 import { AppSettings } from '../settings/app.settings';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { RequesterService } from './requester.service';
-import { CampanaService } from './campana.service';
-import { ItemCampanaService } from './itemcampana.service';
-import { UtilsService } from './utils.service';
 import * as moment from 'moment-timezone';
+import { UtilsService } from './utils.service';
 
 
 @Injectable()
@@ -17,7 +14,8 @@ export class RegionService {
     REQUEST_URL = AppSettings.API_ENDPOINT + AppSettings.REGION_URL;
 
     constructor(
-        private requester: RequesterService
+        private requester: RequesterService,
+        private utils: UtilsService
     ) {
 
     }
@@ -36,6 +34,9 @@ export class RegionService {
             return fechaLima;
         }
         
+        if (this.utils.isUndefinedOrNullOrEmpty(campana.fechaDistribucion)){
+            return fechaLima;
+        }
         let fecha = campana.fechaDistribucion.toString().substring(0,10);
         let dateParts = fecha.split("-");
         
@@ -55,6 +56,10 @@ export class RegionService {
         let r = region.find(x => x.nombre.trim().toUpperCase() === 'PROVINCIA');
 
         if (r === undefined || r === null){
+            return fechaProvincia;
+        }
+
+        if (this.utils.isUndefinedOrNullOrEmpty(campana.fechaDistribucion)){
             return fechaProvincia;
         }
 
@@ -82,14 +87,15 @@ export class RegionService {
 
     }
 
-    ultimaFechaReporte(campana: Campana, region: Region[]): string {
+    ultimaFechaProgramadaReporte(campana: Campana, region: Region[]): string {
         let fechaReporte = "-";
 
         if(this.ultimaFechaDistribucion(campana,region) === "-"){
-            return;
+            return fechaReporte;
         }        
+       
 
-        let fecha = campana.fechaDistribucion.toString().substring(0,10);
+        let fecha = this.ultimaFechaDistribucion(campana,region).toString().substring(0,10);
         let dateParts = fecha.split("-");
         let fechaDistribucion =  new Date(moment(new Date(parseInt(dateParts[2]), parseInt(dateParts[1])-1, parseInt(dateParts[0])), "DD-MM-YYYY HH:mm:ss"));
 
