@@ -128,6 +128,8 @@ export class ReporteUtdComponent implements OnInit {
             let campana_u = this.campanaService.getUltimoSeguimientoCampana(campana);
             let proveedor_nombre = '';
             let tipoCampana_nombre = '';
+            let ultimaFechaProgramadaReporte = this.regionService.ultimaFechaProgramadaReporte(campana, this.region);
+            let fechaRealReporte = this.campanaService.getFechaPorEstado(campana, 20);
 
             if (!this.utilsService.isUndefinedOrNullOrEmpty(campana.proveedor)) {
               proveedor_nombre = campana.proveedor.nombre;
@@ -136,6 +138,8 @@ export class ReporteUtdComponent implements OnInit {
             if (!this.utilsService.isUndefinedOrNullOrEmpty(campana.tipoCampana)) {
               tipoCampana_nombre = campana.tipoCampana.nombre;
             }
+
+            if (this.utilsService.isUndefinedOrNullOrEmpty(fechaRealReporte)) fechaRealReporte = "-";
 
             dataCampanas.push({
               id: this.campanaService.codigoAutogenerado(campana.id, this.prefijo.DOCUMENTO),
@@ -149,8 +153,8 @@ export class ReporteUtdComponent implements OnInit {
               cantidadTotal: this.cantidadTotal(campana.itemsCampana),
               estadoActualCampana: campana_u.estadoCampana.nombre,
               fechaUltimoEstado: campana_u.fecha,
-              fechaReporteProgramado: '',
-              fechaReporteReal: ''
+              fechaReporteProgramado: ultimaFechaProgramadaReporte,
+              fechaReporteReal: fechaRealReporte
             });
           });
           this.generarColumnas();
