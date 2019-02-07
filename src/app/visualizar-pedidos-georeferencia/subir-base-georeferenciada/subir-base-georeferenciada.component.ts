@@ -37,7 +37,7 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
 
   campanaForm: FormGroup;
 
-
+/*
   columnsItemsCampanaCargados = {    
     correlativo: {
       title: 'Correlativo'
@@ -59,9 +59,9 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
     }
 
   };
-
+*/
   ngOnInit() {
-    this.tableSettings.columns = this.columnsItemsCampanaCargados;         
+    //this.tableSettings.columns = this.columnsItemsCampanaCargados;         
     this.campanaForm = new FormGroup({
       'archivoExcel': new FormControl(null)
     })
@@ -102,9 +102,9 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
 
       if (this.utilsService.isUndefinedOrNullOrEmpty(data.mensaje)) {
         
-        let dataItemsCampanaCargados = [];
+        //let dataItemsCampanaCargados = [];
         data.forEach(element => {
-        
+            /*
             dataItemsCampanaCargados.push({
               departamento: element.distrito.provincia.departamento.nombre,
               provincia: element.distrito.provincia.nombre,
@@ -112,14 +112,14 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
               direccion: element.direccion,            
               estado: element.enviable == true ? "Normalizado" : "No distribuible",
               correlativo: element.correlativoBase
-            })
-         
+            })*/
+            element.enviable == true ? "Normalizado" : "No distribuible";
             this.campana.itemsCampana.find(x=> x.id == element.id).enviable = element.enviable;  
           
         });
 
-        this.itemsCampanaCargados = dataItemsCampanaCargados;
-        this.dataItemsCampanaCargados.load(dataItemsCampanaCargados);
+        //this.itemsCampanaCargados = dataItemsCampanaCargados;
+        //this.dataItemsCampanaCargados.load(dataItemsCampanaCargados);
         return;
       }
       this.notifier.notify('error', data.mensaje);
@@ -129,7 +129,7 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
 
   onSubmit(form: any){
 
-    if(this.itemsCampanaCargados.length == 0){
+    if(this.campana.itemsCampana.length == 0){
       this.notifier.notify('error', "Debe seleccionar un archivo");
       return;
     } 
