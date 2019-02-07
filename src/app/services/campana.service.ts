@@ -320,12 +320,17 @@ export class CampanaService {
         let objects = [];
         campana.forEach(campana => {
 
+
             let proveedorNombre = "";
             let tipoCampanaNombre = "";
+            if (!this.utils.isUndefinedOrNullOrEmpty(campana.proveedor)) proveedorNombre = campana.proveedor.nombre;
+            if (!this.utils.isUndefinedOrNullOrEmpty(campana.tipoCampana)) tipoCampanaNombre = campana.tipoCampana.nombre;
+
 
             let fechaFinLima = this.regionService.fechaFinalLima(campana, region);
             let fechaFinProvincia = this.regionService.fechaFinalProvincia(campana, region);
             let ultimaFechaProgramadaReporte = this.regionService.ultimaFechaProgramadaReporte(campana, region);
+
 
             let fechaAsignacionProveedor = this.getFechaPorEstado(campana, 2);
             let fechaGeoreferenciacion = this.getFechaPorEstado(campana, 3);
@@ -341,34 +346,6 @@ export class CampanaService {
             let fechaEnvioOperativa = this.getFechaPorEstado(campana, 17);
             let fechaInicioDistribucionReal = this.getFechaPorEstado(campana, 19);
             let fechaRealReporte = this.getFechaPorEstado(campana, 20);
-            let fechaInicioDistribucionProgramado;
-
-            let cantidadEntregados = 0;
-            let cantidadRezagados = 0;
-            let cantidadFaltantes = 0;
-            let cantidadNoDistribuibles = 0;
-
-            let cantidadDocumentosTotales = this.contarDocumentosGeo(campana.itemsCampana, true, true) + this.contarDocumentosGeo(campana.itemsCampana, false, true)
-
-            if (cantidadDocumentosTotales === 0) {
-                cantidadDocumentosTotales = campana.itemsCampana.length
-            }
-
-            if (!this.utils.isUndefinedOrNullOrEmpty(campana.proveedor)) proveedorNombre = campana.proveedor.nombre;
-            if (!this.utils.isUndefinedOrNullOrEmpty(campana.tipoCampana)) tipoCampanaNombre = campana.tipoCampana.nombre;
-
-            if (this.utils.isUndefinedOrNullOrEmpty(campana.fechaDistribucion)) {
-                fechaInicioDistribucionProgramado = "-";
-            }
-            else {
-                fechaInicioDistribucionProgramado = campana.fechaDistribucion;
-            }
-
-            if (this.getUltimoSeguimientoCampana(campana).estadoCampana.id >= EstadoCampanaEnum.REPORTE_ADJUNTADO) cantidadEntregados = this.contarDocumentosPorEstado(campana.itemsCampana, EstadoItemCampanaEnum.ENTREGADO);
-            if (this.getUltimoSeguimientoCampana(campana).estadoCampana.id >= EstadoCampanaEnum.REPORTE_ADJUNTADO) cantidadRezagados = this.contarDocumentosPorEstado(campana.itemsCampana, EstadoItemCampanaEnum.REZAGADO);
-            if (this.getUltimoSeguimientoCampana(campana).estadoCampana.id >= EstadoCampanaEnum.REPORTE_ADJUNTADO) cantidadFaltantes = this.contarDocumentosPorEstado(campana.itemsCampana, EstadoItemCampanaEnum.FALTANTE);
-            if (this.getUltimoSeguimientoCampana(campana).estadoCampana.id >= EstadoCampanaEnum.REPORTE_ADJUNTADO) cantidadNoDistribuibles = this.contarDocumentosPorEstado(campana.itemsCampana, EstadoItemCampanaEnum.NO_DISTRIBUIBLE);
-
             if (this.utils.isUndefinedOrNullOrEmpty(fechaAsignacionProveedor)) fechaAsignacionProveedor = "-";
             if (this.utils.isUndefinedOrNullOrEmpty(fechaGeoreferenciacion)) fechaGeoreferenciacion = "-";
             if (this.utils.isUndefinedOrNullOrEmpty(fechaConfirmacionGeo)) fechaConfirmacionGeo = "-";
@@ -383,6 +360,31 @@ export class CampanaService {
             if (this.utils.isUndefinedOrNullOrEmpty(fechaEnvioOperativa)) fechaEnvioOperativa = "-";
             if (this.utils.isUndefinedOrNullOrEmpty(fechaInicioDistribucionReal)) fechaInicioDistribucionReal = "-";
             if (this.utils.isUndefinedOrNullOrEmpty(fechaRealReporte)) fechaRealReporte = "-";
+
+
+            let cantidadDocumentosTotales = this.contarDocumentosGeo(campana.itemsCampana, true, true) + this.contarDocumentosGeo(campana.itemsCampana, false, true)
+            if (cantidadDocumentosTotales === 0) {
+                cantidadDocumentosTotales = campana.itemsCampana.length
+            }
+
+
+            let fechaInicioDistribucionProgramado;
+            if (this.utils.isUndefinedOrNullOrEmpty(campana.fechaDistribucion)) {
+                fechaInicioDistribucionProgramado = "-";
+            }
+            else {
+                fechaInicioDistribucionProgramado = campana.fechaDistribucion;
+            }
+
+            
+            let cantidadEntregados = 0;
+            let cantidadRezagados = 0;
+            let cantidadFaltantes = 0;
+            let cantidadNoDistribuibles = 0;
+            if (this.getUltimoSeguimientoCampana(campana).estadoCampana.id >= EstadoCampanaEnum.REPORTE_ADJUNTADO) cantidadEntregados = this.contarDocumentosPorEstado(campana.itemsCampana, EstadoItemCampanaEnum.ENTREGADO);
+            if (this.getUltimoSeguimientoCampana(campana).estadoCampana.id >= EstadoCampanaEnum.REPORTE_ADJUNTADO) cantidadRezagados = this.contarDocumentosPorEstado(campana.itemsCampana, EstadoItemCampanaEnum.REZAGADO);
+            if (this.getUltimoSeguimientoCampana(campana).estadoCampana.id >= EstadoCampanaEnum.REPORTE_ADJUNTADO) cantidadFaltantes = this.contarDocumentosPorEstado(campana.itemsCampana, EstadoItemCampanaEnum.FALTANTE);
+            if (this.getUltimoSeguimientoCampana(campana).estadoCampana.id >= EstadoCampanaEnum.REPORTE_ADJUNTADO) cantidadNoDistribuibles = this.contarDocumentosPorEstado(campana.itemsCampana, EstadoItemCampanaEnum.NO_DISTRIBUIBLE);
 
 
             objects.push({
