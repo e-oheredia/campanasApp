@@ -31,7 +31,7 @@ export class CampanaService {
     ) {
 
     }
-    
+
     getFechaCreacion(campana: Campana): Date | string {
         return campana.seguimientosCampana.find(seguimientoCampana =>
             seguimientoCampana.estadoCampana.id === 1
@@ -53,14 +53,14 @@ export class CampanaService {
     getFechaPorEstado(campana: Campana, estadoId: Number) {
         let c = campana.seguimientosCampana.filter(x => x.estadoCampana).sort((a, b) =>
             a.estadoCampana.id - b.estadoCampana.id).find(oka => oka.estadoCampana.id === estadoId)
-        if(this.utils.isUndefinedOrNullOrEmpty(c)){
+        if (this.utils.isUndefinedOrNullOrEmpty(c)) {
             return null;
         }
-        else{
+        else {
             return c.fecha;
         }
     }
-    
+
     listarCampanasPorEstado(estadoCampana: number): Observable<Campana[]> {
         return this.requester.get<Campana[]>(this.REQUEST_URL, {
             params: new HttpParams().append('estadoId', estadoCampana.toString())
@@ -348,13 +348,19 @@ export class CampanaService {
             let cantidadFaltantes = 0;
             let cantidadNoDistribuibles = 0;
 
+            let cantidadDocumentosTotales = this.contarDocumentosGeo(campana.itemsCampana, true, true) + this.contarDocumentosGeo(campana.itemsCampana, false, true)
+
+            if (cantidadDocumentosTotales === 0) {
+                cantidadDocumentosTotales = campana.itemsCampana.length
+            }
+
             if (!this.utils.isUndefinedOrNullOrEmpty(campana.proveedor)) proveedorNombre = campana.proveedor.nombre;
             if (!this.utils.isUndefinedOrNullOrEmpty(campana.tipoCampana)) tipoCampanaNombre = campana.tipoCampana.nombre;
 
             if (this.utils.isUndefinedOrNullOrEmpty(campana.fechaDistribucion)) {
                 fechaInicioDistribucionProgramado = "-";
             }
-            else{
+            else {
                 fechaInicioDistribucionProgramado = campana.fechaDistribucion;
             }
 
@@ -362,7 +368,7 @@ export class CampanaService {
             if (this.getUltimoSeguimientoCampana(campana).estadoCampana.id >= EstadoCampanaEnum.REPORTE_ADJUNTADO) cantidadRezagados = this.contarDocumentosPorEstado(campana.itemsCampana, EstadoItemCampanaEnum.REZAGADO);
             if (this.getUltimoSeguimientoCampana(campana).estadoCampana.id >= EstadoCampanaEnum.REPORTE_ADJUNTADO) cantidadFaltantes = this.contarDocumentosPorEstado(campana.itemsCampana, EstadoItemCampanaEnum.FALTANTE);
             if (this.getUltimoSeguimientoCampana(campana).estadoCampana.id >= EstadoCampanaEnum.REPORTE_ADJUNTADO) cantidadNoDistribuibles = this.contarDocumentosPorEstado(campana.itemsCampana, EstadoItemCampanaEnum.NO_DISTRIBUIBLE);
-                            
+
             if (this.utils.isUndefinedOrNullOrEmpty(fechaAsignacionProveedor)) fechaAsignacionProveedor = "-";
             if (this.utils.isUndefinedOrNullOrEmpty(fechaGeoreferenciacion)) fechaGeoreferenciacion = "-";
             if (this.utils.isUndefinedOrNullOrEmpty(fechaConfirmacionGeo)) fechaConfirmacionGeo = "-";
@@ -378,9 +384,7 @@ export class CampanaService {
             if (this.utils.isUndefinedOrNullOrEmpty(fechaInicioDistribucionReal)) fechaInicioDistribucionReal = "-";
             if (this.utils.isUndefinedOrNullOrEmpty(fechaRealReporte)) fechaRealReporte = "-";
 
-            console.log(campana.itemsCampana);
-            console.log(campana);
-            //campana.itemsCampana.sort((a, b) => a.correlativoBase - b.correlativoBase).forEach(ItemCampana => {
+
             objects.push({
                 "Código de campaña": campana.id,
                 "Nombre de campaña": campana.nombre,
@@ -404,7 +408,7 @@ export class CampanaService {
                 "Cantidad Provincia inicial": campana.itemsCampana.length - campana.itemsCampana.filter(documento => documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA").length,
                 "Cantidad Lima final": this.contarDocumentosGeo(campana.itemsCampana, true, true),
                 "Cantidad Provincia final": this.contarDocumentosGeo(campana.itemsCampana, false, true),
-                "Cantidad total": this.contarDocumentosGeo(campana.itemsCampana, true, true) + this.contarDocumentosGeo(campana.itemsCampana, false, true),
+                "Cantidad total": cantidadDocumentosTotales,
                 "Estado actual de la campaña": this.getUltimoSeguimientoCampana(campana).estadoCampana.nombre,
                 "Fecha de creación": this.getFechaCreacion(campana),
                 "Fecha de asignación de proveedor": fechaAsignacionProveedor,
@@ -421,7 +425,7 @@ export class CampanaService {
                 "Fecha de guía adjuntada": fechaGuiaAdjunta,
                 "Fecha de envío de operativa": fechaEnvioOperativa,
                 "Fecha de inicio de habilitado": "-", //falta agregar campo a la vista 'guia aceptada'
-                "Fecha de inicio de distribución programada": fechaInicioDistribucionProgramado, //campana.fechaDistribucion,
+                "Fecha de inicio de distribución programada": fechaInicioDistribucionProgramado,
                 "Fecha de inicio de distribución real": fechaInicioDistribucionReal, //falta definir columnas del reporte del proveedor
                 "Fecha fin de distribución Lima - programada": fechaFinLima,
                 "Fecha fin de distribución Provincia - programada": fechaFinProvincia,
@@ -434,16 +438,14 @@ export class CampanaService {
                 "Cantidad de Faltantes": cantidadFaltantes,
                 "Cantidad de no distribuibles": cantidadNoDistribuibles
             })
-            //});
         });
         this.writeExcelService.jsonToExcel(objects, "Reporte-de-Campañas");
     }
 
+
     verTipoEntrega(tipoEntrega: TipoEntrega[]) {
         let entrega = "";
-
         let i = 1;
-
         tipoEntrega.forEach(e => {
             entrega += " " + e.nombre;
             if (tipoEntrega.length > i) {
@@ -456,33 +458,32 @@ export class CampanaService {
 
     verTipoHabilitado(tipoHabilitado: TipoHabilitado[]) {
         let habilitado = "";
-
         let i = 1;
-
         tipoHabilitado.forEach(t => {
             habilitado += " " + t.descripcion;
             if (tipoHabilitado.length > i) {
                 habilitado += ",";
             }
             i++;
-        }
-        )
+        })
         return habilitado;
     }
+
 
     contarDocumentosGeo(documentos: ItemCampana[], lima: boolean = true, normalizado: boolean = false): number {
         return documentos.filter(documento => (documento.distrito.provincia.nombre.toUpperCase().trim() !== "LIMA" || lima) && (documento.distrito.provincia.nombre.toUpperCase().trim() === "LIMA" || !lima) && (documento.enviable || !normalizado)).length;
     }
 
+
     contarDocumentosPorEstado(documentos: ItemCampana[], estadoItemCampana): number {
         let d = documentos.filter(documento => (documento.estadoItemCampana.id === estadoItemCampana.id));
-        if (this.utils.isUndefinedOrNullOrEmpty(d)){
+        if (this.utils.isUndefinedOrNullOrEmpty(d)) {
             return 0;
         }
-        else{
+        else {
             return d.length;
         }
-        
+
     }
 
 
