@@ -398,12 +398,17 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     campana.tiposAgrupado = this.tiposAgrupadoElegidos;
     campana.tiposEntrega = this.tiposEntregaElegidos;
     campana.observacion = values.observacion;
+    if(values.fechaHoraRecojo == ""){
+      this.notifier.notify('warning', 'Ingrese la fecha y hora de recojo');
+      return;
+    }
     if (values.imprenta !== null && values.imprenta !== "") {
       let proveedorImpresion = {
         nombre: values.imprenta,
         direccion: values.direccion,
-        contacto: values.contacto,
+        contacto: values.contacto,         
         fechaRecojo: moment(values.fechaHoraRecojo).format("DD-MM-YYYY HH:mm:ss")
+       
       }
       campana.proveedorImpresion = proveedorImpresion;
     }

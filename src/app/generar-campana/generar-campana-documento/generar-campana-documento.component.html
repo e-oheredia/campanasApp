@@ -710,7 +710,7 @@
   <div class="row justify-content-center">
     <div class="col-11 mt-4 mb-4">
       <div class="form-group">
-        <button class="btn btn-success form-control mt-2" type="submit">
+        <button class="btn btn-success form-control mt-2" type="submit" [disabled]="!campanaForm.valid">
           CREAR CAMPAÑA
         </button>
       </div>

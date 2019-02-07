@@ -316,9 +316,9 @@ export class CampanaService {
         }
     }
 
-    exportarReporte(campana: Campana[], region: Region[]) {
+    exportarReporte(campanas: Campana[], region: Region[]) {
         let objects = [];
-        campana.forEach(campana => {
+        campanas.forEach(campana => {
 
             let proveedorNombre = "";
             let tipoCampanaNombre = "";
@@ -475,7 +475,7 @@ export class CampanaService {
     }
 
     contarDocumentosPorEstado(documentos: ItemCampana[], estadoItemCampana): number {
-        let d = documentos.filter(documento => (documento.estadoItemCampana.id === estadoItemCampana.id));
+        let d = documentos.filter(documento => (documento.enviable === true) && (documento.estadoItemCampana.id === estadoItemCampana.id));
         if (this.utils.isUndefinedOrNullOrEmpty(d)){
             return 0;
         }
