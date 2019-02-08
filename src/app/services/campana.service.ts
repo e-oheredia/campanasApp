@@ -478,7 +478,7 @@ export class CampanaService {
 
 
     contarDocumentosPorEstado(documentos: ItemCampana[], estadoItemCampana): number {
-        let d = documentos.filter(documento => (documento.enviable === true) && (documento.estadoItemCampana.id === estadoItemCampana.id));
+        let d = documentos.filter(documento => (documento.enviable === true) && (documento.estadoItemCampana.id === estadoItemCampana));
         if (this.utils.isUndefinedOrNullOrEmpty(d)){
             return 0;
         }
