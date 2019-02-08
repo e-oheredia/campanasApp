@@ -102,9 +102,9 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
 
       if (this.utilsService.isUndefinedOrNullOrEmpty(data.mensaje)) {
         
-        //let dataItemsCampanaCargados = [];
+        let dataItemsCampanaCargados = [];
         data.forEach(element => {
-            /*
+            
             dataItemsCampanaCargados.push({
               departamento: element.distrito.provincia.departamento.nombre,
               provincia: element.distrito.provincia.nombre,
@@ -112,13 +112,13 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
               direccion: element.direccion,            
               estado: element.enviable == true ? "Normalizado" : "No distribuible",
               correlativo: element.correlativoBase
-            })*/
+            })
             element.enviable == true ? "Normalizado" : "No distribuible";
             this.campana.itemsCampana.find(x=> x.id == element.id).enviable = element.enviable;  
           
         });
 
-        //this.itemsCampanaCargados = dataItemsCampanaCargados;
+        this.itemsCampanaCargados = dataItemsCampanaCargados;
         //this.dataItemsCampanaCargados.load(dataItemsCampanaCargados);
         return;
       }
@@ -129,7 +129,7 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
 
   onSubmit(form: any){
 
-    if(this.campana.itemsCampana.length == 0){
+    if(this.itemsCampanaCargados.length == 0){
       this.notifier.notify('error', "Debe seleccionar un archivo");
       return;
     } 

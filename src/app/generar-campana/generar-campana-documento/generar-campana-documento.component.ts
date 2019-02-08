@@ -256,7 +256,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     });
   }
 
-  mostrar = true;
+  //mostrar = true;
 
   agregarCentroCostoItem() {
     if (this.utilsService.isUndefinedOrNullOrEmpty(this.campanaForm) ||
@@ -398,10 +398,7 @@ export class GenerarCampanaDocumentoComponent implements OnInit {
     campana.tiposAgrupado = this.tiposAgrupadoElegidos;
     campana.tiposEntrega = this.tiposEntregaElegidos;
     campana.observacion = values.observacion;
-    if(values.fechaHoraRecojo == ""){
-      this.notifier.notify('warning', 'Ingrese la fecha y hora de recojo');
-      return;
-    }
+    
     if (values.imprenta !== null && values.imprenta !== "") {
       let proveedorImpresion = {
         nombre: values.imprenta,
