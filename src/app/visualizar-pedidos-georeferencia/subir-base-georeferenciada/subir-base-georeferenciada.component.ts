@@ -122,7 +122,9 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
         //this.dataItemsCampanaCargados.load(dataItemsCampanaCargados);
         return;
       }
+      this.campanaForm.get("archivoExcel").setValue("");
       this.notifier.notify('error', data.mensaje);
+      
     });
 
   }
@@ -130,7 +132,7 @@ export class SubirBaseGeoreferenciadaComponent implements OnInit {
   onSubmit(form: any){
 
     if(this.itemsCampanaCargados.length == 0){
-      this.notifier.notify('error', "Debe seleccionar un archivo");
+      this.notifier.notify('error', "Debe seleccionar un archivo");      
       return;
     } 
 

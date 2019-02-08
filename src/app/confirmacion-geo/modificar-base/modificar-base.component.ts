@@ -116,7 +116,7 @@ export class ModificarBaseComponent implements OnInit {
         });
 
         this.itemsCampanaCargados = dataItemsCampanaCargados;
-        this.dataItemsCampanaCargados.load(dataItemsCampanaCargados);
+        //this.dataItemsCampanaCargados.load(dataItemsCampanaCargados);
         return;
       }
       this.notifier.notify('error', data.mensaje);
