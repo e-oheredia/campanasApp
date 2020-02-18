@@ -172,7 +172,7 @@ export class ReporteUtdComponent implements OnInit {
   }
 
 
-  exportar(campana: Campana) {
+  exportar() {
     this.campanaService.exportarReporte(this.campanas, this.region);
   }
 

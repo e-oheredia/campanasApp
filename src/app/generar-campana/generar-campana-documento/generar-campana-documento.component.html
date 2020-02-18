@@ -16,7 +16,7 @@
             <a class="dropdown-item" [href]="rutaPlantillaInterna" target="_blank">Plantilla Interna</a>
           </li>
           <li role="menuitem">
-            <a class="dropdown-item" [href]="rutaPlantillaExterna">Plantilla Externa</a>
+            <a class="dropdown-item" [href]="rutaPlantillaExterna" target="_blank">Plantilla Externa</a>
           </li>
 
         </ul>
@@ -148,8 +148,8 @@
                       <div>
                         <div class="form-group" *ngFor="let tipoEntrega of tiposEntrega">
                           <div class="form-check">
-                            <input type="checkbox" class="form-check-input" [id]="'ta-' + tipoEntrega.id" (change)="onChangeTipoEntregaElegido($event, tipoEntrega)">
-                            <label class="form-check-label" [for]="'ta-' + tipoEntrega.id">{{tipoEntrega.nombre}}</label>
+                            <input type="checkbox" class="form-check-input" [id]="'te-' + tipoEntrega.id" (change)="onChangeTipoEntregaElegido($event, tipoEntrega)">
+                            <label class="form-check-label" [for]="'te-' + tipoEntrega.id">{{tipoEntrega.nombre}}</label>
                           </div>
                         </div>
                       </div>

@@ -304,11 +304,12 @@ export class ItemCampanaService {
 
                 
                 if((estadoItemCampana.id === EstadoItemCampanaEnum.ENTREGADO || estadoItemCampana.id === EstadoItemCampanaEnum.REZAGADO) && this.utilsService.isUndefinedOrNullOrEmpty(data[i][14])){
+                    
                     callback({
                         mensaje: "Ingrese el detalle del estado en la fila " + (i + 1)
                     });
-                    return;
                     
+                    return;                    
                 }
                 
                 itemCampanaCargado.detalle = data[i][14] || "";

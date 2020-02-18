@@ -1,3 +1,4 @@
+import { AppSettings } from './../../settings/app.settings';
 import { Injectable } from '@angular/core';
 import {
     HttpInterceptor, HttpRequest, HttpHandler, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent,
@@ -17,6 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
     headers: HttpHeaders;
     browserStorageSubscription: Subscription;
     peticionNuevoToken: boolean = false;
+
 
     constructor(private browserStorageService: BrowserStorageService, private router: Router, private requesterService: RequesterService) {
 
@@ -71,7 +73,7 @@ export class AuthInterceptor implements HttpInterceptor {
                             this.peticionNuevoToken = true;
                             this.browserStorageService.set("token", this.browserStorageService.get("refreshtoken"));
 
-                            return this.requesterService.post<any>('http://localhost:8092/token', null, {}).subscribe(
+                            return this.requesterService.post<any>(AppSettings.API_USUARIOS + 'token', null, {}).subscribe(
                                 data => {
                                     if (data) {
                                         this.browserStorageService.set("token", data.token);

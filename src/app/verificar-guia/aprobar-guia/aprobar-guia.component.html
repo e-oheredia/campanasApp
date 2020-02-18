@@ -1,5 +1,5 @@
 
-    <form [formGroup]="datosAprobarGuiaForm" (ngSubmit)=onSubmit(datosAprobarGuiaForm.value)>
+    <form [formGroup]="datosAprobarGuiaForm">
 
       <div class="modal-header">
         <h4 class="modal-title pull-left">{{titulo}}</h4>
@@ -14,7 +14,7 @@
 
         <div class="form-row">
           <div class="col">
-            <label for="fechaDistribucion">{{fechaDistribucion}}</label>
+            <label for="fechaDistribucion">Fecha de distribución</label>
           </div>
           <div class="col">
             <input type="date" class="form-control-date" id="fechaDistribucion" formControlName="fechaDistribucion">

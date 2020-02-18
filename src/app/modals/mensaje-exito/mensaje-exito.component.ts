@@ -11,6 +11,7 @@ export class MensajeExitoComponent implements OnInit {
   constructor(public bsModalRef: BsModalRef) {}
 
   autogenerado: string;
+  public mensaje: string;
 
   ngOnInit() {
   }

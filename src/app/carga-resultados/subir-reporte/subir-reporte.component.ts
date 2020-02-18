@@ -19,7 +19,7 @@ import { element } from '@angular/core/src/render3';
 export class SubirReporteComponent implements OnInit {
 
   constructor(
-    private bsModalRef: BsModalRef,
+    public bsModalRef: BsModalRef,
     private utilsService: UtilsService,
     private notifier: NotifierService,
     private itemCampanaService: ItemCampanaService,

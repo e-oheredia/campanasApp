@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TituloComponent implements OnInit {
 
-  private titulo: string;
+  public titulo: string;
 
   constructor(
     private tituloService: TituloService
